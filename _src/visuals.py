@@ -1,4 +1,4 @@
-"""SVG visuals for the Arron site. All return markup strings."""
+"""SVG visuals for the ARRON site. All return markup strings."""
 import math
 
 FONT = 'font-family="Manrope,sans-serif"'
@@ -136,7 +136,7 @@ def v_cx():
 
 # ------------------------------------------------------------------ Home: connected model
 def v_model():
-    return f'''<svg viewBox="0 0 520 420" {FONT} aria-label="Arron model">
+    return f'''<svg viewBox="0 0 520 420" {FONT} aria-label="ARRON model">
 {_defs('m')}
 <rect x="10" y="10" width="500" height="80" rx="18" {GLASS}/><text x="34" y="42" fill="#ff8b95" font-size="11" font-weight="800" letter-spacing="2.4">STRATEGY</text><text x="34" y="70" fill="#fff" font-size="20" font-weight="800">Vision, roadmap and business case</text>
 <rect x="10" y="118" width="244" height="110" rx="18" {GLASS}/><text x="34" y="152" fill="#ff8b95" font-size="11" font-weight="800" letter-spacing="2.4">PLATFORMS</text><text x="34" y="182" fill="#fff" font-size="19" font-weight="800">ERP and ITSM</text><text x="34" y="206" fill="#9fb3e0" font-size="12.5">Systems of record and service</text>
@@ -148,17 +148,17 @@ def v_model():
 
 # ------------------------------------------------------------------ Offerings: connected stack
 def v_stack():
-    layers = [("AI / SI", "Intelligence", "#6aa3ff"), ("ERP", "Operations", "#4a86f0"), ("ITSM", "Service", "#2f6bd8"), ("CX", "Experience", "#ff6b78")]
+    layers = [("AI / SI", "Intelligence", "#6aa3ff"), ("ERP", "Operations", "#4a86f0"), ("ITSM", "Service", "#2f6bd8"), ("CX", "Experience", "#8a7be8"), ("DIGITAL WORKPLACE", "People", "#ff6b78")]
     out = ''
     for i, (t, s, c) in enumerate(layers):
-        y = 40 + i * 78
+        y = 22 + i * 74
         out += f'''<g style="animation:float {6+i*.6}s ease-in-out infinite;animation-delay:{i*.3}s">
-<path d="M280 {y} L470 {y+36} L280 {y+72} L90 {y+36} Z" fill="{c}" fill-opacity=".28" stroke="{c}" stroke-width="1.6"/>
-<path d="M90 {y+36} L280 {y+72} L280 {y+84} L90 {y+48} Z" fill="{c}" fill-opacity=".45"/><path d="M470 {y+36} L280 {y+72} L280 {y+84} L470 {y+48} Z" fill="{c}" fill-opacity=".6"/>
-<text x="280" y="{y+40}" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">{t}</text><text x="280" y="{y+58}" text-anchor="middle" fill="#dbe6ff" font-size="11" letter-spacing="2">{s.upper()}</text></g>'''
-    return f'''<svg viewBox="0 0 560 420" {FONT} aria-label="Connected stack">
-<path d="M280 20V400" stroke="rgba(255,255,255,.18)" stroke-dasharray="3 7"/>{out}
-<circle r="5" fill="#fff"><animateMotion dur="5s" repeatCount="indefinite" path="M280 20V400"/></circle></svg>'''
+<path d="M280 {y} L470 {y+34} L280 {y+68} L90 {y+34} Z" fill="{c}" fill-opacity=".28" stroke="{c}" stroke-width="1.6"/>
+<path d="M90 {y+34} L280 {y+68} L280 {y+79} L90 {y+45} Z" fill="{c}" fill-opacity=".45"/><path d="M470 {y+34} L280 {y+68} L280 {y+79} L470 {y+45} Z" fill="{c}" fill-opacity=".6"/>
+<text x="280" y="{y+37}" text-anchor="middle" fill="#fff" font-size="{16 if len(t)>8 else 18}" font-weight="800">{t}</text><text x="280" y="{y+53}" text-anchor="middle" fill="#dbe6ff" font-size="10.5" letter-spacing="2">{s.upper()}</text></g>'''
+    return f'''<svg viewBox="0 0 560 410" {FONT} aria-label="Connected stack">
+<path d="M280 10V400" stroke="rgba(255,255,255,.18)" stroke-dasharray="3 7"/>{out}
+<circle r="5" fill="#fff"><animateMotion dur="6s" repeatCount="indefinite" path="M280 10V400"/></circle></svg>'''
 
 
 # ------------------------------------------------------------------ Capabilities
@@ -183,7 +183,7 @@ def v_services():
 
 
 def v_partners():
-    names = ["ServiceNow", "SAP", "Microsoft", "Oracle", "Atlassian", "Salesforce"]
+    names = ["ServiceNow", "SAP", "Microsoft", "Oracle", "Zoho", "Salesforce"]
     cx, cy, R = 280, 180, 128
     out = ''
     for i, n in enumerate(names):
@@ -302,6 +302,8 @@ def mini(kind):
             x = 30 + i * 92
             out += f'<rect x="{x}" y="50" width="74" height="86" rx="12" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.22)"/><rect x="{x+10}" y="62" width="54" height="22" rx="6" fill="{c}" opacity=".85"/><rect x="{x+10}" y="94" width="40" height="5" rx="2.5" fill="rgba(255,255,255,.5)"/><rect x="{x+10}" y="106" width="28" height="5" rx="2.5" fill="rgba(255,255,255,.3)"/>'
         return f'<svg viewBox="0 0 300 190" preserveAspectRatio="xMidYMid slice">{out}<path d="M106 93h14M198 93h14" stroke="#fff" stroke-dasharray="3 3"/></svg>'
+    if kind == "dw":
+        return '<svg viewBox="0 0 300 190" preserveAspectRatio="xMidYMid slice"><rect x="78" y="42" width="144" height="92" rx="10" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.3)"/><rect x="92" y="56" width="50" height="10" rx="5" fill="#6aa3ff"/><rect x="92" y="74" width="116" height="6" rx="3" fill="rgba(255,255,255,.35)"/><rect x="92" y="88" width="90" height="6" rx="3" fill="rgba(255,255,255,.25)"/><rect x="92" y="104" width="40" height="18" rx="9" fill="#ff6b78"/><path d="M60 150h180" stroke="rgba(255,255,255,.35)" stroke-width="4" stroke-linecap="round"/><circle cx="238" cy="52" r="13" fill="#10306b" stroke="#fff" stroke-opacity=".6"/><path d="M233 52h10M238 47v10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>'
     if kind == "cx":
         return '<svg viewBox="0 0 300 190" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="mcx" x1="0" x2="1"><stop offset="0" stop-color="#6aa3ff"/><stop offset="1" stop-color="#ff6b78"/></linearGradient></defs><path d="M20 140C70 140 80 80 120 80S170 150 205 130 250 50 285 40" fill="none" stroke="url(#mcx)" stroke-width="3.5" stroke-linecap="round"/><g fill="#fff"><circle cx="120" cy="80" r="5"/><circle cx="205" cy="130" r="5"/><circle cx="285" cy="40" r="5"/></g><circle cx="205" cy="130" r="12" fill="none" stroke="#ff6b78"><animate attributeName="r" values="6;16;6" dur="2.6s" repeatCount="indefinite"/></circle></svg>'
 
@@ -317,3 +319,70 @@ def art(kind):
 
 
 AVATAR = '<svg viewBox="0 0 200 200"><circle cx="100" cy="78" r="38" fill="rgba(255,255,255,.22)"/><path d="M20 200c0-46 36-74 80-74s80 28 80 74z" fill="rgba(255,255,255,.22)"/></svg>'
+
+
+# ------------------------------------------------------------------ Digital Workplace
+def v_dw():
+    ins = ["Chat", "Meetings", "Documents", "Devices"]
+    outs = ["Productivity", "Engagement", "Security"]
+    out = ''
+    for i, t in enumerate(ins):
+        y = 30 + i * 82
+        out += f'''<rect x="14" y="{y}" width="130" height="54" rx="14" {GLASS}/><text x="79" y="{y+33}" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">{t}</text>
+<path d="M144 {y+27} C190 {y+27} 190 195 236 195" fill="none" stroke="url(#gdw)" stroke-width="2" class="sv-flow" style="animation-delay:{i*.3}s"/>'''
+    for i, t in enumerate(outs):
+        y = 56 + i * 90
+        out += f'''<path d="M326 195 C372 195 372 {y+27} 418 {y+27}" fill="none" stroke="url(#gdw)" stroke-width="2" class="sv-flow" style="animation-delay:{i*.3}s"/>
+<rect x="418" y="{y}" width="128" height="54" rx="14" {GLASS}/><text x="482" y="{y+33}" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="800">{t}</text><circle cx="436" cy="{y+27}" r="4" fill="#4ade80" class="sv-pulse"/>'''
+    return f'''<svg viewBox="0 0 560 390" {FONT} aria-label="Digital workplace"><defs><linearGradient id="gdw" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>{out}
+<rect x="236" y="150" width="90" height="90" rx="22" fill="#14367a" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/><rect x="252" y="170" width="58" height="38" rx="6" fill="none" stroke="#fff" stroke-width="2"/><path d="M246 222h70" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>'''
+
+
+# ------------------------------------------------------------------ Product visuals
+def v_prod_arron():
+    chips = ["Chat", "Voice", "Email", "Social"]
+    out = ''.join(f'<rect x="{24+i*130}" y="20" width="116" height="34" rx="17" {GLASS}/><text x="{82+i*130}" y="42" text-anchor="middle" fill="#cfdcff" font-size="12.5" font-weight="800">{t}</text>' for i, t in enumerate(chips))
+    return f'''<svg viewBox="0 0 560 360" {FONT}>{out}
+<rect x="24" y="76" width="512" height="260" rx="20" {GLASS}/>
+<rect x="48" y="100" width="210" height="44" rx="14" fill="rgba(255,255,255,.12)"/><text x="64" y="127" fill="#fff" font-size="13">My order has not arrived yet.</text>
+<rect x="238" y="160" width="274" height="62" rx="14" fill="#2563d8"/><text x="256" y="186" fill="#fff" font-size="13" font-weight="700">I found it. It ships today and</text><text x="256" y="205" fill="#fff" font-size="13" font-weight="700">will arrive tomorrow.</text>
+<rect x="48" y="238" width="170" height="40" rx="14" fill="rgba(255,255,255,.12)"/><text x="64" y="263" fill="#fff" font-size="13">Great, thank you.</text>
+<rect x="238" y="292" width="170" height="30" rx="15" fill="rgba(74,222,128,.16)" stroke="#4ade80"/><circle cx="256" cy="307" r="4" fill="#4ade80" class="sv-pulse"/><text x="268" y="311" fill="#b7f5cf" font-size="12" font-weight="800">Resolved by agent</text></svg>'''
+
+
+def v_prod_vault():
+    docs = ''.join(f'<rect x="{40+i*28}" y="{90+i*18}" width="120" height="150" rx="12" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.22)"/>' for i in range(3))
+    return f'''<svg viewBox="0 0 560 360" {FONT}>{docs}
+<rect x="250" y="40" width="270" height="270" rx="28" fill="#14367a" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+<circle cx="385" cy="175" r="78" fill="none" stroke="rgba(255,255,255,.25)" stroke-dasharray="3 7" class="spin"/><circle cx="385" cy="175" r="52" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
+<rect x="362" y="165" width="46" height="34" rx="7" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M371 165v-9a14 14 0 0 1 28 0v9" fill="none" stroke="#fff" stroke-width="2.4"/><circle cx="385" cy="182" r="4" fill="#ff6b78"/>
+<path d="M162 165 L250 175" stroke="url(#gv)" stroke-width="2" class="sv-flow"/><defs><linearGradient id="gv" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>
+<g font-size="11.5" font-weight="800" fill="#9fb3e0" letter-spacing="1.6"><text x="40" y="312">DOCUMENTS</text><text x="40" y="330">RECORDS</text><text x="40" y="348">CASE HISTORY</text></g></svg>'''
+
+
+def v_prod_connect():
+    import math
+    cx, cy = 280, 175
+    out = ''
+    for i in range(8):
+        a = i * math.pi / 4
+        x, y = cx + 130 * math.cos(a), cy + 112 * math.sin(a)
+        out += f'<path d="M{cx},{cy} L{x:.0f},{y:.0f}" stroke="url(#gc)" stroke-width="1.8" class="sv-flow" style="animation-delay:{i*.2}s"/><circle cx="{x:.0f}" cy="{y:.0f}" r="20" fill="#14367a" stroke="rgba(255,255,255,.5)"/><circle cx="{x:.0f}" cy="{y-4:.0f}" r="5" fill="#fff"/><path d="M{x-9:.0f} {y+11:.0f}a9 8 0 0 1 18 0" fill="#fff"/>'
+    return f'''<svg viewBox="0 0 560 350" {FONT}><defs><linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>{out}
+<circle cx="{cx}" cy="{cy}" r="48" fill="#2563d8" stroke="rgba(255,255,255,.5)" stroke-width="2"/><text x="{cx}" y="{cy-2}" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">Community</text><text x="{cx}" y="{cy+16}" text-anchor="middle" fill="#cfdcff" font-size="10.5">grows together</text></svg>'''
+
+
+# ------------------------------------------------------------------ Offices (About)
+def v_offices():
+    us = [("Dallas, TX", 150, 190, True), ("Louisville, KY", 235, 105, False), ("Houston, TX", 170, 265, False)]
+    ind = [("Delhi NCR", 430, 85), ("Pune", 405, 195), ("Bangalore", 440, 270)]
+    out = ''
+    for i, (n, x, y) in enumerate(ind):
+        out += f'<path d="M150,190 Q{(150+x)/2},{min(190,y)-110} {x},{y}" fill="none" stroke="url(#go2)" stroke-width="1.8" class="sv-flow" style="animation-delay:{i*.3}s"/>'
+    for n, x, y, hq in us:
+        out += f'<circle cx="{x}" cy="{y}" r="{9 if hq else 6}" fill="{"#ff6b78" if hq else "#6aa3ff"}"/><text x="{x}" y="{y+24}" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="800">{n}</text>' + (f'<circle cx="{x}" cy="{y}" r="14" fill="none" stroke="#ff6b78" stroke-width="2"><animate attributeName="r" values="9;30;9" dur="2.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2.8s" repeatCount="indefinite"/></circle><text x="{x}" y="{y+40}" text-anchor="middle" fill="#9fb3e0" font-size="10.5">Headquarters</text>' if hq else '')
+    for n, x, y in ind:
+        out += f'<circle cx="{x}" cy="{y}" r="6" fill="#6aa3ff"/><text x="{x}" y="{y+24}" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="800">{n}</text>'
+    dots = ''.join(f'<circle cx="{x}" cy="{y}" r="1.6" fill="rgba(255,255,255,.16)"/>' for x in range(30, 540, 20) for y in range(30, 320, 20))
+    return f'''<svg viewBox="0 0 560 330" {FONT}><defs><linearGradient id="go2" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>{dots}
+<text x="170" y="40" text-anchor="middle" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="3">UNITED STATES</text><text x="430" y="40" text-anchor="middle" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="3">INDIA</text>{out}</svg>'''

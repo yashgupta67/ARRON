@@ -58,6 +58,13 @@ document.querySelectorAll('[data-filter]').forEach(function(g){
   })});
 });
 document.querySelectorAll('form[data-demo]').forEach(function(f){f.addEventListener('submit',function(e){
-  e.preventDefault();var ok=f.parentNode.querySelector('.ok')||f.querySelector('.ok');if(ok)ok.style.display='block';f.reset();
+  e.preventDefault();
+  var ok=f.parentNode.querySelector('.ok')||f.querySelector('.ok');
+  if(f.dataset.mailto){
+    var g=function(n){var el=f.elements[n];return el?el.value:''};
+    var body='Name: '+g('name')+'\nEmail: '+g('email')+'\nCompany: '+g('company')+'\nInterested in: '+g('topic')+'\n\n'+g('msg');
+    window.location.href='mailto:'+f.dataset.mailto+'?subject='+encodeURIComponent('Enquiry from the ARRON website - '+g('topic'))+'&body='+encodeURIComponent(body);
+  }
+  if(ok)ok.style.display='block';f.reset();
 })});
 })();

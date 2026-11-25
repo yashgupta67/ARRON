@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the Arron static site into the parent folder. Run: python3 _src/build.py"""
+"""Generates the ARRON static site into the parent folder. Run: python3 _src/build.py"""
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -7,6 +7,41 @@ import visuals as V
 
 VER = str(int(__import__('time').time()))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+EMAIL_1 = "RajitM@arrontechnologies.com"
+EMAIL_2 = "Annad@arrontechnologies.com"
+MAILTO = f"mailto:{EMAIL_1},{EMAIL_2}?subject=Enquiry%20from%20the%20ARRON%20website"
+import re as _re
+
+def _svg_path(fname):
+    s = open(os.path.join(ROOT, "assets", "img", "partners", fname)).read()
+    m = _re.search(r' d="([^"]+)"', s)
+    return m.group(1)
+
+
+_BRANDS = {
+    "SAP": ("sap.svg", "#0FAAFF"), "Oracle": ("oracle.svg", "#F80000"), "Salesforce": ("salesforce.svg", "#00A1E0"),
+    "Zoho": ("zoho.svg", "#E42527"), "OpenAI": ("openai.svg", "#111111"), "Anthropic": ("anthropic.svg", "#D97757"),
+    "Google Cloud": ("googlecloud.svg", "#4285F4"), "AWS": ("amazonaws.svg", "#FF9900"),
+}
+
+
+def plogo(name):
+    """Logo (brand icon + name) for a partner, or a plain text wordmark when no icon is available."""
+    if name == "Microsoft":
+        ico = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="10" height="10" fill="#F25022"/><rect x="12.5" y="1.5" width="10" height="10" fill="#7FBA00"/><rect x="1.5" y="12.5" width="10" height="10" fill="#00A4EF"/><rect x="12.5" y="12.5" width="10" height="10" fill="#FFB900"/></svg>'
+        return f'<span class="plg">{ico}<span class="wm">Microsoft</span></span>'
+    if name in _BRANDS:
+        f, col = _BRANDS[name]
+        return f'<span class="plg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="{col}" d="{_svg_path(f)}"/></svg><span class="wm">{name}</span></span>'
+    if name == "ServiceNow":
+        return '<span class="plg"><span class="wm">service<i style="color:#3fae2a">now</i></span></span>'
+    if name == "Workday":
+        return '<span class="plg"><span class="wm" style="color:#0875E1">workday<i style="color:#F5A31A">.</i></span></span>'
+    if name == "NetSuite":
+        return '<span class="plg"><span class="wm" style="color:#1F4E85">NetSuite</span></span>'
+    return f'<span class="plg"><span class="wm">{name}</span></span>'
+
+
 ARROW = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 CHEV = '<svg width="10" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1.5l5 5 5-5"/></svg>'
 LI = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.6-1 1.9-2 3.9-2 4 0 4.7 2.6 4.7 6V21h-4v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></svg>'
@@ -46,7 +81,7 @@ def part(name, cls="art ph", extra=""):
     return f'<div class="{cls}">{photo(name)}{extra}</div>'
 
 
-PLATFORMS = ["ServiceNow", "SAP", "Oracle", "Microsoft Azure", "Atlassian", "Salesforce", "AWS", "Google Cloud", "Workday", "NetSuite", "Dynamics 365", "Pega"]
+PLATFORMS = ["ServiceNow", "SAP", "Oracle", "Microsoft", "Salesforce", "Workday", "NetSuite", "Zoho", "AWS", "Google Cloud", "OpenAI", "Anthropic"]
 
 # ------------------------------------------------------------------ NAV
 MENUS = {
@@ -54,7 +89,8 @@ MENUS = {
         ("ai.html", "AI / Super Intelligence", "Strategy, data foundations and agentic AI"),
         ("erp.html", "ERP", "Selection, implementation and optimization"),
         ("itsm.html", "ITSM", "Faster, smarter IT service operations"),
-        ("cx.html", "Customer Experience", "Journeys, platforms and insight")])],
+        ("cx.html", "Customer Experience", "Journeys, platforms and insight"),
+        ("digital-workplace.html", "Digital Workplace", "Modern, intelligent employee experiences")])],
         foot=("offerings.html", "View all offerings"), wide=False),
     "capabilities.html": dict(groups=[(None, [
         ("consulting.html", "Consulting", "Strategy and advice you can execute"),
@@ -69,7 +105,7 @@ MENUS = {
     "resources.html": dict(groups=[(None, [
         ("blog.html", "Blogs & Newsletter", "Insights on AI, ERP, ITSM and CX"),
         ("events.html", "Events & Webinars", "Live sessions and on-demand recordings"),
-        ("careers.html", "Careers", "Build your career with Arron")])],
+        ("careers.html", "Careers", "Build your career with ARRON")])],
         foot=("resources.html", "All resources"), wide=False),
 }
 NAV = [("index.html", "Home"), ("offerings.html", "Offerings"), ("capabilities.html", "Capabilities"),
@@ -106,7 +142,7 @@ def header(fname):
             on = ' class="active"' if href == active else ''
             items += f'<a href="{href}"{on}>{label}</a>'
     return f'''<header class="site-header"><div class="wrap bar">
-<a class="logo" href="index.html" aria-label="Arron home"><img src="assets/img/logo.png" alt="Arron — Ahead of now"></a>
+<a class="logo" href="index.html" aria-label="ARRON home"><img src="assets/img/logo.png" alt="ARRON — Ahead of now"></a>
 <button class="burger" aria-label="Menu"><span></span><span></span></button>
 <nav class="nav">{items}<a class="btn btn-red" href="about.html#contact">Talk to us {ARROW}</a></nav></div></header>'''
 
@@ -115,16 +151,16 @@ def footer():
     def col(title, links):
         return f'<div><h4>{title}</h4><ul>' + ''.join(f'<li><a href="{h}">{t}</a></li>' for h, t in links) + '</ul></div>'
     return f'''<footer class="site-footer"><div class="wrap"><div class="ft" style="grid-template-columns:1.5fr repeat(4,1fr)">
-<div><img src="assets/img/logo-stacked-light.png" alt="Arron — ahead of now"><p style="max-width:34ch">Enterprise technology consulting for AI, ERP, ITSM and customer experience. Based in Dallas, Texas.</p></div>
-{col("Offerings", [("ai.html", "AI / Super Intelligence"), ("erp.html", "ERP"), ("itsm.html", "ITSM"), ("cx.html", "Customer Experience")])}
+<div><img src="assets/img/logo-stacked-light.png" alt="ARRON — ahead of now"><p style="max-width:34ch">An AI-ready technology company building AI-native enterprises. Headquartered in Dallas, Texas.</p></div>
+{col("Offerings", [("ai.html", "AI / Super Intelligence"), ("erp.html", "ERP"), ("itsm.html", "ITSM"), ("cx.html", "Customer Experience"), ("digital-workplace.html", "Digital Workplace")])}
 {col("Capabilities", [("consulting.html", "Consulting"), ("services.html", "Services"), ("partnerships.html", "Partnerships"), ("product.html", "Product as a Service")])}
 {col("Explore", [("case-studies.html", "Case Studies"), ("testimonials.html", "Testimonials"), ("consultants.html", "Consultants"), ("blog.html", "Blog"), ("events.html", "Events"), ("careers.html", "Careers")])}
-{col("Company", [("about.html", "About Us"), ("about.html#contact", "Contact"), ("mailto:hello@arron.com", "hello@arron.com")])}</div>
-<div class="fb"><span>© 2026 Arron. All rights reserved.</span><span>Dallas, Texas · Privacy · Terms</span></div></div></footer>'''
+{col("Company", [("about.html", "About Us"), ("about.html#contact", "Contact us"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
+<div class="fb"><span>© 2026 ARRON Technologies. All rights reserved.</span><span>Dallas, Texas · Louisville · Houston · Delhi NCR · Pune · Bangalore</span></div></div></footer>'''
 
 
 def marquee(label="The platforms and ecosystems we work across", names=PLATFORMS):
-    items = ''.join(f'<div class="it">{n}</div>' for n in names)
+    items = ''.join(f'<div class="it">{plogo(n)}</div>' for n in names)
     return f'<div class="marq"><div class="lab">{label}</div><div class="roll"><div class="track">{items}{items}</div></div></div>'
 
 
@@ -134,12 +170,13 @@ def page(fname, title, desc, body):
 <title>{title}</title><meta name="description" content="{desc}">
 <link rel="icon" href="assets/img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css?v={VER}"></head>
 <body>{header(fname)}
 {body}
 {footer()}
 <script src="assets/main.js?v={VER}"></script></body></html>'''
+    html = html.replace('href="about.html#contact"', f'href="{MAILTO}"') if fname != "about.html" else html.replace('<a class="btn btn-red" href="about.html#contact">', f'<a class="btn btn-red" href="{MAILTO}">')
     with open(os.path.join(ROOT, fname), "w") as f:
         f.write(html)
 
@@ -213,7 +250,7 @@ D["ai"] = dict(
             ("factory", "Manufacturing", "Demand forecasting and predictive maintenance."), ("heart", "Healthcare", "Documentation and operational support."),
             ("cart", "Retail", "Personalization and demand sensing."), ("signal", "Telecom", "Network incident prediction and routing.")]),
     plat_label="AI platforms and tools we work with",
-    platforms=["Azure OpenAI", "AWS Bedrock", "Google Vertex AI", "ServiceNow AI", "SAP Business AI", "Salesforce Einstein", "Atlassian Intelligence", "Databricks", "Snowflake"])
+    platforms=["OpenAI", "Anthropic", "Google Cloud", "AWS", "Microsoft", "ServiceNow", "SAP", "Salesforce", "Zoho", "Databricks", "Snowflake"])
 D["erp"] = dict(
     file="erp.html", parent=("offerings.html", "Offerings"), name="Enterprise Resource Planning", short="ERP", visual=V.v_erp, mini="erp",
     tile_desc="Selection, implementation and optimization of the platforms that run finance and operations.",
@@ -231,7 +268,7 @@ D["erp"] = dict(
             ("gov", "Public Sector", "Modernization for state, local and nonprofit."), ("bank", "Financial Services", "Finance, controls and reporting at scale."),
             ("heart", "Healthcare", "Supply, finance and workforce management."), ("brief", "Professional Services", "Projects, billing and resource planning.")]),
     plat_label="ERP platforms we work with",
-    platforms=["SAP S/4HANA", "Oracle Fusion", "Microsoft Dynamics 365", "NetSuite", "Workday", "Infor", "Epicor", "Acumatica", "IFS"])
+    platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "Workday", "Zoho", "Infor", "Epicor", "IFS"])
 D["itsm"] = dict(
     file="itsm.html", parent=("offerings.html", "Offerings"), name="IT Service Management", short="ITSM", visual=V.v_itsm, mini="itsm",
     tile_desc="Faster resolution and happier users through ITIL-aligned, AI-assisted service operations.",
@@ -249,7 +286,7 @@ D["itsm"] = dict(
             ("code", "SaaS", "Incident correlation across DevOps pipelines."), ("heart", "Healthcare & Pharma", "SLA-driven support for critical systems."),
             ("cart", "Retail", "Surge detection for peak-season traffic."), ("signal", "Telecom & Media", "Network incident prediction and routing.")]),
     plat_label="ITSM platforms and tools we work with",
-    platforms=["ServiceNow", "Jira Service Management", "BMC Helix", "Freshservice", "Atlassian Assets", "Microsoft Teams", "Slack", "Zendesk", "PagerDuty"])
+    platforms=["ServiceNow", "Zoho", "BMC Helix", "Freshservice", "Microsoft", "Slack", "Zendesk", "PagerDuty"])
 D["cx"] = dict(
     file="cx.html", parent=("offerings.html", "Offerings"), name="Customer Experience", short="CX", visual=V.v_cx, mini="cx",
     tile_desc="Journeys, platforms and insight that turn every interaction into loyalty and growth.",
@@ -267,8 +304,26 @@ D["cx"] = dict(
             ("signal", "Telecom", "Proactive service and churn reduction."), ("heart", "Healthcare", "Patient access and engagement."),
             ("code", "Technology & SaaS", "Product-led onboarding and success."), ("plane", "Travel & Hospitality", "Loyalty and real-time service recovery.")]),
     plat_label="CX platforms and tools we work with",
-    platforms=["Salesforce", "Microsoft Dynamics 365", "Adobe Experience Cloud", "Twilio", "Genesys", "Zendesk", "HubSpot", "Qualtrics", "Five9"])
+    platforms=["Salesforce", "Microsoft", "Zoho", "Adobe Experience Cloud", "Twilio", "Genesys", "Zendesk", "HubSpot", "Qualtrics"])
 
+D["dw"] = dict(
+    file="digital-workplace.html", parent=("offerings.html", "Offerings"), name="Digital Workplace", short="Digital Workplace", visual=V.v_dw, mini="dw",
+    tile_desc="Modern, secure and intelligent workplaces that lift employee experience and productivity.",
+    h1='A workplace that works <span class="r">the way people do.</span>',
+    lead="We help organizations build digital workplaces where collaboration, service and intelligence come together, so employees find answers fast and spend their time on the work that matters.",
+    what_p="Everything that shapes a day at work, designed as one connected experience.",
+    what=[("Modern collaboration", "Messaging, meetings, documents and knowledge brought together on platforms your people already know."),
+          ("Employee service portal", "One front door for IT, HR and facilities requests, with intelligent routing and self-service."),
+          ("Device & endpoint experience", "Secure, well-managed devices with support that resolves issues before they interrupt work."),
+          ("Intelligent workplace", "Copilots and agents that answer questions, automate requests and personalize each employee's day.")],
+    steps=[("Assess", "Understand how people work today and where friction sits."), ("Design", "Define the target employee experience and platform choices."),
+           ("Deploy", "Roll out platforms, portals and automation in managed waves."), ("Adopt", "Train, measure and keep improving based on real usage.")],
+    third=("What you get", "A workplace people actually enjoy using.", "Outcomes we design for, measured against targets set up front.",
+           [("bolt", "Faster support", "Requests resolved quickly with less back-and-forth."), ("chart", "Higher productivity", "Less time lost to tools, searching and waiting."),
+            ("users", "Better employee experience", "One consistent experience across IT, HR and facilities."), ("shield", "Consistent security", "Access and data protected without slowing people down."),
+            ("cog", "Less tool sprawl", "Fewer overlapping tools and lower running costs."), ("check", "Measurable adoption", "Clear usage and satisfaction data to guide improvement.")]),
+    plat_label="Digital workplace platforms we work with",
+    platforms=["Microsoft", "Google Cloud", "Zoho", "ServiceNow", "Slack", "Zoom", "Okta", "Jamf"])
 D["consulting"] = dict(
     file="consulting.html", parent=("capabilities.html", "Capabilities"), name="Consulting", short="Consulting", visual=V.v_consult, photo="sticky-notes",
     tile_desc="Technology and operating-model advice tied to financial outcomes.",
@@ -304,7 +359,7 @@ D["services"] = dict(
             ("users", "Named team", "Consistent people who know your business."), ("shield", "Security first", "Access, audit and data-protection controls."),
             ("cog", "Continuous improvement", "A standing backlog of enhancements."), ("doc", "Full documentation", "Runbooks and knowledge you own.")]),
     plat_label="Delivery tools and platforms",
-    platforms=["Jira", "Azure DevOps", "ServiceNow", "GitHub", "Jenkins", "Terraform", "Datadog", "Splunk", "Confluence"])
+    platforms=["ServiceNow", "Azure DevOps", "GitHub", "Jenkins", "Terraform", "Datadog", "Splunk", "Zoho"])
 D["partnerships"] = dict(
     file="partnerships.html", parent=("capabilities.html", "Capabilities"), name="Partnerships", short="Partnerships", visual=V.v_partners, photo="handshake",
     tile_desc="A certified ecosystem of platform vendors and specialist firms.",
@@ -322,7 +377,7 @@ D["partnerships"] = dict(
             ("bolt", "Faster starts", "Accelerators and templates from partner ecosystems."), ("check", "Aligned delivery", "One plan, one governance, one lead."),
             ("chart", "Better commercial terms", "Partner programs that benefit you."), ("map", "Roadmap access", "Early insight into platform direction.")]),
     plat_label="Technology partner ecosystem",
-    platforms=["ServiceNow", "SAP", "Microsoft", "Oracle", "Atlassian", "Salesforce", "AWS", "Google Cloud", "Workday"])
+    platforms=["ServiceNow", "SAP", "Microsoft", "Oracle", "Salesforce", "Workday", "Zoho", "AWS", "Google Cloud", "OpenAI", "Anthropic"])
 D["product"] = dict(
     file="product.html", parent=("capabilities.html", "Capabilities"), name="Product as a Service", short="Product as a Service", visual=V.v_product, photo="laptop-dark",
     tile_desc="AI-native software designed, built and run for you as a subscription-style service.",
@@ -340,8 +395,8 @@ D["product"] = dict(
             ("chart", "Usage-led roadmap", "Features driven by data, not guesswork."), ("shield", "Enterprise-grade controls", "Governance for AI and data from day one."),
             ("users", "Embedded team", "Product, design and engineering in one squad."), ("check", "Predictable cost", "A simple recurring fee against agreed outcomes.")]),
     plat_label="Technology we build with",
-    platforms=["Python", "TypeScript", "Kubernetes", "Azure", "AWS", "PostgreSQL", "Snowflake", "OpenAI & Anthropic models", "Terraform"])
-OFFER_KEYS = ["ai", "erp", "itsm", "cx"]
+    platforms=["Python", "TypeScript", "Kubernetes", "Microsoft", "AWS", "Google Cloud", "PostgreSQL", "Snowflake", "OpenAI", "Anthropic"])
+OFFER_KEYS = ["ai", "erp", "itsm", "cx", "dw"]
 CAP_KEYS = ["consulting", "services", "partnerships", "product"]
 
 
@@ -358,89 +413,225 @@ def tile_for(d, photo_art=False):
 
 
 def build_detail(key):
+    if key == "ai":
+        return build_ai()
     d = D[key]
     keys = OFFER_KEYS if key in OFFER_KEYS else CAP_KEYS
     others = [D[k] for k in keys if k != key]
     par = d["parent"]
     b = hero(f'<a href="index.html">Home</a> / <a href="{par[0]}">{par[1]}</a> / {d["short"]}', d["h1"], d["lead"], d["visual"]())
     b += marquee(d["plat_label"], d["platforms"] * 2)
+    if key == "product":
+        b += product_block()
     b += f'<section id="more"><div class="wrap">{sh("What we do", "Everything you need, from first idea to steady state.", d["what_p"])}{rows(d["what"], "c4w")}</div></section>'
     b += '<section class="navy"><div class="wrap">' + sh("How we deliver", "A clear path with no surprises.", "Four stages, each with a defined output, so you always know where the program stands.") + proc(d["steps"]) + '</div></section>'
     k, h2, p, items = d["third"]
     b += '<section><div class="wrap">' + sh(k, h2, p) + '<div class="inds c3" data-stagger>' + ''.join(f'<div class="ind">{icon(i)}<h3>{t}</h3><p>{x}</p></div>' for i, t, x in items) + '</div></div></section>'
     b += '<section class="paper"><div class="wrap">' + sh("Explore further", f'Other {par[1].lower()} to explore.', "Each one stands alone, and together they close the gaps between your systems, service and customers.") + \
-         '<div class="tiles" style="grid-template-columns:repeat(3,1fr)" data-stagger>' + ''.join(tile_for(o) for o in others) + '</div></div></section>'
+         f'<div class="tiles" style="grid-template-columns:repeat({len(others)},1fr)" data-stagger>' + ''.join(tile_for(o) for o in others) + '</div></div></section>'
     b += cta_band(f"Ready to talk {d['short']}?", "Tell us the outcome you want. We will tell you honestly how to get there.")
-    page(d["file"], f'{d["name"]} — Arron', d["lead"][:150], b)
+    page(d["file"], f'{d["name"]} — ARRON', d["lead"][:150], b)
 
 
 def tiles_for(keys):
-    return '<div class="tiles" data-stagger>' + ''.join(tile_for(D[k]) for k in keys) + '</div>'
+    cls = " five" if len(keys) == 5 else ""
+    return f'<div class="tiles{cls}" data-stagger>' + ''.join(tile_for(D[k]) for k in keys) + '</div>'
+
+
+
+# =========================================================== ARRON AURA diagram
+ICONS.update({
+    "brain": '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 2.8A3 3 0 0 0 6 14v1a3 3 0 0 0 3 3h.5V4z"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 2.8A3 3 0 0 1 18 14v1a3 3 0 0 1-3 3h-.5V4z"/>',
+    "network": '<circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M11 7l-5 10M13 7l5 10M7 19h10"/>',
+    "cloud": '<path d="M7 18a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17 9.5 4.3 4.3 0 0 1 17 18z"/>',
+    "lock": '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    "spark": '<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
+    "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+    "target": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+    "loop": '<path d="M12 12c-2-3-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1 6-4zm0 0c2 3 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1-6 4z"/>',
+    "db": '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>',
+    "laptop": '<rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 20h20"/>',
+    "leaf": '<path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/>',
+    "refresh": '<path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14-3M4 14a8 8 0 0 0 14 3"/>',
+})
+
+
+def _at(ic, title, sub, logo=None):
+    top = plogo(logo) if logo else f'<span class="ic">{icon(ic)}</span>'
+    name = '' if logo else f'<b>{title}</b>'
+    return f'<div class="at">{top}{name}<span>{sub}</span></div>'
+
+
+def _row(title, desc, tiles, cls="", n=5):
+    return f'<div class="ar"><div class="ar-l"><h4>{title}</h4><p>{desc}</p></div><div class="ar-c {cls}" style="--n:{n}">{"".join(tiles)}</div></div>'
+
+
+def _flow(labels=None, n=5):
+    arrow = '<svg viewBox="0 0 14 34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v30M3 6l4-4 4 4M3 28l4 4 4-4"/></svg>'
+    cells = ''.join(f'<div>{arrow}{(l if l else "")}</div>' for l in (labels or [""] * n))
+    return f'<div class="flow"><div></div><div class="fr" style="--n:{n}">{cells}</div></div>'
+
+
+def aura_diagram():
+    people = _row("People & Experiences", "Empower every user with Artificial Intelligence copilots and intelligent experiences", [
+        _at("users", "Employees", "Artificial Intelligence Copilots"), _at("users", "Customers", "Personalized Experiences"), _at("chart", "Leaders", "Insights & Decisions"),
+        _at("network", "Partners", "Connected Ecosystem"), _at("globe", "Communities", "Greater Impact")])
+    agents = _row("Artificial Intelligence Agents & Digital Workforce", "Autonomous agents that execute, collaborate and deliver outcomes", [
+        _at("cog", "Service Agent", "Information Technology | Human Resources | Facilities"), _at("chart", "Finance Agent", "Plan | Analyze | Optimize"),
+        _at("users", "Human Resources Agent", "Recruit | Engage | Develop"), _at("spark", "Customer Experience Agent", "Assist | Resolve | Delight"),
+        _at("refresh", "Operations Agent", "Monitor | Heal | Optimize"), _at("factory", "Industry Agent", "Domain Specific"),
+        '<div class="at more">+ More Specialized Agents</div>'], "agents", 7)
+    apps = _row("Enterprise Applications", "Seamless integration across your enterprise ecosystem", [
+        _at("", "", "IT Service Management | IT Operations Management | Customer Service Management", "ServiceNow"),
+        _at("", "", "Human Capital Management | Finance", "Workday"), _at("", "", "Microsoft 365 | Azure | Dynamics", "Microsoft"),
+        _at("", "", "Sales | Service | Marketing", "Salesforce"), _at("", "", "Enterprise Resource Planning | Supply Chain", "SAP"),
+        '<div class="at more">+ Other Enterprise Systems</div>'], "", 6)
+    caps = [("brain", "Reasoning<br>Engine"), ("network", "Agent<br>Orchestration"), ("cog", "Workflow<br>Automation"), ("chart", "Real-time<br>Insights"), ("target", "Decision<br>Intelligence"), ("loop", "Continuous<br>Learning")]
+    core = f'''<div class="ar"><div class="ar-l"><h4>ARRON AURA Intelligence Layer</h4><p>Reasoning, orchestration and intelligence at the core</p></div>
+<div class="core"><div class="core-top"><img src="assets/img/mark.png" alt=""><div><h4>ARRON <em>AURA</em><sup>™</sup></h4><span>ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span></div></div>
+<div class="core-caps">{''.join(f'<div>{icon(i)}<span>{l}</span></div>' for i, l in caps)}<div class="out">From Data<br>to Decisions<br>to Impact</div></div></div></div>'''
+    data = _row("Data & Knowledge Foundation", "Unified, real-time access to all enterprise knowledge", [
+        _at("db", "Structured Data", "Enterprise Resource Planning, Customer Relationship Management, Human Resources, IT Service Management"), _at("doc", "Unstructured Data", "Documents, Email, Content"),
+        _at("brain", "Enterprise Knowledge", "Policies, Manuals, Expertise"), _at("bolt", "Real-time Data", "Events, Internet of Things, Logs"), _at("globe", "External Data", "Market, Industry, Web")])
+    gov = _row("Governance & Security", "Responsible Artificial Intelligence for a trusted and compliant enterprise", [
+        _at("shield", "Security", "Zero Trust"), _at("lock", "Compliance", "Global Standards"), _at("shield", "Responsible Artificial Intelligence", "Ethical & Transparent"),
+        _at("lock", "Privacy", "Data Protection"), _at("users", "Risk Management", "Identify | Monitor | Mitigate")], "gov")
+    infra = _row("Infrastructure & Cloud", "Scalable, secure and resilient by design", [
+        _at("cloud", "Multi-Cloud", "Azure | AWS | Google Cloud"), _at("cloud", "Hybrid & On-Premises", "Flexible Deployment"), _at("server", "Scalable Architecture", "High Performance"),
+        _at("shield", "Resilient & Secure", "Business Continuity"), _at("leaf", "Sustainable", "A Greener Tomorrow")], "gov")
+    return f'''<div class="aura rv" id="aura"><div class="aura-head"><h3>ARRON <em>AURA</em><sup>™</sup></h3><span class="sub">ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span><p>A unified intelligence layer for the Autonomous Enterprise</p></div>
+{people}{_flow()}{agents}{_flow(["Execute", "Collaborate", "Learn", "Adapt", "Deliver Outcomes"])}{apps}{_flow(n=6)}{core}{_flow(n=5)}{data}{gov}{infra}
+<div class="aura-foot"><b>INTELLIGENCE EVERYWHERE. IMPACT FASTER.</b><span>People + Artificial Intelligence Agents + Data + Applications = A More Human, Autonomous Enterprise</span></div></div>'''
+
+
+def aura_mini():
+    def row(title, chips):
+        return f'<div class="am"><div class="t">{title}</div><div class="c">{"".join(f"<span>{c}</span>" for c in chips)}</div></div>'
+    return f'''<a class="amini rv" href="ai.html#aura" data-delay=".5" style="display:block"><div class="am-h"><b>ARRON <em>AURA</em>™</b><span>ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span></div>
+{row("People & Experiences", ["Employees", "Customers", "Leaders", "Partners", "Communities"])}
+{row("Artificial Intelligence Agents", ["Service", "Finance", "Human Resources", "Customer Experience", "Operations", "Industry"])}
+{row("Enterprise Applications", ["ServiceNow", "Workday", "Microsoft", "Salesforce", "SAP"])}
+<div class="am core">ARRON AURA INTELLIGENCE LAYER<small>Reasoning · Orchestration · Automation · Insights · Decisions · Learning</small></div>
+{row("Data & Knowledge Foundation", ["Structured", "Unstructured", "Knowledge", "Real-time", "External"])}
+{row("Governance & Security", ["Security", "Compliance", "Responsible AI", "Privacy", "Risk"])}
+{row("Infrastructure & Cloud", ["Multi-Cloud", "Hybrid", "Scalable", "Resilient", "Sustainable"])}</a>'''
+
+
+def build_ai():
+    d = D["ai"]
+    lead = "At ARRON, we help organizations move beyond automation and into the era of the Autonomous Enterprise, where AI serves as a trusted digital workforce that accelerates innovation, augments decision-making, and transforms customer and employee experiences."
+    b = hero('<a href="index.html">Home</a> / <a href="offerings.html">Offerings</a> / AI / Super Intelligence',
+             'From Digital Transformation to the <span class="r">Autonomous Enterprise</span>', lead + ' <b style="color:#fff">Built AI-Native. Designed for Ahead of Now.</b>', V.v_ai())
+    b += marquee("AI platforms and ecosystems we work with", d["platforms"] * 2)
+    b += f'''<section id="more"><div class="wrap">{sh("AI-Native Architecture", "AI-Native Architecture for an AI-First Future", "Traditional enterprises bolt AI onto existing systems. ARRON takes a fundamentally different approach.")}
+<div class="split2" style="align-items:start"><div><p class="lead rv" style="margin-top:0">We design AI-native architectures that embed intelligence into the core of business operations, enabling autonomous decision-making, continuous learning, and seamless collaboration between people, processes, and AI from day one.</p></div>
+<div class="rv" data-delay=".2" style="padding:34px 36px;border-radius:24px;background:var(--paper);border-left:4px solid var(--red)"><span class="kicker" style="margin-bottom:12px">Definition</span><h3 style="font-size:1.35rem;margin-bottom:12px">What is AI-Native Architecture?</h3><p style="color:var(--text)">AI-native architecture is an enterprise framework where AI agents, business applications, automation, and data operate as a unified intelligence ecosystem. Every layer is designed to enable intelligent orchestration, predictive insights, adaptive workflows, and autonomous execution at scale.</p></div></div></div></section>'''
+    b += f'''<section class="paper" id="aura-sec"><div class="wrap">{sh("Introducing ARRON AURA™", "Artificial Intelligence Unified Reasoning Architecture", "ARRON AURA is our AI-native enterprise platform that connects intelligent agents, enterprise systems, data, and human expertise to create a unified operational intelligence layer across the organization.")}{aura_diagram()}</div></section>'''
+    caps = [("brain", "Agentic AI Platform", "Autonomous AI agents that execute tasks, make decisions, and collaborate across business functions."),
+            ("network", "Intelligent Enterprise Workflows", "AI-driven orchestration across ERP, ITSM, HR, Finance, Customer Experience, and business operations."),
+            ("db", "Data Intelligence Layer", "A real-time enterprise foundation that powers predictive, generative, and reasoning-based AI."),
+            ("refresh", "Autonomous Operations", "Self-healing, self-optimizing systems that continuously improve efficiency, resilience, and performance."),
+            ("users", "Human + AI Collaboration", "AI copilots that empower employees with contextual intelligence, guidance, and productivity augmentation.")]
+    b += '<section><div class="wrap">' + sh("Key Capabilities", "What ARRON AURA delivers.", "Five capabilities that turn a collection of tools into one intelligent enterprise.") + \
+         '<div class="tiles five" data-stagger>' + ''.join(f'<div class="kcard"><span class="ic">{icon(i)}</span><h3>{ti}</h3><p>{tx}</p></div>' for i, ti, tx in caps) + '</div></div></section>'
+    pil = [("AI Agents", "Purpose-built digital workers that automate processes, execute actions, and drive intelligent outcomes."),
+           ("Enterprise Platforms", "Seamless integration across ServiceNow, Workday, Microsoft, Salesforce, SAP, and other enterprise ecosystems."),
+           ("Data & Knowledge Fabric", "Unified access to structured data, unstructured content, enterprise knowledge, and real-time insights."),
+           ("Governance & Security", "Responsible AI frameworks delivering transparency, compliance, privacy, security, and trust."),
+           ("Continuous Intelligence", "Adaptive systems that learn, evolve, and improve through every interaction and outcome.")]
+    b += '<section class="navy"><div class="wrap">' + sh("The ARRON Architecture Pillars", "Five pillars. One intelligent enterprise.", "Every ARRON AURA solution is built on the same five foundations.") + \
+         '<div class="pillars" data-stagger>' + ''.join(f'<div class="pillar"><span class="n">{i+1:02d}</span><h3>{ti}</h3><p>{tx}</p></div>' for i, (ti, tx) in enumerate(pil)) + '</div></div></section>'
+    b += cta_band("Built AI-Native. Designed for Ahead of Now.", "Tell us where you are on the journey to the Autonomous Enterprise.", "Talk to us")
+    page(d["file"], "AI / Super Intelligence — ARRON AURA | ARRON Technologies", "From Digital Transformation to the Autonomous Enterprise. Meet ARRON AURA, our AI-native enterprise platform.", b)
+
+
+# =========================================================== Product as a Service: products
+def product_block():
+    prods = [
+        ("01", "ARRON AI", "Enterprise-grade agentic AI for customer and employee experience",
+         "ARRON AI is an enterprise-grade Agentic AI platform that automates customer experience (CX) and employee experience (EX) interactions across chat, voice, email, and social channels.",
+         ["Chat", "Voice", "Email", "Social channels"], V.v_prod_arron(), False),
+        ("02", "Record Vault AI", "AI-powered evidence vault",
+         "Record Vault AI is an AI-powered evidence vault for securely managing family litigation documents, records, and case history.",
+         ["Documents", "Records", "Case history"], V.v_prod_vault(), True),
+        ("03", "Connect AI", "AI for nonprofit and volunteer organizations",
+         "Connect AI empowers nonprofit and volunteer organizations with AI-driven tools to grow their impact, engage communities, and strengthen member participation.",
+         ["Grow impact", "Engage communities", "Member participation"], V.v_prod_connect(), False)]
+    out = f'<section id="products"><div class="wrap">{sh("Our products", "Products built AI-native.", "From enterprise agents to purpose-built tools for people and communities, delivered as a service.")}</div></section>'
+    for i, (no, name, tag, desc, feats, vis, flip) in enumerate(prods):
+        bg = ' class="paper"' if i % 2 == 0 else ''
+        out += f'''<section{bg}><div class="wrap split2{" flip" if flip else ""}"><div><span class="prod-no rv">PRODUCT {no}</span><h2 data-split>{name}</h2><p class="lead rv" data-delay=".15" style="font-weight:500;color:var(--ink)">{tag}</p>
+<p class="rv" data-delay=".2" style="margin-top:14px">{desc}</p><div class="prod-feat rv" data-delay=".25">{"".join(f"<span>{f}</span>" for f in feats)}</div>
+<a class="btn btn-red rv" style="margin-top:32px" href="{MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Request%20a%20demo%3A%20" + name.replace(" ", "%20"))}">Request a demo {ARROW}</a></div><div class="stage rv">{vis}</div></div></section>'''
+    return out
 
 
 # =========================================================== HOME
 def build_home():
-    orbit = f'''<div class="orbit"><svg viewBox="0 0 580 580" aria-hidden="true"><defs><linearGradient id="go" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>
-<circle cx="290" cy="290" r="225" fill="none" stroke="rgba(255,255,255,.16)" stroke-dasharray="3 8"/><circle cx="290" cy="290" r="150" fill="none" stroke="rgba(255,255,255,.16)" stroke-dasharray="3 8"/>
-<path d="M290 145V70M435 290h75M290 435v75M145 290H70" stroke="url(#go)" stroke-width="2" class="sv-flow"/>
-<g class="spin"><circle cx="290" cy="65" r="5" fill="#ff6b78"/><circle cx="515" cy="290" r="3.5" fill="#9fc0ff"/></g>
-<g class="spin rev"><circle cx="290" cy="140" r="4" fill="#9fc0ff"/><circle cx="140" cy="290" r="4" fill="#ff6b78"/><circle cx="290" cy="440" r="3.5" fill="#fff"/></g></svg>
-<div class="ocore"><img src="assets/img/mark.png" alt=""></div>
-<a class="onode" style="left:50%;top:6%" href="ai.html"><i></i>AI / SI<small>Intelligence</small></a>
-<a class="onode" style="left:93%;top:50%" href="erp.html"><i></i>ERP<small>Operations</small></a>
-<a class="onode" style="left:50%;top:94%" href="itsm.html"><i></i>ITSM<small>Service</small></a>
-<a class="onode" style="left:7%;top:50%" href="cx.html"><i></i>CX<small>Experience</small></a></div>'''
-    b = f'''<section class="hero home-hero"><div class="wrap hero-grid"><div>
-<div class="crumbs rv">Dallas · Enterprise technology consulting</div>
-<h1 data-split>Move <span class="r">ahead of now.</span> Build the enterprise that is ready for what is next.</h1>
-<p class="lead rv" data-delay=".4">Arron helps organizations modernize the systems they run on and adopt AI where it counts, across ERP, IT service management and customer experience.</p>
-<div class="hero-cta rv" data-delay=".55"><a class="btn btn-red" href="about.html#contact">Start a conversation {ARROW}</a><a class="btn btn-ghost" href="offerings.html">Explore offerings</a></div>
-<div class="hero-stats rv" data-delay=".7"><div><b>4</b><span>Core practices</span></div><div><b>18+ yrs</b><span>Leadership experience</span></div><div><b>Certified</b><span>Platform expertise</span></div></div>
-</div><div class="rv" data-delay=".25">{orbit}</div></div></section>'''
+    b = f'''<section class="hero home-hero"><div class="wrap">
+<div class="tagpill rv"><i></i>ARRON Technologies · Ahead of Now</div>
+<h1 data-split>Building AI-native enterprises, <span class="r">ahead of now.</span></h1>
+<p class="lead rv" data-delay=".4">ARRON Technologies is an AI-ready technology company building the future enterprise on AI-native foundations. We help organizations transform operations, elevate customer and employee experiences, and accelerate growth through AI, automation, enterprise platforms, and intelligent services designed for what's ahead of now.</p>
+<div class="hero-cta rv" data-delay=".55"><a class="btn btn-red" href="about.html#contact">Talk to us {ARROW}</a><a class="btn btn-ghost" href="ai.html#aura">Explore ARRON AURA™</a></div>
+<div class="hero-stats rv" data-delay=".7"><div><b>100+</b><span>Projects delivered</span></div><div><b>5</b><span>AI-native applications</span></div><div><b>Up to 30%</b><span>Operational cost savings</span></div><div><b>25+ yrs</b><span>Combined experience</span></div></div>
+{aura_mini()}</div></section>'''
     b += marquee()
-    b += f'''<section id="who"><div class="wrap split2"><div><span class="kicker rv">Who we are</span><h2 data-split>A consultancy built to get enterprises ahead, not just current.</h2>
-<p class="lead rv" data-delay=".2">Arron is a Dallas-based technology consulting firm. Our leaders spent decades inside large systems integrators and enterprise software programs. We started Arron to bring that depth to organizations in a more direct, accountable way.</p>
-<div class="pill-row rv" data-delay=".3"><span class="pill">Senior-led delivery</span><span class="pill">Technology independent</span><span class="pill">Strategy to run</span></div>
-<a class="more rv" style="margin-top:34px" href="about.html">More about Arron {ARROW}</a></div>
+    b += '''<section id="intro"><div class="wrap split2" style="align-items:start"><div><span class="kicker rv">What we believe</span><h2 data-split>The enterprises that lead tomorrow will be built differently.</h2></div>
+<div><p class="lead rv" style="margin-top:0">As businesses move beyond traditional digital transformation, ARRON enables them to become AI-ready by modernizing technology landscapes, optimizing business processes, and creating the foundations required for AI-driven innovation. Our expertise spans Artificial Intelligence, Enterprise Resource Planning (ERP), IT Service Management (ITSM), Customer Experience (CX), Digital Workplace, and Enterprise Transformation.</p>
+<p class="rv" data-delay=".15" style="margin-top:20px">We believe the enterprises that lead tomorrow will be built differently. They will be AI-native at their core, combining human ingenuity, intelligent automation, and data-driven decision-making to create sustainable competitive advantage. ARRON helps organizations make that transition with practical strategies, modern platforms, and measurable outcomes.</p></div></div></section>'''
+    b += f'''<section id="who" class="paper"><div class="wrap split2"><div><span class="kicker rv">Who We Are</span><h2 data-split>Operating ahead of now.</h2>
+<p class="lead rv" data-delay=".2">ARRON Technologies exists to help organizations operate ahead of now. As an AI-ready technology company, we help businesses evolve into AI-native enterprises through intelligent technology, modern platforms, and human ingenuity.</p>
+<p class="rv" data-delay=".25" style="margin-top:18px">Our team of seasoned industry consultants brings proven experience designing and delivering solutions that drive operational efficiency, reduce costs, enhance customer and employee experiences, and create measurable business value.</p>
+<a class="more rv" style="margin-top:34px" href="about.html">More about ARRON {ARROW}</a></div>
 <div class="collage rv rv-r"><div class="c1">{photo("team-room", "Consultants working with a client team")}</div><div class="c2">{photo("dashboard", "Analytics dashboard")}</div>
-<div class="badge"><b>18+ years</b><span>of senior leadership across global enterprise programs</span></div></div></div></section>'''
-    b += f'<section class="paper" id="offer"><div class="wrap">{sh("What we offer", "Four practices. One connected enterprise.", "Each practice stands on its own. Together they close the gaps between your systems, your service teams and your customers.")}{tiles_for(OFFER_KEYS)}</div></section>'
-    why = [("Senior-led delivery", "The people who scope the work are the people who do it."), ("Independent advice", "We recommend what fits your business, not what carries the biggest margin."),
-           ("AI with a purpose", "We apply AI where it moves a number, and say so when it will not."), ("Certified depth", "SAP, Azure, ITIL and ServiceNow credentials earned on real programs."),
-           ("Outcome-based thinking", "Every engagement starts with the result you need and works back."), ("Built to hand over", "We train your team and document the work so you are never dependent on us.")]
-    b += '<section class="navy" id="why"><div class="wrap">' + sh("Why Arron", "Experience you can feel from the first meeting.", "What you get when senior practitioners run the work.") + \
-         '<div class="why6" data-stagger>' + ''.join(f'<div><span class="n">{i+1:02d}</span><h3>{t}</h3><p>{p}</p></div>' for i, (t, p) in enumerate(why)) + '</div></div></section>'
-    b += '<section id="exp"><div class="wrap">' + sh("Experience", "Proven across industries, platforms and program sizes.", "Decades of delivery across global manufacturers, financial institutions and public bodies.") + \
-         '''<div class="stats rv"><div class="stat"><b data-count="18" data-suffix="+">0</b><span>Years of senior leadership experience</span></div><div class="stat"><b data-count="4">0</b><span>Integrated practice areas</span></div><div class="stat"><b data-count="8" data-suffix="+">0</b><span>Industries served</span></div><div class="stat"><b data-count="30" data-suffix="+">0</b><span>Enterprise certifications held</span></div></div>''' + \
-         '<div style="margin-top:56px">' + rows([("Large-scale transformation", "Multi-country ERP and cloud programs for global manufacturers and retailers."), ("Regulated environments", "Audit-ready change and service processes for financial services and healthcare."), ("Measurable results", "Programs measured against cost, speed and satisfaction targets set up front.")], "c3") + '</div>' + \
-         f'<div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:40px"><a class="more" href="case-studies.html">Read our case studies {ARROW}</a><a class="more" href="industry.html">Industries we serve {ARROW}</a></div></div></section>'
-    nxt = [("STEP 01", "Book a discovery call", "Thirty minutes with a senior consultant to frame your challenge. No pitch deck.", "about.html#contact", "Schedule"),
+<div class="badge"><b>25+ years</b><span>of combined experience in technology leadership and transformation</span></div></div></div></section>'''
+    b += f'<section id="offer"><div class="wrap">{sh("What we offer", "Five practices. One connected enterprise.", "Each practice stands on its own. Together they close the gaps between your systems, your people and your customers.")}{tiles_for(OFFER_KEYS)}</div></section>'
+    why = [("100+", "Projects delivered", "100+ transformation and technology projects delivered across enterprise platforms, service management, workplace transformation, customer experience, and automation initiatives."),
+           ("5", "AI-native applications", "5 AI-native applications successfully designed and delivered, helping organizations accelerate innovation and unlock new business capabilities."),
+           ("30%", "Operational cost savings", "Up to 30% operational cost savings achieved through process optimization, automation, AI adoption, and service modernization."),
+           ("04", "Deep expertise", "Deep expertise in AI, ERP, ITSM, Digital Workplace, and Customer Experience (CX) to help organizations accelerate transformation and maximize business outcomes."),
+           ("05", "Business-first approach", "Business-first approach focused on measurable value, operational efficiency, and sustainable growth."),
+           ("06", "AI-ready, AI-native", "AI-ready strategies and AI-native foundations designed to help organizations thrive in the age of intelligent enterprises.")]
+    cells = ''
+    for i, (m, ti, tx) in enumerate(why):
+        if i == 0:
+            head = '<span class="metric">100<i>+</i></span>'
+        elif i == 1:
+            head = '<span class="metric">5</span>'
+        elif i == 2:
+            head = '<span class="metric"><small style="font-size:.4em;letter-spacing:0;font-weight:500">Up to </small>30<i>%</i></span>'
+        else:
+            head = f'<span class="n">{m}</span>'
+        cells += f'<div>{head}<h3>{ti}</h3><p>{tx}</p></div>'
+    b += '<section class="navy" id="why"><div class="wrap">' + sh("Why ARRON", "Experience you can measure.", "What clients get when seasoned consultants and AI-native foundations come together.") + \
+         f'<div class="why6" data-stagger>{cells}</div><div class="closing rv"><b>ARRON. Ahead of Now. Building AI-Native Enterprises.</b><div style="margin-top:26px;display:flex;gap:26px;justify-content:center;flex-wrap:wrap"><a class="more" href="case-studies.html">Read our case studies {ARROW}</a><a class="more" href="industry.html">Industries we serve {ARROW}</a></div></div></div></section>'
+    nxt = [("STEP 01", "Talk to us", "Reach the team directly by email. A senior consultant will reply within one business day.", "about.html#contact", "Contact us"),
            ("STEP 02", "See how we work", "Understand our consulting, services and partnership models and which fits you.", "capabilities.html", "Capabilities"),
-           ("STEP 03", "Read our latest thinking", "Guides, briefings and webinars on AI, ERP, ITSM and customer experience.", "resources.html", "Resources")]
+           ("STEP 03", "Explore ARRON AURA", "See how our AI-native architecture connects agents, data and enterprise systems.", "ai.html#aura", "ARRON AURA")]
     b += '<section class="paper"><div class="wrap">' + sh("What should you do next", "Pick the starting point that fits you.", "No forms to fill and no sales script. Just a useful conversation.") + \
          '<div class="nexts" data-stagger>' + ''.join(f'<a class="nx" href="{h}"><span class="n">{n}</span><b>{t}</b><p>{p}</p><span class="more">{l} {ARROW}</span></a>' for n, t, p, h, l in nxt) + '</div></div></section>'
-    b += cta_band("Ready to get ahead of now?", "Tell us where you are headed. We will tell you honestly how to get there.")
-    page("index.html", "Arron — Ahead of now | AI, ERP, ITSM & CX Consulting", "Arron is a Dallas-based technology consultancy helping enterprises modernize with AI, ERP, ITSM and customer experience.", b)
+    b += cta_band("ARRON. Ahead of Now.", "Building AI-Native Enterprises. Tell us where you are headed and we will tell you honestly how to get there.", "Talk to us")
+    page("index.html", "ARRON Technologies — Ahead of Now | AI-Native Enterprise Technology", "ARRON Technologies is an AI-ready technology company building AI-native enterprises through AI, ERP, ITSM, Customer Experience and Digital Workplace.", b)
 
 
 # =========================================================== HUBS
 def build_offerings():
-    b = hero('<a href="index.html">Home</a> / Offerings', 'Four practices that power <span class="r">the modern enterprise.</span>',
+    b = hero('<a href="index.html">Home</a> / Offerings', 'Five practices that power <span class="r">the AI-native enterprise.</span>',
              "Intelligence, operations, service and experience. Start with one, or run them as a single connected program.", V.v_stack())
     b += marquee()
     b += f'<section id="more"><div class="wrap">{sh("Our practices", "Choose your starting point.", "Each practice has its own team, playbook and platform expertise.")}{tiles_for(OFFER_KEYS)}</div></section>'
     qs = [("ai.html", "Not sure where AI will pay off?", "Artificial & Super Intelligence", "01"), ("erp.html", "Outgrown your ERP, or choosing a new one?", "Enterprise Resource Planning", "02"),
-          ("itsm.html", "Drowning in tickets and missed SLAs?", "IT Service Management", "03"), ("cx.html", "Customers leaving between touchpoints?", "Customer Experience", "04")]
+          ("itsm.html", "Drowning in tickets and missed SLAs?", "IT Service Management", "03"), ("cx.html", "Customers leaving between touchpoints?", "Customer Experience", "04"), ("digital-workplace.html", "Employees losing time to clunky tools?", "Digital Workplace", "05")]
     b += '<section class="navy"><div class="wrap">' + sh("Start where it hurts", "Tell us the problem. We will point to the practice.", "A shortcut if you know the pain but not the label.") + \
          '<div style="border-top:1px solid rgba(255,255,255,.14)" data-stagger>' + ''.join(
              f'<a href="{h}" class="qrow"><span class="n">{n}</span><b>{q}</b><span class="a">{a}</span><span class="go">{ARROW}</span></a>' for h, q, a, n in qs) + '</div></div></section>'
     b += cta_band("Not sure where to start?", "Tell us the outcome you want and we will recommend the lightest path to it.")
-    page("offerings.html", "Offerings — Arron | AI, ERP, ITSM & CX", "Arron offerings: Artificial & Super Intelligence, ERP, IT Service Management and Customer Experience.", b)
+    page("offerings.html", "Offerings — ARRON | AI, ERP, ITSM, CX & Digital Workplace", "ARRON offerings: Artificial & Super Intelligence, ERP, IT Service Management and Customer Experience.", b)
 
 
 def build_cap():
     b = hero('<a href="index.html">Home</a> / Capabilities', 'However you need us, <span class="r">we plug in.</span>',
-             "Advise, deliver, partner or build. Four ways to work with Arron, designed around how much of the journey you want us to own.", V.v_ladder())
+             "Advise, deliver, partner or build. Four ways to work with ARRON, designed around how much of the journey you want us to own.", V.v_ladder())
     b += marquee()
     b += '<section id="more"><div class="wrap">' + sh("Engagement spectrum", "From advice to full ownership.", "Pick the lightest model that gets the job done. You can move along the spectrum as needs change.") + \
          '''<div class="spec rv"><div><span class="lv">You lead</span><h3>Advise</h3><p>Independent guidance and expert oversight while your team drives delivery.</p></div><div><span class="lv">We co-deliver</span><h3>Deliver together</h3><p>Blended teams run programs end to end, with knowledge transfer built in.</p></div><div><span class="lv">We own it</span><h3>Operate & build</h3><p>Managed services and AI-native products delivered against agreed outcomes.</p></div></div></div></section>'''
@@ -448,7 +639,7 @@ def build_cap():
     b += '<section class="navy"><div class="wrap">' + sh("How an engagement runs", "Clear stages. No surprises.", "Whatever the model, the rhythm is the same.") + \
          proc([("Discover", "Listen, assess and define the outcome and success measures."), ("Design", "Agree architecture, plan and business case."), ("Deliver", "Build in short cycles with visible progress every sprint."), ("Sustain", "Hand over, train and keep improving.")]) + '</div></section>'
     b += cta_band("Find the model that fits.", "We will recommend the lightest engagement that gets the job done.")
-    page("capabilities.html", "Capabilities — Arron | Consulting, Services, Partnerships, Product as a Service", "How Arron works with you: consulting, managed services, technology partnerships and AI-native product development.", b)
+    page("capabilities.html", "Capabilities — ARRON | Consulting, Services, Partnerships, Product as a Service", "How ARRON works with you: consulting, managed services, technology partnerships and AI-native product development.", b)
 
 
 # ---------- industry data
@@ -500,13 +691,13 @@ def build_industry():
     b += '<section id="more"><div class="wrap">' + sh("Industries", "Sector knowledge that shortens the learning curve.", "These are the environments our team knows well.") + \
          '<div class="inds" data-stagger>' + ''.join(f'<div class="ind">{icon(i)}<h3>{t}</h3><p>{p}</p></div>' for i, t, p in INDS) + '</div></div></section>'
     tl = [("case-studies.html", "Clients", "Case Studies", "Representative engagements, with the challenge, approach and results.", "boardroom"),
-          ("testimonials.html", "Clients", "Testimonials", "What clients say about working with Arron.", "highfive"),
+          ("testimonials.html", "Clients", "Testimonials", "What clients say about working with ARRON.", "highfive"),
           ("consultants.html", "Consultants", "Consultants & Partners", "Profiles of our team and the partner network we bring in.", "team-room")]
     b += '<section class="paper"><div class="wrap">' + sh("Explore", "See the work and the people.", "Everything you need to judge whether we are the right fit.") + \
          '<div class="tiles" style="grid-template-columns:repeat(3,1fr)" data-stagger>' + ''.join(
              f'<a class="tile" href="{h}"><div class="art ph">{photo(ph)}</div><div class="tb"><span class="k">{k}</span><h3>{t}</h3><p>{d}</p><span class="more">Explore {ARROW}</span></div></a>' for h, k, t, d, ph in tl) + '</div></div></section>'
     b += cta_band("Working in one of these sectors?", "We will bring people who have done it before.")
-    page("industry.html", "Industry Expertise — Arron | Clients, Case Studies & Consultants", "Arron's client work, industry experience and the consultants who deliver it.", b)
+    page("industry.html", "Industry Expertise — ARRON | Clients, Case Studies & Consultants", "ARRON's client work, industry experience and the consultants who deliver it.", b)
 
 
 def build_cases():
@@ -520,7 +711,7 @@ def build_cases():
 <div id="caselist"><div class="chipbar" data-filter="#caselist"><button class="fbtn on" data-f="all">All</button><button class="fbtn" data-f="erp">ERP</button><button class="fbtn" data-f="itsm">ITSM</button><button class="fbtn" data-f="ai">AI</button><button class="fbtn" data-f="cx">CX</button></div>
 <div class="cases" data-stagger>{''.join(case_card(c) for c in CASES[1:])}</div></div></div></section>'''
     b += cta_band("Want results like these?", "Tell us your goal and we will share the most relevant experience.")
-    page("case-studies.html", "Case Studies — Arron", "Representative Arron engagements across ERP, ITSM, AI and CX.", b)
+    page("case-studies.html", "Case Studies — ARRON", "Representative ARRON engagements across ERP, ITSM, AI and CX.", b)
 
 
 def build_testimonials():
@@ -532,7 +723,7 @@ def build_testimonials():
 <div class="bigq rv"><div class="art ph">{photo("meeting-table", "Client workshop")}</div><div class="qb"><div class="mark">“</div><p>{q[0]}</p><b>{q[1]}</b><span>{q[2]}</span></div></div>
 <div class="qgrid" data-stagger>{''.join(f'<div class="qcard"><div class="mark">“</div><p>{t}</p><div class="who"><div class="av">{i}</div><div><b>{r}</b><span>{s}</span></div></div></div>' for t, r, s, i in QUOTES[1:])}</div></div></section>'''
     b += cta_band("Be our next success story.", "Start with a conversation about what you want to achieve.")
-    page("testimonials.html", "Testimonials — Arron", "What Arron clients say about working with us.", b)
+    page("testimonials.html", "Testimonials — ARRON", "What ARRON clients say about working with us.", b)
 
 
 def build_consultants():
@@ -541,11 +732,13 @@ def build_consultants():
              "Practitioners with decades of enterprise delivery behind them, supported by a network of specialist partners.", stage, "photo")
     b += '<section id="more" class="paper"><div class="wrap">' + sh("Our consultants", "Meet the team.", "Profiles of the practitioners who lead our engagements.") + \
          '<div class="people" data-stagger>' + ''.join(f'<article class="person"><div class="ph"><span class="yrs">{y}</span>{V.AVATAR}</div><div class="pi"><h3>{n}</h3><div class="role">{r}</div><p>{bio}</p><div class="chips">{"".join(f"<span>{c}</span>" for c in ch)}</div><div class="loc">{loc}</div></div></article>' for n, r, y, bio, ch, loc in PEOPLE) + '</div></div></section>'
-    pl = [("ServiceNow", "ITSM · Workflow"), ("SAP", "ERP · BTP"), ("Microsoft", "Azure · Dynamics"), ("Oracle", "ERP · Cloud"), ("Atlassian", "Jira Service Mgmt"), ("Salesforce", "CRM · CX"), ("AWS", "Cloud · AI"), ("Google Cloud", "Data · AI")]
+    pl = [("ServiceNow", "IT Service Management"), ("SAP", "Enterprise Resource Planning"), ("Microsoft", "Azure · Dynamics · 365"), ("Oracle", "ERP · Cloud"),
+          ("Salesforce", "Customer Relationship Management"), ("Workday", "Human Capital · Finance"), ("NetSuite", "ERP · Cloud"), ("Zoho", "Business applications"),
+          ("AWS", "Cloud · Artificial Intelligence"), ("Google Cloud", "Data · Artificial Intelligence"), ("OpenAI", "Generative AI"), ("Anthropic", "Generative AI")]
     b += '<section><div class="wrap">' + sh("Our partners", "Strong platforms. Stronger together.", "Certified expertise across the ecosystems our clients already run on.") + \
-         '<div class="plogos" data-stagger>' + ''.join(f'<div class="plogo">{n}<small>{s}</small></div>' for n, s in pl) + '</div></div></section>'
+         '<div class="plogos" data-stagger>' + ''.join(f'<div class="plogo">{plogo(n)}<small>{s}</small></div>' for n, s in pl) + '</div></div></section>'
     b += f'''<section class="band">{photo("team-laptop", "Team collaborating")}<div class="wrap"><span class="kicker">Join us</span><h2>Do the best work of your career.</h2><p style="margin:20px 0 32px;max-width:48ch;font-size:1.1rem;color:#cfdcff">We hire experienced consultants and architects who want to stay close to clients and to the work.</p><a class="btn btn-red" href="careers.html">See open roles {ARROW}</a></div></section>'''
-    page("consultants.html", "Consultants & Partners — Arron", "Meet the Arron consultants and our partner network.", b)
+    page("consultants.html", "Consultants & Partners — ARRON", "Meet the ARRON consultants and our partner network.", b)
 
 
 POSTS = [
@@ -623,7 +816,7 @@ def build_blog():
 <div class="posts" data-stagger>{cards}</div></div></div></section>'''
     b += f'''<section class="navy" style="padding:90px 0" id="newsletter"><div class="wrap split2"><div><span class="kicker rv">Newsletter</span><h2 data-split>One useful email, once a month.</h2></div>
 <div class="rv" data-delay=".2"><p style="font-size:1.1rem;margin-bottom:26px;max-width:44ch">Short briefings on what is changing in enterprise technology, and what to do about it.</p><form data-demo onsubmit="return false"><div class="news"><input type="email" required placeholder="you@company.com" aria-label="Email"><button class="btn btn-red" type="submit">Subscribe</button></div></form><div class="ok" style="margin-top:16px">Thanks, you are on the list.</div></div></div></section>'''
-    page("blog.html", "Blogs & Newsletter — Arron", "Arron insights on AI, ERP, ITSM and customer experience, plus our monthly newsletter.", b)
+    page("blog.html", "Blogs & Newsletter — ARRON", "ARRON insights on AI, ERP, ITSM and customer experience, plus our monthly newsletter.", b)
 
 
 def build_articles():
@@ -637,7 +830,7 @@ def build_articles():
         others = [j for j in range(len(POSTS)) if j != i][:3]
         b += '<section class="paper"><div class="wrap">' + sh("Keep reading", "More from the blog.", "Related articles on AI, ERP, ITSM and CX.") + '<div class="posts" data-stagger>' + ''.join(
             f'<a class="post" href="{ARTICLES[j][0]}.html"><div class="art ph">{photo(POSTS[j][4])}</div><div class="pb"><span class="m">{POSTS[j][1]} · {POSTS[j][5]}</span><h3>{POSTS[j][2]}</h3><p>{POSTS[j][3]}</p><span class="more">Read article {ARROW}</span></div></a>' for j in others) + '</div></div></section>'
-        page(f"{slug}.html", f"{title} — Arron", desc, b)
+        page(f"{slug}.html", f"{title} — ARRON", desc, b)
 
 
 def build_events():
@@ -651,14 +844,14 @@ def build_events():
     b += '<section class="paper"><div class="wrap">' + sh("On demand", "Watch when it suits you.", "Recordings of past webinars, free to watch.") + \
          '<div class="evcards" data-stagger>' + ''.join(f'<div class="evc"><div class="art ph">{photo(ph)}</div><div class="eb"><span class="k">Webinar recording</span><h3>{t}</h3><p>{d}</p><a class="more" href="about.html#contact">Request recording {ARROW}</a></div></div>' for t, d, ph in od) + '</div></div></section>'
     b += cta_band("Want us at your event?", "Our consultants speak on AI, ERP, ITSM and customer experience.", "Invite a speaker")
-    page("events.html", "Events & Webinars — Arron", "Upcoming and on-demand Arron webinars and events.", b)
+    page("events.html", "Events & Webinars — ARRON", "Upcoming and on-demand ARRON webinars and events.", b)
 
 
 def build_careers():
-    stage = photo_stage("team-laptop", "Build your career with Arron", "Senior practitioners, real clients, room to grow")
+    stage = photo_stage("team-laptop", "Build your career with ARRON", "Senior practitioners, real clients, room to grow")
     b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Careers', 'Do the best work <span class="r">of your career.</span>',
              "Join a team where senior practitioners shape the work, learn from each other and stay close to clients.", stage, "photo")
-    b += f'<section id="more"><div class="wrap">{sh("Why Arron", "What it is like to work here.", "A small, senior team with the ambition of a much larger firm.")}' + rows([
+    b += f'<section id="more"><div class="wrap">{sh("Why ARRON", "What it is like to work here.", "A small, senior team with the ambition of a much larger firm.")}' + rows([
         ("Meaningful work", "Modern ERP, service and AI programs for organizations that depend on them."),
         ("Senior colleagues", "Learn directly from people with decades of delivery experience."),
         ("Funded learning", "Certification budgets and protected time to build new skills."),
@@ -671,7 +864,7 @@ def build_careers():
     b += '<section class="navy"><div class="wrap">' + sh("How we hire", "A process that respects your time.", "Four steps, usually completed within three weeks.") + \
          proc([("Apply", "Send your profile or a short note."), ("Conversation", "Meet a senior consultant to discuss your experience."), ("Case discussion", "Talk through a real engagement scenario."), ("Offer", "Meet the leadership team and receive your offer.")]) + '</div></section>'
     b += cta_band("Ready to join us?", "Send us your profile and tell us what you want to work on.", "Get in touch")
-    page("careers.html", "Careers — Arron", "Careers at Arron: open roles and how we hire.", b)
+    page("careers.html", "Careers — ARRON", "Careers at ARRON: open roles and how we hire.", b)
 
 
 def build_resources():
@@ -679,36 +872,38 @@ def build_resources():
              "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", resources_stage())
     tl = [("blog.html", "Blogs & Newsletter", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX, plus a monthly newsletter.", "laptop-dark"),
           ("events.html", "Events & Webinars", "Learn with us, live", "Upcoming sessions and on-demand recordings.", "workshop"),
-          ("careers.html", "Careers", "Build your career with Arron", "Open roles and how we hire.", "team-laptop")]
+          ("careers.html", "Careers", "Build your career with ARRON", "Open roles and how we hire.", "team-laptop")]
     b += '<section id="more"><div class="wrap">' + sh("Explore", "Three ways to engage.", "Read, learn or join us.") + '<div class="tiles" style="grid-template-columns:repeat(3,1fr)" data-stagger>' + ''.join(
         f'<a class="tile" href="{h}"><div class="art ph">{photo(ph)}</div><div class="tb"><span class="k">{k}</span><h3>{t}</h3><p>{d}</p><span class="more">Explore {ARROW}</span></div></a>' for h, k, t, d, ph in tl) + '</div></div></section>'
     b += '<section class="paper"><div class="wrap">' + sh("Latest", "Fresh from the blog.", "Three recent reads.") + '<div class="posts" data-stagger>' + ''.join(
         f'<a class="post" href="{ARTICLES[i+1][0]}.html"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for i, (c, t, ti, de, ph, rt) in enumerate(POSTS[1:4])) + '</div></div></section>'
     b += cta_band("Get the monthly briefing.", "One useful email, once a month.", "Subscribe", "blog.html#newsletter")
-    page("resources.html", "Resources — Arron | Insights, Events & Careers", "Arron insights, newsletter, webinars and career opportunities.", b)
+    page("resources.html", "Resources — ARRON | Insights, Events & Careers", "ARRON insights, newsletter, webinars and career opportunities.", b)
 
 
 def build_about():
-    b = hero('<a href="index.html">Home</a> / About Us', 'A Dallas company with <span class="r">a national network.</span>',
-             "Arron exists to help organizations stay ahead of change with senior expertise, honest advice and work that lasts.", V.v_map())
-    b += f'''<section id="more"><div class="wrap split2"><div class="collage rv" ><div class="c1">{photo("office", "Arron office")}</div><div class="c2">{photo("team-laptop", "Team at work")}</div><div class="badge"><b>Dallas, TX</b><span>Headquarters, with a network of specialists nationwide</span></div></div>
-<div><span class="kicker rv">Our story</span><h2 data-split>Why “Ahead of now.”</h2>
-<p class="lead rv" data-delay=".2">Technology moves faster than most organizations can absorb. Arron was founded on a simple idea: your business should not be catching up to its own systems.</p>
-<p class="rv" data-delay=".3" style="margin-top:18px">Headquartered in Dallas, Texas, we are a team of experienced practitioners with a wide network of specialist partners across the country, so we can staff the right people for each engagement.</p>
-<div class="stats rv" style="grid-template-columns:1fr 1fr 1fr;margin-top:40px"><div class="stat"><b data-count="18" data-suffix="+">0</b><span>Years of leadership</span></div><div class="stat"><b data-count="4">0</b><span>Practice areas</span></div><div class="stat"><b data-count="12" data-suffix="+">0</b><span>Platform partners</span></div></div></div></div></section>'''
-    vals = [("Integrity", "We say what we think, even when it is not the easy answer."), ("Craft", "We care about the detail, and about work that stands up in production."), ("Partnership", "Your goals are ours. We succeed only when you do."), ("Foresight", "We look past the trend to what will matter in three years.")]
-    b += '<section class="navy"><div class="wrap">' + sh("What we stand for", "Our values.", "How we behave when nobody is checking.") + '<div class="values" data-stagger>' + ''.join(f'<div class="val"><span class="n">{i+1:02d}</span><h3>{t}</h3><p>{p}</p></div>' for i, (t, p) in enumerate(vals)) + '</div></div></section>'
-    tl = [("FOUNDATION", "Arron is established in Dallas", "A small senior team with one goal: deliver enterprise outcomes without the overhead."), ("EXPANSION", "Four connected practices", "AI, ERP, ITSM and CX come together under one delivery model."),
-          ("NETWORK", "Partners and talent nationwide", "An ecosystem of platform vendors and specialists joins the Arron bench."), ("NEXT", "AI-native products", "Product-as-a-service offerings built for the way enterprises will work.")]
-    b += '<section><div class="wrap">' + sh("Journey", "Where we are heading.", "A young firm with long experience behind it.") + '<div class="tl" data-stagger>' + ''.join(f'<div class="tli"><b>{k}</b><h3>{t}</h3><p>{p}</p></div>' for k, t, p in tl) + '</div></div></section>'
+    b = hero('<a href="index.html">Home</a> / About Us', 'Building the Future Enterprise. <span class="r">Today.</span>',
+             "Headquartered in Dallas, Texas, ARRON Technologies is an AI-ready technology consulting and services company dedicated to helping organizations operate ahead of now.", V.v_offices())
+    b += '''<section id="more" class="navy"><div class="wrap split2" style="align-items:start"><div><span class="kicker rv">Our Purpose</span><h2 class="pull" data-split>We believe the next generation of successful enterprises will not simply use AI. They will be built around it.</h2></div>
+<div><p class="lead rv" style="margin-top:0;color:#c3cee6">ARRON exists to help organizations create that future by building AI-native foundations that empower people, accelerate innovation, and create sustainable competitive advantage.</p>
+<p class="rv" data-delay=".2" style="margin-top:28px;font:500 1.3rem var(--fd);color:#fff">ARRON. Ahead of Now. Building AI-Native Enterprises.</p></div></div></section>'''
+    b += f'''<section><div class="wrap split2" style="align-items:start"><div class="collage rv" ><div class="c1">{photo("office", "ARRON office")}</div><div class="c2">{photo("team-laptop", "Team at work")}</div><div class="badge"><b>Dallas, TX</b><span>Headquarters, with delivery teams across the U.S. and India</span></div></div>
+<div><span class="kicker rv">Building the Future Enterprise. Today.</span><h2 data-split>An AI-ready company for an AI-driven world.</h2>
+<p class="lead rv" data-delay=".2">Headquartered in Dallas, Texas, ARRON Technologies is an AI-ready technology consulting and services company dedicated to helping organizations operate ahead of now. We enable businesses to transition from traditional operating models to AI-native enterprises by combining intelligent technology, modern platforms, and human ingenuity.</p>
+<p class="rv" data-delay=".25" style="margin-top:18px">With more than 25 years of combined experience in technology leadership, digital transformation, enterprise architecture, customer experience, service management, and business operations, our team has helped organizations reimagine how they work, serve customers, and create value in an increasingly AI-driven world.</p>
+<p class="rv" data-delay=".3" style="margin-top:18px">Our consultants have designed and delivered transformational solutions across industries, helping organizations modernize operations, improve service experiences, accelerate innovation, and realize significant business value through technology. From AI and automation to ERP, ITSM, Digital Workplace, and Customer Experience (CX), we focus on solutions that drive measurable outcomes and sustainable growth.</p></div></div></section>'''
+    b += '<section class="paper"><div class="wrap"><div class="stats rv" style="grid-template-columns:repeat(4,1fr)"><div class="stat"><b data-count="25" data-suffix="+">0</b><span>Years of combined experience</span></div><div class="stat"><b data-count="100" data-suffix="+">0</b><span>Projects delivered</span></div><div class="stat"><b data-count="5">0</b><span>AI-native applications</span></div><div class="stat"><b data-count="6">0</b><span>Offices across two countries</span></div></div></div></section>'
+    b += '<section id="offices"><div class="wrap">' + sh("Global Delivery, Local Partnership", "U.S. leadership. Global delivery.", "ARRON combines U.S. leadership with global delivery capabilities to provide clients with access to experienced consultants, architects, engineers, and transformation specialists.")
+    b += '<div class="offices" data-stagger><div class="ofc"><h3>United States</h3><ul><li class="hq"><i></i>Dallas, Texas <small>Headquarters</small></li><li><i></i>Louisville, Kentucky</li><li><i></i>Houston, Texas</li></ul></div><div class="ofc"><h3>India</h3><ul><li><i></i>National Capital Region (Delhi NCR)</li><li><i></i>Pune</li><li><i></i>Bangalore</li></ul></div></div>'
+    b += '<p class="rv" style="margin-top:34px;max-width:80ch;font-size:1.05rem">This distributed presence enables us to deliver the responsiveness of a local partner with the scale, expertise, and innovation capabilities of a global technology organization.</p></div></section>'
     b += f'''<section class="paper" id="contact"><div class="wrap cgrid"><div><span class="kicker rv">Contact us</span><h2 data-split>Let's talk about what is next.</h2>
 <p class="rv" data-delay=".2" style="margin-top:22px;font-size:1.1rem">Tell us a little about your challenge. A senior member of the team will reply within one business day.</p>
-<div class="cinfo rv" data-delay=".3"><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div><div><b>Email</b><span>hello@arron.com</span></div><div><b>Hours</b><span>Mon–Fri, 8am–6pm Central</span></div></div></div>
-<div class="rv rv-r"><form class="f" data-demo onsubmit="return false"><div class="two"><label>Name<input required placeholder="Jane Smith"></label><label>Work email<input type="email" required placeholder="jane@company.com"></label></div>
-<div class="two"><label>Company<input placeholder="Company name"></label><label>Interested in<select><option>AI / Super Intelligence</option><option>ERP</option><option>ITSM</option><option>Customer Experience</option><option>Careers</option><option>Something else</option></select></label></div>
-<label>How can we help?<textarea placeholder="A few lines about your goals or challenge"></textarea></label>
-<button class="btn btn-red" type="submit" style="justify-content:center">Send message {ARROW}</button><div class="ok">Thank you. We will be in touch within one business day.</div></form></div></div></section>'''
-    page("about.html", "About Us — Arron | Dallas Technology Consulting", "About Arron, a Dallas-based technology consulting company, and how to contact us.", b)
+<div class="cinfo rv" data-delay=".3"><div><b>Email</b><span><a href="mailto:{EMAIL_1}">{EMAIL_1}</a></span></div><div><b>Email</b><span><a href="mailto:{EMAIL_2}">{EMAIL_2}</a></span></div><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div></div></div>
+<div class="rv rv-r"><form class="f" data-demo data-mailto="{EMAIL_1},{EMAIL_2}" onsubmit="return false"><div class="two"><label>Name<input name="name" required placeholder="Jane Smith"></label><label>Work email<input name="email" type="email" required placeholder="jane@company.com"></label></div>
+<div class="two"><label>Company<input name="company" placeholder="Company name"></label><label>Interested in<select name="topic"><option>Artificial Intelligence / ARRON AURA</option><option>ERP</option><option>ITSM</option><option>Customer Experience</option><option>Digital Workplace</option><option>Products</option><option>Careers</option><option>Something else</option></select></label></div>
+<label>How can we help?<textarea name="msg" placeholder="A few lines about your goals or challenge"></textarea></label>
+<button class="btn btn-red" type="submit" style="justify-content:center">Send message {ARROW}</button><div class="ok">Your email app should open with the message ready to send. If it does not, write to us directly at the addresses shown.</div></form></div></div></section>'''
+    page("about.html", "About Us — ARRON Technologies | Dallas, Texas", "ARRON Technologies is an AI-ready technology consulting and services company headquartered in Dallas, Texas, with delivery teams in the U.S. and India.", b)
 
 
 if __name__ == "__main__":
