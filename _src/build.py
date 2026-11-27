@@ -437,9 +437,12 @@ def build_erp():
                     "We help organizations transform their operational core through ERP strategy, implementation, and modernization. Our approach combines clean-core architecture, connected enterprise data, and embedded AI to create agile businesses that can respond quickly to market shifts and emerging opportunities. Our long-term ambition is to enable AI-native enterprises, where intelligent agents continuously support, optimize, and adapt business processes, allowing organizations ahead of now.")
     b += marquee(d["plat_label"], d["platforms"] * 2)
     b += f'''<section id="more"><div class="wrap"><div class="statement rv">Replacement as a product, not a project. Guidance generated from the system's own definitions. Scenario branches on the live business. Everything replaceable, plus an exit door. One product from AI Agents to several continents, across finance, logistics, operations and regulations.</div></div></section>'''
-    b += f'''<section class="paper"><div class="wrap">{sh("What we do", "Evolve core systems to a smarter enterprise.", "From strategy and implementation to run and evolve, we modernize the operational core of the business.")}
-<div class="split2" style="align-items:start;margin-bottom:64px"><div><span class="kicker rv" style="color:var(--red)">AI-Native ERP</span><h3 class="rv" style="font:600 clamp(1.5rem,2.6vw,2.1rem)/1.25 var(--fd);color:var(--ink);margin-top:10px">The core that thinks, acts and improves.</h3></div>
-<div><p class="lead rv" style="margin-top:0">Traditional ERP records what happened. AI-native ERP helps decide what happens next.</p><p class="rv" data-delay=".15" style="margin-top:16px">Most enterprises add AI on top of their ERP as a separate layer. ARRON builds intelligence into the core itself, so processes can sense, decide and act, with people kept in control.</p></div></div>
+    b += f'''<section class="paper"><div class="wrap">{sh("What we do", "Evolve core systems to a smarter enterprise.", "ERP Advisory & Roadmap, Transformation & Implementation, Intelligent ERP & Integration, and Run, Optimize & Evolve.")}''' + rows([
+        ("ERP Advisory & Roadmap", "Assess processes, landscape and business priorities to choose the right platform, deployment model and path to value."),
+        ("Transformation & Implementation", "Greenfield, brownfield or phased moves to modern cloud ERP on any leading platform, with fit-to-standard processes and clean data migration."),
+        ("Intelligent ERP & Integration", "Embed AI, automation and analytics into core processes, and connect ERP smoothly with the wider enterprise landscape."),
+        ("Run, Optimize & Evolve", "Application management and continuous improvement that keep the core stable, current and in step with the business.")], "c4w") + '</div></section>'
+    b += f'''<section><div class="wrap">{sh("AI-Native ERP", "The core that thinks, acts and improves.", "Traditional ERP records what happened. AI-native ERP helps decide what happens next. Most enterprises add AI on top of their ERP as a separate layer. ARRON builds intelligence into the core itself, so processes can sense, decide and act, with people kept in control.")}
 <span class="kicker rv">What AI-native ERP delivers</span>
 <div class="tiles five" data-stagger style="margin-top:18px">''' + ''.join(f'<div class="kcard"><span class="ic">{icon(i)}</span><h3>{t}</h3><p>{x}</p></div>' for i, t, x in [
         ("cog", "Autonomous Processes", "AI agents run routine work across finance, supply chain, procurement and order-to-cash, from matching and reconciling to replenishing and resolving exceptions."),
@@ -447,17 +450,12 @@ def build_erp():
         ("spark", "Conversational ERP", "People ask, approve and act in natural language instead of moving between screens and transactions."),
         ("check", "Intelligent Close & Control", "Continuous reconciliation, anomaly detection and automated compliance checks for a faster, cleaner close."),
         ("db", "Connected Data Foundation", "One trusted data layer across ERP and the wider enterprise, which gives AI the context it needs to reason and act.")]) + '</div></div></section>'
-    b += steps_block("How we get there", "From transaction to autonomous action.", "Four stages that move each process from assisted to autonomous as trust grows.",
+    b += steps_block("Our approach", "How we get there.", "From Transaction → Insight → Autonomous Action.",
                      [("Assess", "Find the high-value processes and check how ready the data, platform and organization are for AI."),
                       ("Architect", "Design a clean, AI-ready core with clear integration, governance and points where people make the decision."),
                       ("Embed", "Build agents, automation and insight into live ERP processes, whatever the platform."),
-                      ("Evolve", "Move each process from assisted to autonomous as trust, controls and adoption grow.")], "From Transaction → Insight → Autonomous Action.")
-    b += f'''<section><div class="wrap">{sh("ERP services", "Four services across the ERP lifecycle.", "Choose one, or let us run the whole journey with you.")}''' + rows([
-        ("ERP Advisory & Roadmap", "Assess processes, landscape and business priorities to choose the right platform, deployment model and path to value."),
-        ("Transformation & Implementation", "Greenfield, brownfield or phased moves to modern cloud ERP on any leading platform, with fit-to-standard processes and clean data migration."),
-        ("Intelligent ERP & Integration", "Embed AI, automation and analytics into core processes, and connect ERP smoothly with the wider enterprise landscape."),
-        ("Run, Optimize & Evolve", "Application management and continuous improvement that keep the core stable, current and in step with the business.")], "c4w") + '</div></section>'
-    b += get_block("What you get", "An ERP that makes the business easier to run.", "Outcomes we design for from the first workshop.", [
+                      ("Evolve", "Move each process from assisted to autonomous as trust, controls and adoption grow.")])
+    b += get_block("What you get", "An ERP that makes the business easier to run.", "", [
         ("bolt", "Operational efficiency", "Simpler processes and fewer manual steps."), ("cog", "Higher productivity", "Automation across core business processes."),
         ("chart", "Better decisions", "Connected data and timely insight for informed action."), ("refresh", "Greater agility", "Processes and platforms that adapt as the business changes."),
         ("shield", "Stronger control", "Better visibility, robust governance and consistent processes."), ("network", "Operational simplicity", "Harmonized processes and connected systems make the business easier to run and scale.")])
