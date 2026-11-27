@@ -822,9 +822,9 @@ def build_industry_page(key):
 
 # =========================================================== EMPTY-STATE SECTIONS (insights, proven experience, careers)
 def build_soon(file, parent, name, h1, lead, ph, blurb, subject, cta_html=None):
-    quiet = parent[0] == "insights.html"
+    quiet = True
     crumb = f'<a href="index.html">Home</a> / <a href="{parent[0]}">{parent[1]}</a> / {name}'
-    b = hero(crumb, h1, lead, photo_stage(ph, name, parent[1] if quiet else "Coming soon"), "photo", cta_html=cta_html)
+    b = hero(crumb, h1, lead, photo_stage(ph, name, parent[1]), "photo", cta_html=cta_html)
     mail = MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + subject.replace(" ", "%20"))
     b += f'''<section id="more"><div class="wrap"><div class="soon rv"><span class="soon-ic">{icon("doc")}</span><span class="kicker">{"Stay in touch" if quiet else "Coming soon"}</span><h2>{"Be the first to read it." if quiet else "Nothing published here yet."}</h2>
 <p>{"Leave us a note and we will send it your way as soon as it is published." if quiet else blurb}</p><div class="soon-cta"><a class="btn btn-red" href="{mail}">{"Notify me" if quiet else "Notify me when it is live"} {ARROW}</a><a class="btn btn-ghost" href="{parent[0]}">Back to {parent[1]}</a></div></div></div></section>'''
@@ -834,8 +834,8 @@ def build_soon(file, parent, name, h1, lead, ph, blurb, subject, cta_html=None):
 
 
 def build_soon_hub(file, name, h1, lead, ph, sh_t, items, sub):
-    quiet = file == "insights.html"
-    b = hero(f'<a href="index.html">Home</a> / {name}', h1, lead, photo_stage(ph, name, "ARRON" if quiet else "Being prepared"), "photo")
+    quiet = True
+    b = hero(f'<a href="index.html">Home</a> / {name}', h1, lead, photo_stage(ph, name, "ARRON"), "photo")
     b += f'<section id="more"><div class="wrap">{sh(name, sh_t, sub)}<div class="tiles" style="grid-template-columns:repeat({len(items)},1fr)" data-stagger>' + ''.join(
         f'<a class="tile" href="{h}"><div class="art ph">{photo(p)}</div><div class="tb"><span class="k">{name if quiet else "Coming soon"}</span><h3>{t}</h3><p>{d}</p><span class="more">Open {ARROW}</span></div></a>' for h, t, d, p in items) + '</div></div></section>'
     b += cta_band("Want to hear when we publish?", "Tell us what you would like to read first and we will let you know.", "Notify me", MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + name.replace(" ", "%20")))
@@ -862,10 +862,10 @@ def build_insights():
 
 
 def build_proven():
-    build_soon_hub("proven-experience.html", "Proven Experience", 'Results you can <span class="r">point to.</span>', "Client stories, case studies and testimonials. This section is being prepared as we receive client approvals.", "highfive",
+    build_soon_hub("proven-experience.html", "Proven Experience", 'Results you can <span class="r">point to.</span>', "Client stories, case studies and testimonials.", "highfive",
                    "Evidence of the work.", [("client-stories.html", "Client Stories", "How clients describe the journey, in their own words.", "team-room"),
                                             ("case-studies.html", "Case Studies", "The challenge, the approach and the outcome.", "boardroom"),
-                                            ("testimonials.html", "Testimonials", "What clients say about working with ARRON.", "meeting-table")], "We will publish these once clients have approved them.")
+                                            ("testimonials.html", "Testimonials", "What clients say about working with ARRON.", "meeting-table")], "Client stories, case studies and testimonials.")
     s = [("client-stories.html", "Client Stories", 'Our clients, <span class="r">in their words.</span>', "Stories of the journeys we have shared with clients.", "team-room", "Client stories will appear here once clients have approved them."),
          ("case-studies.html", "Case Studies", 'The challenge, the approach, <span class="r">the outcome.</span>', "Detailed engagements across AI, ERP, ITSM, customer experience and the digital workplace.", "boardroom", "Case studies will appear here once clients have approved them."),
          ("testimonials.html", "Testimonials", 'What clients <span class="r">say about us.</span>', "Straight feedback from the leaders we have worked alongside.", "meeting-table", "Testimonials will appear here once clients have approved them.")]
