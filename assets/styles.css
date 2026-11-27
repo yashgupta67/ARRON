@@ -706,3 +706,7 @@ a.ind:hover h3{color:var(--red)}
 .tiles:has(>:nth-child(3):last-child){grid-template-columns:repeat(3,1fr)}
 @media(max-width:1100px){.tiles:has(>:nth-child(3):last-child){grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.tiles:has(>:nth-child(3):last-child){grid-template-columns:1fr}}
+.logo{flex:none;display:block}
+.logo img{max-width:none;width:auto;object-fit:contain}
+.nav{min-width:0}
+@media(min-width:1361px) and (max-width:1480px){.logo img{height:50px}.nav>a,.nav .dd>a{padding:10px 8px;font-size:.85rem}.nav>a::after,.nav .dd>a::after{left:8px;right:8px}.nav .btn{margin-left:6px;padding:10px 16px}}
