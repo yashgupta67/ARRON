@@ -822,30 +822,32 @@ def build_industry_page(key):
 
 # =========================================================== EMPTY-STATE SECTIONS (insights, proven experience, careers)
 def build_soon(file, parent, name, h1, lead, ph, blurb, subject, cta_html=None):
+    quiet = parent[0] == "insights.html"
     crumb = f'<a href="index.html">Home</a> / <a href="{parent[0]}">{parent[1]}</a> / {name}'
-    b = hero(crumb, h1, lead, photo_stage(ph, name, "Coming soon"), "photo", cta_html=cta_html)
+    b = hero(crumb, h1, lead, photo_stage(ph, name, parent[1] if quiet else "Coming soon"), "photo", cta_html=cta_html)
     mail = MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + subject.replace(" ", "%20"))
-    b += f'''<section id="more"><div class="wrap"><div class="soon rv"><span class="soon-ic">{icon("doc")}</span><span class="kicker">Coming soon</span><h2>Nothing published here yet.</h2>
-<p>{blurb}</p><div class="soon-cta"><a class="btn btn-red" href="{mail}">Notify me when it is live {ARROW}</a><a class="btn btn-ghost" href="{parent[0]}">Back to {parent[1]}</a></div></div></div></section>'''
+    b += f'''<section id="more"><div class="wrap"><div class="soon rv"><span class="soon-ic">{icon("doc")}</span><span class="kicker">{"Stay in touch" if quiet else "Coming soon"}</span><h2>{"Be the first to read it." if quiet else "Nothing published here yet."}</h2>
+<p>{"Leave us a note and we will send it your way as soon as it is published." if quiet else blurb}</p><div class="soon-cta"><a class="btn btn-red" href="{mail}">{"Notify me" if quiet else "Notify me when it is live"} {ARROW}</a><a class="btn btn-ghost" href="{parent[0]}">Back to {parent[1]}</a></div></div></div></section>'''
     b += '<section class="paper"><div class="wrap">' + sh("In the meantime", "Explore what is live.", "Start with our practices, or meet the team.") + '<div class="tiles" data-stagger>' + \
          tile_for(D["ai"]) + tile_for(D["erp"]) + f'<a class="tile" href="about.html"><div class="art ph">{photo("team-room")}</div><div class="tb"><span class="k">About ARRON</span><h3>Our Purpose</h3><p>Why ARRON exists and how we work.</p><span class="more">Explore {ARROW}</span></div></a>' + '</div></div></section>'
     page(file, f'{name} — ARRON', lead[:150], b)
 
 
 def build_soon_hub(file, name, h1, lead, ph, sh_t, items, sub):
-    b = hero(f'<a href="index.html">Home</a> / {name}', h1, lead, photo_stage(ph, name, "Being prepared"), "photo")
+    quiet = file == "insights.html"
+    b = hero(f'<a href="index.html">Home</a> / {name}', h1, lead, photo_stage(ph, name, "ARRON" if quiet else "Being prepared"), "photo")
     b += f'<section id="more"><div class="wrap">{sh(name, sh_t, sub)}<div class="tiles" style="grid-template-columns:repeat({len(items)},1fr)" data-stagger>' + ''.join(
-        f'<a class="tile" href="{h}"><div class="art ph">{photo(p)}</div><div class="tb"><span class="k">Coming soon</span><h3>{t}</h3><p>{d}</p><span class="more">Open {ARROW}</span></div></a>' for h, t, d, p in items) + '</div></div></section>'
+        f'<a class="tile" href="{h}"><div class="art ph">{photo(p)}</div><div class="tb"><span class="k">{name if quiet else "Coming soon"}</span><h3>{t}</h3><p>{d}</p><span class="more">Open {ARROW}</span></div></a>' for h, t, d, p in items) + '</div></div></section>'
     b += cta_band("Want to hear when we publish?", "Tell us what you would like to read first and we will let you know.", "Notify me", MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + name.replace(" ", "%20")))
     page(file, f'{name} — ARRON', lead[:150], b)
 
 
 def build_insights():
-    build_soon_hub("insights.html", "Our Insights", 'Thinking worth <span class="r">acting on.</span>', "Technology insights, perspectives, playbooks and articles from the ARRON team. This section is being prepared.", "laptop-dark",
+    build_soon_hub("insights.html", "Our Insights", 'Thinking worth <span class="r">acting on.</span>', "Technology insights, perspectives, playbooks and articles from the ARRON team.", "laptop-dark",
                    "Four ways to read us.", [("technology-insights.html", "Technology Insights", "What is changing in enterprise technology, and what to do about it.", "dashboard"),
                                              ("perspectives.html", "Perspectives", "Points of view from our leaders on the AI-native enterprise.", "boardroom"),
                                              ("playbooks.html", "Playbooks", "Practical, step-by-step guides you can put to work.", "sticky-notes"),
-                                             ("blog.html", "Blog / Newsletter", "Articles and updates from the ARRON team, plus our newsletter.", "meeting-table")], "We are preparing our first publications.")
+                                             ("blog.html", "Blog / Newsletter", "Articles and updates from the ARRON team, plus our newsletter.", "meeting-table")], "Technology insights, perspectives, playbooks and articles.")
     s = [("technology-insights.html", "Technology Insights", ("Technology Insights", 'Enterprise technology, <span class="r">explained.</span>', "Clear, practical analysis of the technology shifts that matter to enterprise leaders.", "dashboard", "We are preparing our first technology insights on AI, ERP, ITSM, customer experience and the digital workplace.")),
          ("perspectives.html", "Perspectives", ("Perspectives", 'Points of view <span class="r">from our leaders.</span>', "How ARRON's leaders see the road from digital transformation to the AI-native enterprise.", "boardroom", "Our leaders' first perspectives are being prepared.")),
          ("playbooks.html", "Playbooks", ("Playbooks", 'Guides you can <span class="r">put to work.</span>', "Practical playbooks for adopting AI, modernizing the core and improving service and experience.", "sticky-notes", "Our first playbooks are being prepared.")),
