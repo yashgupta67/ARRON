@@ -770,3 +770,5 @@ html,body{overflow-x:clip}
   .logo img{height:clamp(34px,3.5vw,54px)!important}
 }
 .site-header .wrap.bar{width:min(1440px,100% - 48px);max-width:none;padding-left:0;padding-right:0}
+.person .role small{display:block;font:500 .8rem/1.4 var(--fb);color:var(--muted);margin-top:4px}
+.person .role{min-height:4.2em}
