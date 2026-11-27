@@ -723,3 +723,9 @@ a.ind:hover h3{color:var(--red)}
 .person .li:hover{background:#004182;transform:translateY(-2px)}
 .person .li svg{width:16px;height:16px;fill:#fff}
 .person .chips{padding-top:14px}
+/* official logo (wider wordmark) */
+.logo img{height:54px}
+@media(max-width:1360px){.logo img{height:48px!important}}
+@media(min-width:1361px) and (max-width:1480px){.logo img{height:48px!important}}
+@media(max-width:640px){.logo img{height:38px!important}}
+.ft img{height:auto;width:min(100%,260px)}
