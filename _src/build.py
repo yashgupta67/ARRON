@@ -113,8 +113,8 @@ MENUS = {
         ("technology-insights.html", "Technology Insights", "What is changing in enterprise technology"),
         ("perspectives.html", "Perspectives", "Points of view from our leaders"),
         ("playbooks.html", "Playbooks", "Practical guides you can put to work"),
-        ("blog.html", "Blogs", "Articles from the ARRON team")])],
-        foot=("insights.html", "All insights"), wide=False),
+        ("blog.html", "Blog / Newsletter", "Articles and our newsletter")])],
+        foot=("insights.html", "All our insights"), wide=False),
     "proven-experience.html": dict(groups=[(None, [
         ("client-stories.html", "Client Stories", "In our clients' own words and numbers"),
         ("case-studies.html", "Case Studies", "Challenge, approach and outcome"),
@@ -128,7 +128,7 @@ MENUS = {
         foot=("about.html", "About ARRON"), wide=False),
 }
 NAV = [("index.html", "Home"), ("offerings.html", "Offerings"), ("capabilities.html", "Capabilities"), ("products.html", "Products"),
-       ("industry.html", "Industry Expertise"), ("insights.html", "Insights"), ("proven-experience.html", "Proven Experience"),
+       ("industry.html", "Industry Expertise"), ("insights.html", "Our Insights"), ("proven-experience.html", "Proven Experience"),
        ("about.html", "About ARRON"), ("careers.html", "Careers")]
 SECTION = {}
 for sec, m in MENUS.items():
@@ -171,7 +171,7 @@ def footer():
 {col("Offerings", [("ai.html", "AI / Super Intelligence"), ("erp.html", "ERP"), ("itsm.html", "ITSM"), ("cx.html", "Customer Experience"), ("digital-workplace.html", "Digital Workplace")])}
 {col("Capabilities & Products", [("consulting.html", "Consulting"), ("services.html", "Services"), ("partnerships.html", "Partnerships"), ("arron-ai.html", "ARRON AI"), ("record-vault-ai.html", "Record Vault AI"), ("connect-ai.html", "Connect AI")])}
 {col("Industries", [(h, t) for h, t, d in INDUSTRY_PAGES])}
-{col("Company", [("about.html", "About ARRON"), ("proven-experience.html", "Proven Experience"), ("insights.html", "Insights"), ("careers.html", "Careers"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
+{col("Company", [("about.html", "About ARRON"), ("proven-experience.html", "Proven Experience"), ("insights.html", "Our Insights"), ("careers.html", "Careers"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
 <div class="fb"><span>© 2026 ARRON Technologies. All rights reserved.</span><span>Dallas, Texas · Louisville · Houston · Delhi NCR · Pune · Bangalore</span></div></div></footer>'''
 
 
@@ -824,9 +824,9 @@ def build_industry_page(key):
 
 
 # =========================================================== EMPTY-STATE SECTIONS (insights, proven experience, careers)
-def build_soon(file, parent, name, h1, lead, ph, blurb, subject):
+def build_soon(file, parent, name, h1, lead, ph, blurb, subject, cta_html=None):
     crumb = f'<a href="index.html">Home</a> / <a href="{parent[0]}">{parent[1]}</a> / {name}'
-    b = hero(crumb, h1, lead, photo_stage(ph, name, "Coming soon"), "photo")
+    b = hero(crumb, h1, lead, photo_stage(ph, name, "Coming soon"), "photo", cta_html=cta_html)
     mail = MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + subject.replace(" ", "%20"))
     b += f'''<section id="more"><div class="wrap"><div class="soon rv"><span class="soon-ic">{icon("doc")}</span><span class="kicker">Coming soon</span><h2>Nothing published here yet.</h2>
 <p>{blurb}</p><div class="soon-cta"><a class="btn btn-red" href="{mail}">Notify me when it is live {ARROW}</a><a class="btn btn-ghost" href="{parent[0]}">Back to {parent[1]}</a></div></div></div></section>'''
@@ -844,17 +844,22 @@ def build_soon_hub(file, name, h1, lead, ph, sh_t, items, sub):
 
 
 def build_insights():
-    build_soon_hub("insights.html", "Insights", 'Thinking worth <span class="r">acting on.</span>', "Technology insights, perspectives, playbooks and articles from the ARRON team. This section is being prepared.", "laptop-dark",
+    build_soon_hub("insights.html", "Our Insights", 'Thinking worth <span class="r">acting on.</span>', "Technology insights, perspectives, playbooks and articles from the ARRON team. This section is being prepared.", "laptop-dark",
                    "Four ways to read us.", [("technology-insights.html", "Technology Insights", "What is changing in enterprise technology, and what to do about it.", "dashboard"),
                                              ("perspectives.html", "Perspectives", "Points of view from our leaders on the AI-native enterprise.", "boardroom"),
                                              ("playbooks.html", "Playbooks", "Practical, step-by-step guides you can put to work.", "sticky-notes"),
-                                             ("blog.html", "Blogs", "Articles and updates from the ARRON team.", "meeting-table")], "We are preparing our first publications.")
+                                             ("blog.html", "Blog / Newsletter", "Articles and updates from the ARRON team, plus our newsletter.", "meeting-table")], "We are preparing our first publications.")
     s = [("technology-insights.html", "Technology Insights", ("Technology Insights", 'Enterprise technology, <span class="r">explained.</span>', "Clear, practical analysis of the technology shifts that matter to enterprise leaders.", "dashboard", "We are preparing our first technology insights on AI, ERP, ITSM, customer experience and the digital workplace.")),
          ("perspectives.html", "Perspectives", ("Perspectives", 'Points of view <span class="r">from our leaders.</span>', "How ARRON's leaders see the road from digital transformation to the AI-native enterprise.", "boardroom", "Our leaders' first perspectives are being prepared.")),
          ("playbooks.html", "Playbooks", ("Playbooks", 'Guides you can <span class="r">put to work.</span>', "Practical playbooks for adopting AI, modernizing the core and improving service and experience.", "sticky-notes", "Our first playbooks are being prepared.")),
-         ("blog.html", "Blogs", ("Blogs", 'Notes from <span class="r">the field.</span>', "Articles and updates from the people doing the work at ARRON.", "meeting-table", "Our first articles are being prepared."))]
+         ("blog.html", "Blog / Newsletter", ("Blog / Newsletter", 'Notes from <span class="r">the field.</span>', "Articles and updates from the people doing the work at ARRON, delivered to your inbox.", "meeting-table", "Our first articles are being prepared."))]
     for f, n, (nm, h1, lead, ph, blurb) in s:
-        build_soon(f, ("insights.html", "Insights"), nm, h1, lead, ph, blurb, n)
+        sig = None
+        if f == "blog.html":
+            sig = f'''<div class="hero-signup rv" data-delay=".5"><span class="hs-label">Get the blog and newsletter by email</span>
+<form data-demo data-mailto="{EMAIL_1},{EMAIL_2}" data-subject="Subscribe me to the ARRON blog and newsletter" onsubmit="return false"><div class="news"><input type="email" name="email" required placeholder="you@company.com" aria-label="Email address"><button class="btn btn-red" type="submit">Subscribe {ARROW}</button></div></form>
+<div class="ok">Your email app should open with the request ready to send. Just press send and we will add you.</div><p class="hs-note">Be first to read our articles when they are published. Free, and you can unsubscribe any time.</p></div>'''
+        build_soon(f, ("insights.html", "Our Insights"), nm, h1, lead, ph, blurb, n, sig)
 
 
 def build_proven():

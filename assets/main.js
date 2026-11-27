@@ -60,7 +60,10 @@ document.querySelectorAll('[data-filter]').forEach(function(g){
 document.querySelectorAll('form[data-demo]').forEach(function(f){f.addEventListener('submit',function(e){
   e.preventDefault();
   var ok=f.parentNode.querySelector('.ok')||f.querySelector('.ok');
-  if(f.dataset.mailto){
+  if(f.dataset.mailto&&f.dataset.subject){
+    var em=f.elements.email?f.elements.email.value:'';
+    window.location.href='mailto:'+f.dataset.mailto+'?subject='+encodeURIComponent(f.dataset.subject)+'&body='+encodeURIComponent('Please add this email address to the ARRON blog and newsletter list:\n\n'+em);
+  } else if(f.dataset.mailto){
     var g=function(n){var el=f.elements[n];return el?el.value:''};
     var body='Name: '+g('name')+'\nEmail: '+g('email')+'\nCompany: '+g('company')+'\nInterested in: '+g('topic')+'\n\n'+g('msg');
     window.location.href='mailto:'+f.dataset.mailto+'?subject='+encodeURIComponent('Enquiry from the ARRON website - '+g('topic'))+'&body='+encodeURIComponent(body);
