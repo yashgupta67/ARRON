@@ -84,42 +84,58 @@ def part(name, cls="art ph", extra=""):
 PLATFORMS = ["ServiceNow", "SAP", "Oracle", "Microsoft", "Salesforce", "Workday", "NetSuite", "Zoho", "AWS", "Google Cloud", "OpenAI", "Anthropic"]
 
 # ------------------------------------------------------------------ NAV
+INDUSTRY_PAGES = [("banking.html", "Banking & Financial Services", "Compliance, resilience and customer trust"),
+                  ("manufacturing.html", "Manufacturing", "Connected plants, planning and supply chains"),
+                  ("retail.html", "Retail & Consumer", "Omnichannel experience and demand sensing"),
+                  ("telecom.html", "Telecom", "Proactive service on always-on networks"),
+                  ("healthcare.html", "Healthcare", "Access, operations and secure data")]
 MENUS = {
     "offerings.html": dict(groups=[(None, [
-        ("ai.html", "AI / Super Intelligence", "Strategy, data foundations and agentic AI"),
-        ("erp.html", "ERP", "Selection, implementation and optimization"),
-        ("itsm.html", "ITSM", "Faster, smarter IT service operations"),
-        ("cx.html", "Customer Experience", "Journeys, platforms and insight"),
-        ("digital-workplace.html", "Digital Workplace", "Modern, intelligent employee experiences")])],
+        ("ai.html", "AI / Super Intelligence", "AI built for impact, architected for autonomy"),
+        ("erp.html", "ERP", "A smarter core for the AI-native enterprise"),
+        ("itsm.html", "ITSM", "Service built for efficiency, engineered for resilience"),
+        ("cx.html", "Customer Experience", "Every interaction, elevated"),
+        ("digital-workplace.html", "Digital Workplace", "Work designed around people")])],
         foot=("offerings.html", "View all offerings"), wide=False),
     "capabilities.html": dict(groups=[(None, [
         ("consulting.html", "Consulting", "Strategy and advice you can execute"),
         ("services.html", "Services", "Implementation, integration and managed support"),
-        ("partnerships.html", "Partnerships", "A certified ecosystem on your side"),
-        ("product.html", "Product as a Service", "AI-native development, delivered as a product")])],
+        ("partnerships.html", "Partnerships", "A certified ecosystem on your side")])],
         foot=("capabilities.html", "How we work with you"), wide=False),
-    "industry.html": dict(groups=[
-        ("Clients", [("case-studies.html", "Case Studies", "Representative engagements and outcomes"), ("testimonials.html", "Testimonials", "What clients say about working with us")]),
-        ("Consultants", [("consultants.html", "Our Consultants & Partners", "Profiles of our team and partner network"), ("careers.html", "Join Us", "Open roles and how we hire")])],
-        foot=("industry.html", "Industries we serve"), wide=True),
-    "resources.html": dict(groups=[(None, [
-        ("blog.html", "Blogs & Newsletter", "Insights on AI, ERP, ITSM and CX"),
-        ("events.html", "Events & Webinars", "Live sessions and on-demand recordings"),
-        ("careers.html", "Careers", "Build your career with ARRON")])],
-        foot=("resources.html", "All resources"), wide=False),
+    "products.html": dict(groups=[(None, [
+        ("arron-ai.html", "ARRON AI", "Agentic AI for customer and employee experience"),
+        ("record-vault-ai.html", "Record Vault AI", "An AI-powered evidence vault"),
+        ("connect-ai.html", "Connect AI", "AI for nonprofit and volunteer organizations")])],
+        foot=("products.html", "Product as a Service"), wide=False),
+    "industry.html": dict(groups=[(None, [(h, t, d) for h, t, d in INDUSTRY_PAGES])],
+        foot=("industry.html", "All industries"), wide=False),
+    "insights.html": dict(groups=[(None, [
+        ("technology-insights.html", "Technology Insights", "What is changing in enterprise technology"),
+        ("perspectives.html", "Perspectives", "Points of view from our leaders"),
+        ("playbooks.html", "Playbooks", "Practical guides you can put to work"),
+        ("blog.html", "Blogs", "Articles from the ARRON team")])],
+        foot=("insights.html", "All insights"), wide=False),
+    "proven-experience.html": dict(groups=[(None, [
+        ("client-stories.html", "Client Stories", "In our clients' own words and numbers"),
+        ("case-studies.html", "Case Studies", "Challenge, approach and outcome"),
+        ("testimonials.html", "Testimonials", "What clients say about working with us")])],
+        foot=("proven-experience.html", "All proven experience"), wide=False),
+    "about.html": dict(groups=[(None, [
+        ("about.html", "Our Purpose", "Why ARRON exists"),
+        ("delivery-landscape.html", "Delivery Landscape", "Offices across the U.S. and India"),
+        ("consultants.html", "Leadership & Consultants", "The people you will work with"),
+        ("partners.html", "Our Partners", "The platform ecosystem we work across")])],
+        foot=("about.html", "About ARRON"), wide=False),
 }
-NAV = [("index.html", "Home"), ("offerings.html", "Offerings"), ("capabilities.html", "Capabilities"),
-       ("industry.html", "Industry Expertise"), ("resources.html", "Resources"), ("about.html", "About Us")]
+NAV = [("index.html", "Home"), ("offerings.html", "Offerings"), ("capabilities.html", "Capabilities"), ("products.html", "Products"),
+       ("industry.html", "Industry Expertise"), ("insights.html", "Insights"), ("proven-experience.html", "Proven Experience"),
+       ("about.html", "About ARRON"), ("careers.html", "Careers")]
 SECTION = {}
 for sec, m in MENUS.items():
     SECTION[sec] = sec
     for g, items in m["groups"]:
         for h, *_ in items:
             SECTION.setdefault(h, sec)
-for _a in ["ai-readiness","erp-over-budget","ai-triage-human-touch","connecting-customer-data","erp-demo-truth","itsm-migration","pilot-to-production","cx-beyond-nps"]:
-    SECTION[_a + ".html"] = "resources.html"
-SECTION["careers.html"] = "resources.html"  # careers lives under Resources; also reachable from Industry > Consultants > Join Us
-
 
 def header(fname):
     active = SECTION.get(fname, fname)
@@ -153,9 +169,9 @@ def footer():
     return f'''<footer class="site-footer"><div class="wrap"><div class="ft" style="grid-template-columns:1.5fr repeat(4,1fr)">
 <div><img src="assets/img/logo-stacked-light.png" alt="ARRON — ahead of now"><p style="max-width:34ch">An AI-ready technology company building AI-native enterprises. Headquartered in Dallas, Texas.</p></div>
 {col("Offerings", [("ai.html", "AI / Super Intelligence"), ("erp.html", "ERP"), ("itsm.html", "ITSM"), ("cx.html", "Customer Experience"), ("digital-workplace.html", "Digital Workplace")])}
-{col("Capabilities", [("consulting.html", "Consulting"), ("services.html", "Services"), ("partnerships.html", "Partnerships"), ("product.html", "Product as a Service")])}
-{col("Explore", [("case-studies.html", "Case Studies"), ("testimonials.html", "Testimonials"), ("consultants.html", "Consultants"), ("blog.html", "Blog"), ("events.html", "Events"), ("careers.html", "Careers")])}
-{col("Company", [("about.html", "About Us"), ("about.html#contact", "Contact us"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
+{col("Capabilities & Products", [("consulting.html", "Consulting"), ("services.html", "Services"), ("partnerships.html", "Partnerships"), ("arron-ai.html", "ARRON AI"), ("record-vault-ai.html", "Record Vault AI"), ("connect-ai.html", "Connect AI")])}
+{col("Industries", [(h, t) for h, t, d in INDUSTRY_PAGES])}
+{col("Company", [("about.html", "About ARRON"), ("proven-experience.html", "Proven Experience"), ("insights.html", "Insights"), ("careers.html", "Careers"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
 <div class="fb"><span>© 2026 ARRON Technologies. All rights reserved.</span><span>Dallas, Texas · Louisville · Houston · Delhi NCR · Pune · Bangalore</span></div></div></footer>'''
 
 
@@ -214,114 +230,84 @@ def tile(href, k, title, desc, art_html):
 
 
 
-def resources_stage(active=None):
-    if active == "blog.html":
-        items = [("#more", "article", "#2563d8", "Blog articles", "Latest thinking on AI, ERP, ITSM and CX", "8 articles"),
-                 ("#newsletter", "mail", "#7a4bd8", "Monthly newsletter", "One useful email, once a month", "Free"),
-                 ("events.html", "webinar", "#d4202f", "Events & Webinars", "Live sessions and on-demand recordings", "6 sessions"),
-                 ("careers.html", "career", "#1a9a5b", "Careers", "Open roles and how we hire", "6 open roles")]
-    else:
-        items = [("blog.html", "article", "#2563d8", "Blogs & Newsletter", "Insights on AI, ERP, ITSM and CX, plus a monthly briefing", "8 articles"),
-                 ("events.html", "webinar", "#d4202f", "Events & Webinars", "Live sessions, roundtables and on-demand recordings", "6 sessions"),
-                 ("careers.html", "career", "#1a9a5b", "Careers", "Open roles and how we hire", "6 open roles")]
-    out = ''
-    for href, ic, c, t, d, n in items:
-        out += f'''<a class="rlink" href="{href}"><span class="ri" style="background:{c}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{V.ICON_PATHS[ic]}</svg></span>
-<span class="rt"><b>{t}</b><span>{d}</span></span><span class="rn">{n}</span><span class="rg">{ARROW}</span></a>'''
-    return f'<div class="rstack">{out}</div>'
-
-
 # =========================================================== DETAIL PAGES (offerings + capabilities)
 D = {}
 D["ai"] = dict(
     file="ai.html", parent=("offerings.html", "Offerings"), name="Artificial & Super Intelligence", short="AI / SI", visual=V.v_ai, mini="ai",
-    tile_desc="Strategy, data foundations and agentic solutions that move AI from pilot to production.",
-    h1='Put intelligence to work <span class="r">across the enterprise.</span>',
-    lead="From readiness to production-grade agents, we help you apply AI where it changes a number: cost, speed, revenue or risk. And we build toward systems that reason and act across the whole business, responsibly.",
-    what_p="Four building blocks take you from a promising idea to AI that your people trust and use every day.",
-    what=[("AI readiness & strategy", "Find the use cases worth pursuing, size the value and set a sequenced roadmap."),
-          ("Data foundations", "Pipelines, quality and architecture that your models can rely on."),
-          ("Agents & copilots", "Task-doing AI built into the ERP, service and customer workflows you already run."),
-          ("Governance & trust", "Security, compliance and responsible-AI controls designed in from day one.")],
-    steps=[("Assess", "Review readiness across data, platforms, skills and risk."), ("Prioritize", "Rank use cases by value and feasibility, then pick the first wins."),
-           ("Build", "Prototype, test and take solutions into production."), ("Scale", "Monitor, govern and extend what works across the business.")],
-    third=("Where it works", "Proven in the industries that run on it.", "The same disciplined approach, tuned to the realities of each sector.",
-           [("server", "Enterprise IT", "AI triage, anomaly detection and self-service."), ("bank", "Banking & Financial", "Fraud signals and compliance monitoring."),
-            ("factory", "Manufacturing", "Demand forecasting and predictive maintenance."), ("heart", "Healthcare", "Documentation and operational support."),
-            ("cart", "Retail", "Personalization and demand sensing."), ("signal", "Telecom", "Network incident prediction and routing.")]),
-    plat_label="AI platforms and tools we work with",
-    platforms=["OpenAI", "Anthropic", "Google Cloud", "AWS", "Microsoft", "ServiceNow", "SAP", "Salesforce", "Zoho", "Databricks", "Snowflake"])
+    tile_tag="Evolve or Beyond AI",
+    tile_desc="Beyond AI assistance toward adaptive, autonomous systems that transform decisions, operations and experiences into impact.",
+    platforms=["OpenAI", "Anthropic", "Google Cloud", "AWS", "Microsoft", "ServiceNow", "SAP", "Salesforce", "Zoho", "Databricks", "Snowflake"],
+    plat_label="AI platforms and ecosystems we work with")
 D["erp"] = dict(
     file="erp.html", parent=("offerings.html", "Offerings"), name="Enterprise Resource Planning", short="ERP", visual=V.v_erp, mini="erp",
-    tile_desc="Selection, implementation and optimization of the platforms that run finance and operations.",
-    h1='The right ERP, <span class="r">chosen and delivered right.</span>',
-    lead="Vendor-independent advice and hands-on delivery, so the system that runs your finance and operations fits the way you work and actually gets adopted.",
-    what_p="From the first requirements workshop to life after go-live, we cover the full ERP journey.",
-    what=[("Selection", "Requirements, scripted demos and an unbiased comparison of vendors."),
-          ("Implementation", "Program leadership and delivery from design through go-live."),
-          ("Contract negotiation", "Transparent total cost of ownership and terms that protect you."),
-          ("Cloud migration & optimization", "Move to the cloud and keep improving without disrupting operations.")],
-    steps=[("Strategy", "Define goals, roadmap and the business case."), ("Select", "Shortlist, demo and negotiate with the right vendor."),
-           ("Implement", "Design, configure, integrate, test and train."), ("Optimize", "Stabilize, measure and extend after go-live.")],
-    third=("Where it works", "Proven in the industries that run on it.", "The same disciplined approach, tuned to the realities of each sector.",
-           [("factory", "Manufacturing", "Planning, shop floor and quality in one system."), ("truck", "Distribution & Supply Chain", "Inventory, logistics and demand visibility."),
-            ("gov", "Public Sector", "Modernization for state, local and nonprofit."), ("bank", "Financial Services", "Finance, controls and reporting at scale."),
-            ("heart", "Healthcare", "Supply, finance and workforce management."), ("brief", "Professional Services", "Projects, billing and resource planning.")]),
+    tile_tag="A smarter core",
+    tile_desc="Modernized enterprise core and processes, on a platform that simplifies operations, accelerates decisions and enables continuous change.",
     plat_label="ERP platforms we work with",
     platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "Workday", "Zoho", "Infor", "Epicor", "IFS"])
 D["itsm"] = dict(
     file="itsm.html", parent=("offerings.html", "Offerings"), name="IT Service Management", short="ITSM", visual=V.v_itsm, mini="itsm",
-    tile_desc="Faster resolution and happier users through ITIL-aligned, AI-assisted service operations.",
-    h1='Service operations that <span class="r">resolve faster and cost less.</span>',
-    lead="We design and deploy ITIL-aligned service management on leading platforms, with AI handling triage, routing and prediction so your team spends time on what matters.",
-    what_p="A service desk people want to use, backed by processes that scale as the business grows.",
-    what=[("Process optimization", "Standardize and automate incident, change and request workflows."),
-          ("Incident & problem management", "Faster resolution, plus root-cause work that cuts repeat tickets."),
-          ("Change & release", "Structured approvals, risk scoring and rollback planning."),
-          ("Asset management & portal", "A lifecycle-aware CMDB and a self-service portal that gets used.")],
+    tile_tag="Service, before it's needed",
+    tile_desc="Proactive, automated services that resolve faster, reduce disruption and improve the support experience.",
+    h1='Service built for efficiency, <span class="r">engineered for resilience.</span>',
+    lead="We design and deploy ITIL-aligned service management on leading platforms, combining AI-led self-service, knowledge, prediction and automation to lower cost-to-serve, accelerate resolution and free teams to focus on higher-value work.",
+    what_h="Service management that anticipates, not just responds.", what_p="Four disciplines that take support from reactive to proactive.",
+    what=[("Process Optimization & Automation", "Standardize ITIL-aligned workflows with AI and automation for faster, lower-effort service."),
+          ("Incident & Problem Management", "Combine AI-assisted diagnosis, prediction and root-cause analysis to resolve faster and reduce repeat issues."),
+          ("Change, Release & Service Improvement", "Risk-based controls and service insights to deliver safer change and continuously improve performance."),
+          ("Asset, Knowledge & Self-Service", "A lifecycle-aware CMDB, connected knowledge and AI-led self-service that people actually use.")],
+    steps_h="From assessment to continuous improvement.", steps_p="Four stages, each with a defined output, so you always know where the program stands.",
     steps=[("Assess", "Measure maturity across tools, workflows and skills."), ("Roadmap", "Choose the platform, integrations, KPIs and timeline."),
            ("Implement", "Configure portal, SLAs and automation, and migrate from legacy tools."), ("Optimize", "Use analytics to predict breaches and extend to HR and Finance.")],
-    third=("Where it works", "Proven in the industries that run on it.", "The same disciplined approach, tuned to the realities of each sector.",
-           [("server", "Enterprise IT", "Centralized portals and SLA breach prediction."), ("bank", "BFSI", "Audit-ready change trails and compliance."),
-            ("code", "SaaS", "Incident correlation across DevOps pipelines."), ("heart", "Healthcare & Pharma", "SLA-driven support for critical systems."),
-            ("cart", "Retail", "Surge detection for peak-season traffic."), ("signal", "Telecom & Media", "Network incident prediction and routing.")]),
+    get_h="Better service. Lower cost. Less disruption.", get_p="What changes for your users, your team and your budget.",
+    get=[("bolt", "Faster resolution", "AI-assisted triage and routing get issues to the right resolution faster."),
+         ("chart", "Lower cost-to-serve", "Self-service, knowledge and automation reduce avoidable support effort."),
+         ("cog", "Higher productivity", "Automates repetitive work so teams can focus on higher-value service."),
+         ("refresh", "Fewer repeat incidents", "Root-cause insights help eliminate recurring issues and reduce demand."),
+         ("users", "Better service experience", "Simpler self-service and more consistent support reduce user effort."),
+         ("target", "More proactive operations", "Predictive insights help identify risks earlier and act before service is impacted.")],
     plat_label="ITSM platforms and tools we work with",
     platforms=["ServiceNow", "Zoho", "BMC Helix", "Freshservice", "Microsoft", "Slack", "Zendesk", "PagerDuty"])
 D["cx"] = dict(
     file="cx.html", parent=("offerings.html", "Offerings"), name="Customer Experience", short="CX", visual=V.v_cx, mini="cx",
-    tile_desc="Journeys, platforms and insight that turn every interaction into loyalty and growth.",
-    h1='Turn every interaction <span class="r">into loyalty.</span>',
-    lead="We connect the data, platforms and people behind each touchpoint, so customers get one consistent experience wherever they meet you.",
-    what_p="Better experiences come from fixing the moments that matter, and the systems underneath them.",
-    what=[("Journey design", "Map the customer journey and fix the moments that matter most."),
-          ("CX platforms", "CRM, contact center and digital engagement, implemented well."),
-          ("Insight & personalization", "Unified data that drives the next best action."),
-          ("Service excellence", "AI-assisted agents and self-service that resolve first time.")],
+    tile_tag="Every interaction, elevated",
+    tile_desc="Connected journeys and insight that deliver premium experiences, driving loyalty and growth.",
+    h1='Turn every interaction into <span class="r">loyalty, advocacy and growth.</span>',
+    lead="We connect data, journeys, channels, platforms and people behind every touchpoint to anticipate needs and deliver consistent, personalized experiences.",
+    what_h="Fix the moments that matter most.", what_p="Four disciplines that connect what customers feel to the systems behind it.",
+    what=[("Experience Design", "Map the customer journey and fix the moments that matter most."),
+          ("CX Platforms", "CRM, contact center and digital engagement, implemented well for a consistent experience."),
+          ("Insight & Personalization", "Unified data that drives the next best action."),
+          ("Service Excellence", "AI-assisted agents, knowledge and self-service that get it right the first time.")],
+    steps_h="Listen first, then build.", steps_p="Experience programs start with evidence and end with measured improvement.",
     steps=[("Listen", "Gather feedback, data and journey evidence."), ("Design", "Define target experience and the business case."),
            ("Build", "Implement platforms, integrations and automations."), ("Optimize", "Measure satisfaction and keep improving.")],
-    third=("Where it works", "Proven in the industries that run on it.", "The same disciplined approach, tuned to the realities of each sector.",
-           [("cart", "Retail & Consumer", "Omnichannel service and personalization."), ("bank", "Banking", "Seamless onboarding and support."),
-            ("signal", "Telecom", "Proactive service and churn reduction."), ("heart", "Healthcare", "Patient access and engagement."),
-            ("code", "Technology & SaaS", "Product-led onboarding and success."), ("plane", "Travel & Hospitality", "Loyalty and real-time service recovery.")]),
+    get_h="Turning every interaction into insight. Every insight into value.", get_p="What customers notice, and what the business sees.",
+    get=[("network", "Seamless journeys", "Consistent interactions across channels and touchpoints."),
+         ("spark", "Personalized experiences", "Every interaction shaped by customer context, preferences and needs."),
+         ("leaf", "Lower customer effort", "Simpler journeys with fewer handoffs and repetitions."),
+         ("bolt", "Faster resolution", "AI-assisted service and self-service resolve needs quicker."),
+         ("shield", "Stronger loyalty", "Better experiences build trust and lasting relationships."),
+         ("chart", "Growth & advocacy", "Stronger engagement supports retention, advocacy and growth.")],
     plat_label="CX platforms and tools we work with",
     platforms=["Salesforce", "Microsoft", "Zoho", "Adobe Experience Cloud", "Twilio", "Genesys", "Zendesk", "HubSpot", "Qualtrics"])
-
 D["dw"] = dict(
     file="digital-workplace.html", parent=("offerings.html", "Offerings"), name="Digital Workplace", short="Digital Workplace", visual=V.v_dw, mini="dw",
-    tile_desc="Modern, secure and intelligent workplaces that lift employee experience and productivity.",
-    h1='A workplace that works <span class="r">the way people do.</span>',
-    lead="We help organizations build digital workplaces where collaboration, service and intelligence come together, so employees find answers fast and spend their time on the work that matters.",
-    what_p="Everything that shapes a day at work, designed as one connected experience.",
+    tile_tag="Work, without friction",
+    tile_desc="A secure and seamless workplace that improves how people connect, work and experience technology.",
+    h1='Work designed around people, <span class="r">built for productivity.</span>',
+    lead="We help organizations create connected digital workplaces where collaboration, service, knowledge, devices, AI and intelligence work around the employee, making every day work simpler and more productive.",
+    what_h="Everything that shapes a day at work.", what_p="Four building blocks, designed as one connected employee experience.",
     what=[("Modern collaboration", "Messaging, meetings, documents and knowledge brought together on platforms your people already know."),
           ("Employee service portal", "One front door for IT, HR and facilities requests, with intelligent routing and self-service."),
           ("Device & endpoint experience", "Secure, well-managed devices with support that resolves issues before they interrupt work."),
           ("Intelligent workplace", "Copilots and agents that answer questions, automate requests and personalize each employee's day.")],
+    steps_h="Rolled out in waves, adopted by people.", steps_p="A workplace only works when people use it, so adoption is part of every stage.",
     steps=[("Assess", "Understand how people work today and where friction sits."), ("Design", "Define the target employee experience and platform choices."),
            ("Deploy", "Roll out platforms, portals and automation in managed waves."), ("Adopt", "Train, measure and keep improving based on real usage.")],
-    third=("What you get", "A workplace people actually enjoy using.", "Outcomes we design for, measured against targets set up front.",
-           [("bolt", "Faster support", "Requests resolved quickly with less back-and-forth."), ("chart", "Higher productivity", "Less time lost to tools, searching and waiting."),
-            ("users", "Better employee experience", "One consistent experience across IT, HR and facilities."), ("shield", "Consistent security", "Access and data protected without slowing people down."),
-            ("cog", "Less tool sprawl", "Fewer overlapping tools and lower running costs."), ("check", "Measurable adoption", "Clear usage and satisfaction data to guide improvement.")]),
+    get_h="A workplace people actually enjoy using.", get_p="Outcomes we design for, measured against targets set up front.",
+    get=[("bolt", "Faster support", "Requests resolved quickly with less back-and-forth."), ("chart", "Higher productivity", "Less time lost to tools, searching and waiting."),
+         ("users", "Better employee experience", "One consistent experience across IT, HR and facilities."), ("shield", "Consistent security", "Access and data protected without slowing people down."),
+         ("cog", "Less tool sprawl", "Fewer overlapping tools and lower running costs."), ("check", "Measurable adoption", "Clear usage and satisfaction data to guide improvement.")],
     plat_label="Digital workplace platforms we work with",
     platforms=["Microsoft", "Google Cloud", "Zoho", "ServiceNow", "Slack", "Zoom", "Okta", "Jamf"])
 D["consulting"] = dict(
@@ -329,17 +315,18 @@ D["consulting"] = dict(
     tile_desc="Technology and operating-model advice tied to financial outcomes.",
     h1='Strategy you can <span class="r">actually execute.</span>',
     lead="Technology and operating-model advice tied to financial outcomes. We clarify the decision, build the case and map the path, then stay close while it gets done.",
-    what_p="Independent advice across the decisions that shape how your enterprise runs.",
+    what_h="Advice across the decisions that matter.", what_p="Independent guidance across the choices that shape how your enterprise runs.",
     what=[("Digital & AI strategy", "A prioritized roadmap linking technology bets to business results."),
           ("Vendor selection", "Unbiased evaluation and negotiation across platforms and partners."),
           ("Process & operating model", "Redesign how work flows across finance, supply chain and service."),
           ("Change & adoption", "People-first planning so new systems and ways of working stick.")],
+    steps_h="From first conversation to first delivery wave.", steps_p="Every engagement follows the same four stages.",
     steps=[("Listen", "Interview stakeholders and review the current state."), ("Frame", "Define the problem, options and success measures."),
            ("Recommend", "Present a costed, sequenced plan with clear trade-offs."), ("Enable", "Support leaders through decisions and the first delivery wave.")],
-    third=("What you get", "Deliverables you can act on Monday.", "Every consulting engagement ends with tangible work product, not slideware.",
-           [("map", "Roadmap", "A sequenced plan with owners and milestones."), ("chart", "Business case", "Costs, benefits and risk in plain numbers."),
-            ("doc", "Vendor scorecards", "Transparent comparison against your requirements."), ("cog", "Target operating model", "Roles, processes and governance defined."),
-            ("users", "Change plan", "Communication, training and adoption tactics."), ("shield", "Risk register", "Known risks with mitigations and triggers.")]),
+    get_h="Deliverables you can act on Monday.", get_p="Every consulting engagement ends with tangible work product, not slideware.",
+    get=[("map", "Roadmap", "A sequenced plan with owners and milestones."), ("chart", "Business case", "Costs, benefits and risk in plain numbers."),
+         ("doc", "Vendor scorecards", "Transparent comparison against your requirements."), ("cog", "Target operating model", "Roles, processes and governance defined."),
+         ("users", "Change plan", "Communication, training and adoption tactics."), ("shield", "Risk register", "Known risks with mitigations and triggers.")],
     plat_label="Frameworks and methods we use",
     platforms=["ITIL 4", "TOGAF", "Prince2", "Agile / SAFe", "COBIT", "Lean Six Sigma", "ADKAR", "Value stream mapping", "OKRs"])
 D["services"] = dict(
@@ -347,17 +334,18 @@ D["services"] = dict(
     tile_desc="Implementation, integration and managed support from certified teams.",
     h1='Delivery and run, <span class="r">handled.</span>',
     lead="Implementation, integration and managed support from certified teams, so your platforms stay stable, secure and continuously improving.",
-    what_p="Hands-on delivery from first configuration to steady-state operations.",
+    what_h="Hands-on delivery, then steady-state operations.", what_p="From first configuration to the day-to-day running of your platforms.",
     what=[("Implementation", "Design, configure and launch your platforms on a proven delivery method."),
           ("Integration", "Connect ERP, service and customer systems through reliable interfaces."),
           ("Managed support", "Tiered support and monitoring against agreed service levels."),
           ("Optimization", "Regular releases, tuning and enhancements that keep value growing.")],
+    steps_h="From mobilization to run.", steps_p="Short build cycles, a managed transition and clear service levels once live.",
     steps=[("Mobilize", "Set up the team, governance and plan."), ("Build", "Configure, integrate and test in short cycles."),
            ("Transition", "Train users, cut over and stabilize."), ("Run", "Operate, support and improve against service levels.")],
-    third=("What you get", "Service you can measure.", "Clear commitments, transparent reporting and a team that knows your landscape.",
-           [("check", "Defined SLAs", "Response and resolution targets in writing."), ("chart", "Monthly reporting", "Performance, risks and improvement ideas."),
-            ("users", "Named team", "Consistent people who know your business."), ("shield", "Security first", "Access, audit and data-protection controls."),
-            ("cog", "Continuous improvement", "A standing backlog of enhancements."), ("doc", "Full documentation", "Runbooks and knowledge you own.")]),
+    get_h="Service you can measure.", get_p="Clear commitments, transparent reporting and a team that knows your landscape.",
+    get=[("check", "Defined SLAs", "Response and resolution targets in writing."), ("chart", "Monthly reporting", "Performance, risks and improvement ideas."),
+         ("users", "Named team", "Consistent people who know your business."), ("shield", "Security first", "Access, audit and data-protection controls."),
+         ("cog", "Continuous improvement", "A standing backlog of enhancements."), ("doc", "Full documentation", "Runbooks and knowledge you own.")],
     plat_label="Delivery tools and platforms",
     platforms=["ServiceNow", "Azure DevOps", "GitHub", "Jenkins", "Terraform", "Datadog", "Splunk", "Zoho"])
 D["partnerships"] = dict(
@@ -365,39 +353,22 @@ D["partnerships"] = dict(
     tile_desc="A certified ecosystem of platform vendors and specialist firms.",
     h1='An ecosystem <span class="r">on your side.</span>',
     lead="We work alongside leading enterprise platform vendors and specialist firms, and bring the right ones into each engagement so you get depth without the sprawl.",
-    what_p="Partnerships are only useful when they make your project better. Ours are built around that.",
+    what_h="Alliances that make projects better.", what_p="Partnerships are only useful when they improve your outcome. Ours are built around that.",
     what=[("Platform alliances", "Working relationships with the vendors behind your core systems."),
           ("Certified expertise", "Consultants certified on the platforms we recommend and deliver."),
           ("Joint solutions", "Pre-built accelerators and reference architectures with partners."),
           ("Co-innovation", "Pilots and early access to new platform capabilities.")],
+    steps_h="Aligned from day one.", steps_p="However many partners join, you deal with one accountable lead.",
     steps=[("Align", "Match your goals to the right partner capabilities."), ("Certify", "Ensure the team holds current platform credentials."),
            ("Co-build", "Deliver together under one accountable lead."), ("Grow", "Share learning and extend into new use cases.")],
-    third=("What you get", "The benefit of a network, with one point of accountability.", "We stay your single lead, whichever partners join the work.",
-           [("shield", "Vendor-neutral advice", "We recommend what fits, not what we resell."), ("users", "Right-sized teams", "Specialists on demand, not permanent overhead."),
-            ("bolt", "Faster starts", "Accelerators and templates from partner ecosystems."), ("check", "Aligned delivery", "One plan, one governance, one lead."),
-            ("chart", "Better commercial terms", "Partner programs that benefit you."), ("map", "Roadmap access", "Early insight into platform direction.")]),
+    get_h="A network, with one point of accountability.", get_p="We stay your single lead, whichever partners join the work.",
+    get=[("shield", "Vendor-neutral advice", "We recommend what fits, not what we resell."), ("users", "Right-sized teams", "Specialists on demand, not permanent overhead."),
+         ("bolt", "Faster starts", "Accelerators and templates from partner ecosystems."), ("check", "Aligned delivery", "One plan, one governance, one lead."),
+         ("chart", "Better commercial terms", "Partner programs that benefit you."), ("map", "Roadmap access", "Early insight into platform direction.")],
     plat_label="Technology partner ecosystem",
     platforms=["ServiceNow", "SAP", "Microsoft", "Oracle", "Salesforce", "Workday", "Zoho", "AWS", "Google Cloud", "OpenAI", "Anthropic"])
-D["product"] = dict(
-    file="product.html", parent=("capabilities.html", "Capabilities"), name="Product as a Service", short="Product as a Service", visual=V.v_product, photo="laptop-dark",
-    tile_desc="AI-native software designed, built and run for you as a subscription-style service.",
-    h1='AI-native development, <span class="r">delivered as a product.</span>',
-    lead="We design, build and run software with AI at its core, then operate it as a subscription-style service with continuous releases, so you get outcomes without carrying the engineering burden.",
-    what_p="From first idea to a live product, with the team that built it staying to run it.",
-    what=[("Product discovery & design", "Validate the problem, the users and the value before building."),
-          ("AI-native engineering", "Software designed around models and agents from the first line."),
-          ("Hosted & operated", "We run the platform, security and uptime on your behalf."),
-          ("Continuous releases", "Regular improvements shaped by real usage and your feedback.")],
-    steps=[("Discover", "Define the problem, users and measurable outcome."), ("Prototype", "Build and test a working version with real users."),
-           ("Launch", "Release, onboard and operate the live product."), ("Evolve", "Learn from usage and ship improvements continuously.")],
-    third=("What you get", "A product, not a project.", "Subscription-style delivery that keeps improving after launch.",
-           [("bolt", "Fast time to value", "Working software in weeks, not quarters."), ("cog", "No platform burden", "We handle hosting, scaling and security."),
-            ("chart", "Usage-led roadmap", "Features driven by data, not guesswork."), ("shield", "Enterprise-grade controls", "Governance for AI and data from day one."),
-            ("users", "Embedded team", "Product, design and engineering in one squad."), ("check", "Predictable cost", "A simple recurring fee against agreed outcomes.")]),
-    plat_label="Technology we build with",
-    platforms=["Python", "TypeScript", "Kubernetes", "Microsoft", "AWS", "Google Cloud", "PostgreSQL", "Snowflake", "OpenAI", "Anthropic"])
 OFFER_KEYS = ["ai", "erp", "itsm", "cx", "dw"]
-CAP_KEYS = ["consulting", "services", "partnerships", "product"]
+CAP_KEYS = ["consulting", "services", "partnerships"]
 
 
 def art_for(d):
@@ -409,28 +380,90 @@ def art_for(d):
 def tile_for(d, photo_art=False):
     art_html = f'{photo(d["photo"])}' if "photo" in d else V.mini(d["mini"])
     cls = " ph" if "photo" in d else ""
-    return f'<a class="tile" href="{d["file"]}"><div class="art{cls}">{art_html}</div><div class="tb"><span class="k">{d["short"]}</span><h3>{d["name"]}</h3><p>{d["tile_desc"]}</p><span class="more">Explore {ARROW}</span></div></a>'
+    tag = f'<em class="tg">{d["tile_tag"]}</em>' if d.get("tile_tag") else ''
+    return f'<a class="tile" href="{d["file"]}"><div class="art{cls}">{art_html}</div><div class="tb"><span class="k">{d["short"]}</span><h3>{d["name"]}</h3>{tag}<p>{d["tile_desc"]}</p><span class="more">Explore {ARROW}</span></div></a>'
+
+
+def emph(*parts):
+    return '<div class="emph rv">' + '<i></i>'.join(f'<span>{p}</span>' for p in parts) + '</div>'
+
+
+def get_block(kicker, h, p, items):
+    return '<section><div class="wrap">' + sh(kicker, h, p) + '<div class="inds c3" data-stagger>' + ''.join(
+        f'<div class="ind">{icon(i)}<h3>{t}</h3><p>{x}</p></div>' for i, t, x in items) + '</div></div></section>'
+
+
+def steps_block(kicker, h, p, steps, tag=None):
+    t = f'<p class="flowline rv">{tag}</p>' if tag else ''
+    return '<section class="navy"><div class="wrap">' + sh(kicker, h, p) + proc(steps) + t + '</div></section>'
+
+
+def explore_block(d, keys):
+    others = [D[k] for k in keys if k != d_key(d)]
+    par = d["parent"]
+    return '<section class="paper"><div class="wrap">' + sh("Explore further", f'Other {par[1].lower()} to explore.', "Each one stands alone, and together they close the gaps between your systems, service and customers.") + \
+        f'<div class="tiles" style="grid-template-columns:repeat({len(others)},1fr)" data-stagger>' + ''.join(tile_for(o) for o in others) + '</div></div></section>'
+
+
+def d_key(d):
+    return [k for k, v in D.items() if v is d][0]
+
+
+def detail_hero(d, h1, lead):
+    par = d["parent"]
+    return hero(f'<a href="index.html">Home</a> / <a href="{par[0]}">{par[1]}</a> / {d["short"]}', h1, lead, d["visual"]())
 
 
 def build_detail(key):
     if key == "ai":
         return build_ai()
+    if key == "erp":
+        return build_erp()
     d = D[key]
     keys = OFFER_KEYS if key in OFFER_KEYS else CAP_KEYS
-    others = [D[k] for k in keys if k != key]
-    par = d["parent"]
-    b = hero(f'<a href="index.html">Home</a> / <a href="{par[0]}">{par[1]}</a> / {d["short"]}', d["h1"], d["lead"], d["visual"]())
+    b = detail_hero(d, d["h1"], d["lead"])
     b += marquee(d["plat_label"], d["platforms"] * 2)
-    if key == "product":
-        b += product_block()
-    b += f'<section id="more"><div class="wrap">{sh("What we do", "Everything you need, from first idea to steady state.", d["what_p"])}{rows(d["what"], "c4w")}</div></section>'
-    b += '<section class="navy"><div class="wrap">' + sh("How we deliver", "A clear path with no surprises.", "Four stages, each with a defined output, so you always know where the program stands.") + proc(d["steps"]) + '</div></section>'
-    k, h2, p, items = d["third"]
-    b += '<section><div class="wrap">' + sh(k, h2, p) + '<div class="inds c3" data-stagger>' + ''.join(f'<div class="ind">{icon(i)}<h3>{t}</h3><p>{x}</p></div>' for i, t, x in items) + '</div></div></section>'
-    b += '<section class="paper"><div class="wrap">' + sh("Explore further", f'Other {par[1].lower()} to explore.', "Each one stands alone, and together they close the gaps between your systems, service and customers.") + \
-         f'<div class="tiles" style="grid-template-columns:repeat({len(others)},1fr)" data-stagger>' + ''.join(tile_for(o) for o in others) + '</div></div></section>'
-    b += cta_band(f"Ready to talk {d['short']}?", "Tell us the outcome you want. We will tell you honestly how to get there.")
+    b += f'<section id="more"><div class="wrap">{sh("What we do", d["what_h"], d["what_p"])}{rows(d["what"], "c4w")}</div></section>'
+    b += steps_block("How we deliver", d["steps_h"], d["steps_p"], d["steps"])
+    b += get_block("What you get", d["get_h"], d["get_p"], d["get"])
+    b += explore_block(d, keys)
+    b += cta_band(f"Ready to talk {d['short']}?", "Tell us the outcome you want. We will tell you honestly how to get there.", "Start a conversation")
     page(d["file"], f'{d["name"]} — ARRON', d["lead"][:150], b)
+
+
+def build_erp():
+    d = D["erp"]
+    b = detail_hero(d, 'Enterprise Resource Planning for the <span class="r">AI-Native Enterprise</span>',
+                    "We help organizations transform their operational core through ERP strategy, implementation, and modernization. Our approach combines clean-core architecture, connected enterprise data, and embedded AI to create agile businesses that can respond quickly to market shifts and emerging opportunities. Our long-term ambition is to enable AI-native enterprises, where intelligent agents continuously support, optimize, and adapt business processes, allowing organizations ahead of now.")
+    b += marquee(d["plat_label"], d["platforms"] * 2)
+    b += f'''<section id="more"><div class="wrap"><div class="statement rv">Replacement as a product, not a project. Guidance generated from the system's own definitions. Scenario branches on the live business. Everything replaceable, plus an exit door. One product from AI Agents to several continents, across finance, logistics, operations and regulations.</div></div></section>'''
+    b += f'''<section class="paper"><div class="wrap">{sh("What we do", "Evolve core systems to a smarter enterprise.", "From strategy and implementation to run and evolve, we modernize the operational core of the business.")}
+<div class="split2" style="align-items:start;margin-bottom:64px"><div><span class="kicker rv" style="color:var(--red)">AI-Native ERP</span><h3 class="rv" style="font:600 clamp(1.5rem,2.6vw,2.1rem)/1.25 var(--fd);color:var(--ink);margin-top:10px">The core that thinks, acts and improves.</h3></div>
+<div><p class="lead rv" style="margin-top:0">Traditional ERP records what happened. AI-native ERP helps decide what happens next.</p><p class="rv" data-delay=".15" style="margin-top:16px">Most enterprises add AI on top of their ERP as a separate layer. ARRON builds intelligence into the core itself, so processes can sense, decide and act, with people kept in control.</p></div></div>
+<span class="kicker rv">What AI-native ERP delivers</span>
+<div class="tiles five" data-stagger style="margin-top:18px">''' + ''.join(f'<div class="kcard"><span class="ic">{icon(i)}</span><h3>{t}</h3><p>{x}</p></div>' for i, t, x in [
+        ("cog", "Autonomous Processes", "AI agents run routine work across finance, supply chain, procurement and order-to-cash, from matching and reconciling to replenishing and resolving exceptions."),
+        ("chart", "Predictive Operations", "Forecasting and early-warning signals for demand, cash, inventory and supply risk, so the business acts before issues hit."),
+        ("spark", "Conversational ERP", "People ask, approve and act in natural language instead of moving between screens and transactions."),
+        ("check", "Intelligent Close & Control", "Continuous reconciliation, anomaly detection and automated compliance checks for a faster, cleaner close."),
+        ("db", "Connected Data Foundation", "One trusted data layer across ERP and the wider enterprise, which gives AI the context it needs to reason and act.")]) + '</div></div></section>'
+    b += steps_block("How we get there", "From transaction to autonomous action.", "Four stages that move each process from assisted to autonomous as trust grows.",
+                     [("Assess", "Find the high-value processes and check how ready the data, platform and organization are for AI."),
+                      ("Architect", "Design a clean, AI-ready core with clear integration, governance and points where people make the decision."),
+                      ("Embed", "Build agents, automation and insight into live ERP processes, whatever the platform."),
+                      ("Evolve", "Move each process from assisted to autonomous as trust, controls and adoption grow.")], "From Transaction → Insight → Autonomous Action.")
+    b += f'''<section><div class="wrap">{sh("ERP services", "Four services across the ERP lifecycle.", "Choose one, or let us run the whole journey with you.")}''' + rows([
+        ("ERP Advisory & Roadmap", "Assess processes, landscape and business priorities to choose the right platform, deployment model and path to value."),
+        ("Transformation & Implementation", "Greenfield, brownfield or phased moves to modern cloud ERP on any leading platform, with fit-to-standard processes and clean data migration."),
+        ("Intelligent ERP & Integration", "Embed AI, automation and analytics into core processes, and connect ERP smoothly with the wider enterprise landscape."),
+        ("Run, Optimize & Evolve", "Application management and continuous improvement that keep the core stable, current and in step with the business.")], "c4w") + '</div></section>'
+    b += get_block("What you get", "An ERP that makes the business easier to run.", "Outcomes we design for from the first workshop.", [
+        ("bolt", "Operational efficiency", "Simpler processes and fewer manual steps."), ("cog", "Higher productivity", "Automation across core business processes."),
+        ("chart", "Better decisions", "Connected data and timely insight for informed action."), ("refresh", "Greater agility", "Processes and platforms that adapt as the business changes."),
+        ("shield", "Stronger control", "Better visibility, robust governance and consistent processes."), ("network", "Operational simplicity", "Harmonized processes and connected systems make the business easier to run and scale.")])
+    b += explore_block(d, OFFER_KEYS)
+    b += cta_band("Ready to build a smarter core?", "Tell us where your ERP is today. We'll help shape where it goes next.", "Start a conversation")
+    page(d["file"], "ERP for the AI-Native Enterprise — ARRON", "ARRON helps organizations transform their operational core through ERP strategy, implementation and modernization, with AI built into the core.", b)
 
 
 def tiles_for(keys):
@@ -519,51 +552,105 @@ def aura_mini():
 
 def build_ai():
     d = D["ai"]
-    lead = "At ARRON, we help organizations move beyond automation and into the era of the Autonomous Enterprise, where AI serves as a trusted digital workforce that accelerates innovation, augments decision-making, and transforms customer and employee experiences."
+    lead = "From augmenting people to autonomously orchestrating work, ARRON embeds AI across the enterprise to accelerate innovation, elevate decisions and reimagine customer and employee experiences."
     b = hero('<a href="index.html">Home</a> / <a href="offerings.html">Offerings</a> / AI / Super Intelligence',
-             'From Digital Transformation to the <span class="r">Autonomous Enterprise</span>', lead + ' <b style="color:#fff">Built AI-Native. Designed for Ahead of Now.</b>', V.v_ai())
-    b += marquee("AI platforms and ecosystems we work with", d["platforms"] * 2)
-    b += f'''<section id="more"><div class="wrap">{sh("AI-Native Architecture", "AI-Native Architecture for an AI-First Future", "Traditional enterprises bolt AI onto existing systems. ARRON takes a fundamentally different approach.")}
-<div class="split2" style="align-items:start"><div><p class="lead rv" style="margin-top:0">We design AI-native architectures that embed intelligence into the core of business operations, enabling autonomous decision-making, continuous learning, and seamless collaboration between people, processes, and AI from day one.</p></div>
-<div class="rv" data-delay=".2" style="padding:34px 36px;border-radius:24px;background:var(--paper);border-left:4px solid var(--red)"><span class="kicker" style="margin-bottom:12px">Definition</span><h3 style="font-size:1.35rem;margin-bottom:12px">What is AI-Native Architecture?</h3><p style="color:var(--text)">AI-native architecture is an enterprise framework where AI agents, business applications, automation, and data operate as a unified intelligence ecosystem. Every layer is designed to enable intelligent orchestration, predictive insights, adaptive workflows, and autonomous execution at scale.</p></div></div></div></section>'''
-    b += f'''<section class="paper" id="aura-sec"><div class="wrap">{sh("Introducing ARRON AURA™", "Artificial Intelligence Unified Reasoning Architecture", "ARRON AURA is our AI-native enterprise platform that connects intelligent agents, enterprise systems, data, and human expertise to create a unified operational intelligence layer across the organization.")}{aura_diagram()}</div></section>'''
-    caps = [("brain", "Agentic AI Platform", "Autonomous AI agents that execute tasks, make decisions, and collaborate across business functions."),
-            ("network", "Intelligent Enterprise Workflows", "AI-driven orchestration across ERP, ITSM, HR, Finance, Customer Experience, and business operations."),
-            ("db", "Data Intelligence Layer", "A real-time enterprise foundation that powers predictive, generative, and reasoning-based AI."),
-            ("refresh", "Autonomous Operations", "Self-healing, self-optimizing systems that continuously improve efficiency, resilience, and performance."),
-            ("users", "Human + AI Collaboration", "AI copilots that empower employees with contextual intelligence, guidance, and productivity augmentation.")]
-    b += '<section><div class="wrap">' + sh("Key Capabilities", "What ARRON AURA delivers.", "Five capabilities that turn a collection of tools into one intelligent enterprise.") + \
+             'AI built for impact, <span class="r">architected for autonomy.</span>', lead + ' <b style="color:#fff">Built AI-Native. Designed for Ahead of Now.</b>', V.v_ai())
+    b += marquee(d["plat_label"], d["platforms"] * 2)
+    b += f'''<section id="more"><div class="wrap">{sh("What we do", "From AI potential to enterprise impact.", "AI capabilities that turn data, knowledge and workflows into better decisions, smarter actions and new experiences.")}''' + rows([
+        ("Generative AI", "Transform how people create, discover and interact with enterprise knowledge through contextual AI experiences."),
+        ("Agentic & Autonomous AI", "Build AI systems that reason, coordinate and act across workflows with increasing levels of autonomy."),
+        ("AI Engineering", "Design, build and integrate production-ready AI across enterprise applications, data and processes."),
+        ("Decision Intelligence", "Combine data, context and AI to surface insights, guide decisions and trigger timely action.")], "c4w") + '</div></section>'
+    b += f'''<section class="paper"><div class="wrap">{sh("AI-Native by design", "Traditional enterprises bolt AI onto existing systems. ARRON takes a fundamentally different approach.", "We design AI-native architectures that embed intelligence into the core of business operations, enabling autonomous decision-making, continuous learning, and seamless collaboration between people, processes, and AI from day one.")}
+<div class="rv" style="padding:34px 40px;border-radius:24px;background:#fff;border-left:4px solid var(--red);max-width:900px"><span class="kicker" style="margin-bottom:12px">Definition</span><h3 style="font-size:1.35rem;margin-bottom:12px">What is AI-Native Architecture?</h3><p style="color:var(--text)">AI-native architecture is an enterprise framework where AI agents, business applications, automation, and data operate as a unified intelligence ecosystem. Every layer is designed to enable intelligent orchestration, predictive insights, adaptive workflows, and autonomous execution at scale.</p></div></div></section>'''
+    b += f'''<section id="aura-sec"><div class="wrap">{sh("Introducing ARRON AURA™", "Artificial Intelligence Unified Reasoning Architecture", "ARRON AURA is our AI-native enterprise platform that connects intelligent agents, enterprise systems, data, and human expertise to create a unified operational intelligence layer across the organization.")}{aura_diagram()}</div></section>'''
+    caps = [("brain", "Adaptive AI & Agent Ecosystem", "AI agents and emerging autonomous systems that reason, coordinate and act across enterprise tasks and functions."),
+            ("network", "Intelligent Enterprise Workflows", "Orchestration and automation that connect AI, people, applications and processes around end-to-end outcomes."),
+            ("db", "Data & Decision Intelligence", "A connected data and knowledge foundation that turns enterprise context into real-time insight and better-informed action."),
+            ("refresh", "Autonomous Operations", "Adaptive operations that detect, respond, optimize and increasingly self-correct with appropriate controls."),
+            ("users", "Human + AI Experience", "AI copilots, agents and contextual experiences that augment people across work, service and decision-making.")]
+    b += '<section class="paper"><div class="wrap">' + sh("What AURA delivers", "One framework. Connected enterprise intelligence.", "AURA brings the capabilities required to connect AI, data, workflows, enterprise systems and people, from reasoning and orchestration through action and continuous improvement.") + \
          '<div class="tiles five" data-stagger>' + ''.join(f'<div class="kcard"><span class="ic">{icon(i)}</span><h3>{ti}</h3><p>{tx}</p></div>' for i, ti, tx in caps) + '</div></div></section>'
     pil = [("AI Agents", "Purpose-built digital workers that automate processes, execute actions, and drive intelligent outcomes."),
            ("Enterprise Platforms", "Seamless integration across ServiceNow, Workday, Microsoft, Salesforce, SAP, and other enterprise ecosystems."),
            ("Data & Knowledge Fabric", "Unified access to structured data, unstructured content, enterprise knowledge, and real-time insights."),
            ("Governance & Security", "Responsible AI frameworks delivering transparency, compliance, privacy, security, and trust."),
            ("Continuous Intelligence", "Adaptive systems that learn, evolve, and improve through every interaction and outcome.")]
-    b += '<section class="navy"><div class="wrap">' + sh("The ARRON Architecture Pillars", "Five pillars. One intelligent enterprise.", "Every ARRON AURA solution is built on the same five foundations.") + \
+    b += '<section class="navy"><div class="wrap">' + sh("The ARRON Architecture Pillars", "Built on foundations that scale with what's next.", "Five foundations designed to keep enterprise AI connected, governed and ready to evolve.") + \
          '<div class="pillars" data-stagger>' + ''.join(f'<div class="pillar"><span class="n">{i+1:02d}</span><h3>{ti}</h3><p>{tx}</p></div>' for i, (ti, tx) in enumerate(pil)) + '</div></div></section>'
-    b += cta_band("Built AI-Native. Designed for Ahead of Now.", "Tell us where you are on the journey to the Autonomous Enterprise.", "Talk to us")
-    page(d["file"], "AI / Super Intelligence — ARRON AURA | ARRON Technologies", "From Digital Transformation to the Autonomous Enterprise. Meet ARRON AURA, our AI-native enterprise platform.", b)
+    b += steps_block("How we deliver", "From ambition to AI that works.", "A structured path to take AI from opportunity to enterprise adoption, with scalability, trust and measurable value built in.",
+                     [("Assess", "Identify high-value opportunities and understand data, technology, governance and organizational readiness."),
+                      ("Architect", "Define the AI-native architecture, experience, integrations, controls and human decision points."),
+                      ("Engineer", "Build and integrate AI, agents and automation into enterprise applications and workflows."),
+                      ("Scale", "Operationalize, govern and evolve AI as adoption grows and technology advances.")], "From Data → Decision → Impact.")
+    b += get_block("What you get", "AI that moves from promise to performance.", "Outcomes focused on turning AI investment into enterprise value, with trust and control built in.", [
+        ("chart", "Value at scale", "Move beyond isolated AI success to meaningful impact across functions and the enterprise."),
+        ("bolt", "Faster, stronger decisions", "Help people act sooner and with greater confidence when opportunities and issues emerge."),
+        ("cog", "Higher productivity", "Reduce effort, delay and repetitive work so people can focus on where they add the most value."),
+        ("spark", "Better experiences", "Make customer and employee interactions simpler, faster and more relevant."),
+        ("refresh", "More resilient operations", "Respond faster to change, reduce disruption and strengthen operational continuity."),
+        ("shield", "Autonomy with control", "Progress toward greater enterprise autonomy while retaining governance, security and human oversight.")])
+    b += explore_block(d, OFFER_KEYS)
+    b += cta_band("Ready to move beyond AI experimentation?", "Tell us where you want AI to create impact. We'll help shape the path forward.", "Start a conversation")
+    page(d["file"], "AI / Super Intelligence — ARRON AURA | ARRON Technologies", "AI built for impact, architected for autonomy. Meet ARRON AURA, our AI-native enterprise platform.", b)
 
 
-# =========================================================== Product as a Service: products
-def product_block():
-    prods = [
-        ("01", "ARRON AI", "Enterprise-grade agentic AI for customer and employee experience",
-         "ARRON AI is an enterprise-grade Agentic AI platform that automates customer experience (CX) and employee experience (EX) interactions across chat, voice, email, and social channels.",
-         ["Chat", "Voice", "Email", "Social channels"], V.v_prod_arron(), False),
-        ("02", "Record Vault AI", "AI-powered evidence vault",
-         "Record Vault AI is an AI-powered evidence vault for securely managing family litigation documents, records, and case history.",
-         ["Documents", "Records", "Case history"], V.v_prod_vault(), True),
-        ("03", "Connect AI", "AI for nonprofit and volunteer organizations",
-         "Connect AI empowers nonprofit and volunteer organizations with AI-driven tools to grow their impact, engage communities, and strengthen member participation.",
-         ["Grow impact", "Engage communities", "Member participation"], V.v_prod_connect(), False)]
-    out = f'<section id="products"><div class="wrap">{sh("Our products", "Products built AI-native.", "From enterprise agents to purpose-built tools for people and communities, delivered as a service.")}</div></section>'
-    for i, (no, name, tag, desc, feats, vis, flip) in enumerate(prods):
-        bg = ' class="paper"' if i % 2 == 0 else ''
-        out += f'''<section{bg}><div class="wrap split2{" flip" if flip else ""}"><div><span class="prod-no rv">PRODUCT {no}</span><h2 data-split>{name}</h2><p class="lead rv" data-delay=".15" style="font-weight:500;color:var(--ink)">{tag}</p>
-<p class="rv" data-delay=".2" style="margin-top:14px">{desc}</p><div class="prod-feat rv" data-delay=".25">{"".join(f"<span>{f}</span>" for f in feats)}</div>
-<a class="btn btn-red rv" style="margin-top:32px" href="{MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Request%20a%20demo%3A%20" + name.replace(" ", "%20"))}">Request a demo {ARROW}</a></div><div class="stage rv">{vis}</div></div></section>'''
-    return out
+# =========================================================== Products (Product as a Service)
+PRODUCTS = [
+    dict(no="01", slug="arron-ai", file="arron-ai.html", name="ARRON AI", tag="Enterprise-grade agentic AI for customer and employee experience",
+         h1='Agentic AI for <span class="r">customer and employee experience.</span>',
+         desc="ARRON AI is an enterprise-grade Agentic AI platform that automates customer experience (CX) and employee experience (EX) interactions across chat, voice, email, and social channels.",
+         feats=[("Chat", "Automated CX and EX interactions over chat."), ("Voice", "Automated CX and EX interactions by voice."), ("Email", "Automated CX and EX interactions over email."), ("Social channels", "Automated CX and EX interactions on social channels.")],
+         vis=V.v_prod_arron, flip=False, photo="dashboard"),
+    dict(no="02", slug="record-vault-ai", file="record-vault-ai.html", name="Record Vault AI", tag="AI-powered evidence vault",
+         h1='An AI-powered <span class="r">evidence vault.</span>',
+         desc="Record Vault AI is an AI-powered evidence vault for securely managing family litigation documents, records, and case history.",
+         feats=[("Documents", "Family litigation documents, securely managed in one place."), ("Records", "Records kept organized and protected."), ("Case history", "The full case history, ready when you need it.")],
+         vis=V.v_prod_vault, flip=True, photo="laptop-dark"),
+    dict(no="03", slug="connect-ai", file="connect-ai.html", name="Connect AI", tag="AI for nonprofit and volunteer organizations",
+         h1='AI that grows the impact of <span class="r">nonprofits and volunteer groups.</span>',
+         desc="Connect AI empowers nonprofit and volunteer organizations with AI-driven tools to grow their impact, engage communities, and strengthen member participation.",
+         feats=[("Grow impact", "AI-driven tools that extend what your organization can achieve."), ("Engage communities", "AI-driven tools to reach and engage the people you serve."), ("Member participation", "Tools that strengthen participation across your membership.")],
+         vis=V.v_prod_connect, flip=False, photo="highfive"),
+]
+
+
+def demo_link(name):
+    return MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Request%20a%20demo%3A%20" + name.replace(" ", "%20"))
+
+
+def product_tile(p):
+    return f'<a class="tile" href="{p["file"]}"><div class="art">{p["vis"]()}</div><div class="tb"><span class="k">Product {p["no"]}</span><h3>{p["name"]}</h3><p>{p["tag"]}</p><span class="more">Explore {ARROW}</span></div></a>'
+
+
+def build_products():
+    b = hero('<a href="index.html">Home</a> / Products', 'Products built AI-native, <span class="r">delivered as a service.</span>',
+             "We design, build and run software with AI at its core, then operate it as a subscription-style service with continuous releases, so you get outcomes without carrying the engineering burden.", V.v_product())
+    b += marquee("Technology we build with", ["Python", "TypeScript", "Kubernetes", "Microsoft", "AWS", "Google Cloud", "PostgreSQL", "Snowflake", "OpenAI", "Anthropic"] * 2)
+    b += f'<section id="more"><div class="wrap">{sh("Our products", "Three products, one delivery model.", "From enterprise agents to purpose-built tools for people and communities.")}<div class="tiles" data-stagger>' + ''.join(product_tile(p) for p in PRODUCTS) + '</div></div></section>'
+    b += '<section class="paper"><div class="wrap">' + sh("Product as a Service", "A product, not a project.", "From first idea to a live product, with the team that built it staying to run it.") + rows([
+        ("Product discovery & design", "Validate the problem, the users and the value before building."),
+        ("AI-native engineering", "Software designed around models and agents from the first line."),
+        ("Hosted & operated", "We run the platform, security and uptime on your behalf."),
+        ("Continuous releases", "Regular improvements shaped by real usage and your feedback.")], "c4w") + '</div></section>'
+    b += get_block("What you get", "Subscription-style delivery that keeps improving after launch.", "Outcomes of buying a product instead of commissioning a build.", [
+        ("bolt", "Fast time to value", "Working software in weeks, not quarters."), ("cog", "No platform burden", "We handle hosting, scaling and security."),
+        ("chart", "Usage-led roadmap", "Features driven by data, not guesswork."), ("shield", "Enterprise-grade controls", "Governance for AI and data from day one."),
+        ("users", "Embedded team", "Product, design and engineering in one squad."), ("check", "Predictable cost", "A simple recurring fee against agreed outcomes.")])
+    b += cta_band("Want to see a product in action?", "Tell us which one interests you and we will arrange a demo.", "Request a demo", MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Request%20a%20demo"))
+    page("products.html", "Products — Product as a Service | ARRON", "ARRON AI, Record Vault AI and Connect AI: AI-native products delivered as a service.", b)
+
+
+def build_product(p):
+    b = hero(f'<a href="index.html">Home</a> / <a href="products.html">Products</a> / {p["name"]}', p["h1"], p["desc"], p["vis"](),
+             cta_html=f'<div class="hero-cta rv" data-delay=".5"><a class="btn btn-red" href="{demo_link(p["name"])}">Request a demo {ARROW}</a><a class="btn btn-ghost" href="#more">What it covers</a></div>')
+    icons = ["chat", "voice", "email", "globe"]
+    b += f'<section id="more"><div class="wrap">{sh(f"Product {p["no"]}", p["tag"] + ".", "Delivered as a service: we host it, run it and keep improving it.")}' + rows(p["feats"], "c4w" if len(p["feats"]) == 4 else "c3") + '</div></section>'
+    others = [q for q in PRODUCTS if q is not p]
+    b += '<section class="paper"><div class="wrap">' + sh("Explore further", "More from ARRON Products.", "Each product is delivered as a service, with continuous releases.") + \
+         f'<div class="tiles" style="grid-template-columns:repeat(2,1fr)" data-stagger>' + ''.join(product_tile(q) for q in others) + '</div></div></section>'
+    b += cta_band(f"Interested in {p['name']}?", "Tell us about your use case and we will set up a demo.", "Request a demo", demo_link(p["name"]))
+    page(p["file"], f'{p["name"]} — ARRON', p["desc"][:150], b)
 
 
 # =========================================================== HOME
@@ -576,16 +663,19 @@ def build_home():
 <div class="hero-stats rv" data-delay=".7"><div><b>100+</b><span>Projects delivered</span></div><div><b>5</b><span>AI-native applications</span></div><div><b>Up to 30%</b><span>Operational cost savings</span></div><div><b>25+ yrs</b><span>Combined experience</span></div></div>
 {aura_mini()}</div></section>'''
     b += marquee()
-    b += '''<section id="intro"><div class="wrap split2" style="align-items:start"><div><span class="kicker rv">What we believe</span><h2 data-split>The enterprises that lead tomorrow will be built differently.</h2></div>
-<div><p class="lead rv" style="margin-top:0">As businesses move beyond traditional digital transformation, ARRON enables them to become AI-ready by modernizing technology landscapes, optimizing business processes, and creating the foundations required for AI-driven innovation. Our expertise spans Artificial Intelligence, Enterprise Resource Planning (ERP), IT Service Management (ITSM), Customer Experience (CX), Digital Workplace, and Enterprise Transformation.</p>
-<p class="rv" data-delay=".15" style="margin-top:20px">We believe the enterprises that lead tomorrow will be built differently. They will be AI-native at their core, combining human ingenuity, intelligent automation, and data-driven decision-making to create sustainable competitive advantage. ARRON helps organizations make that transition with practical strategies, modern platforms, and measurable outcomes.</p></div></div></section>'''
-    b += f'''<section id="who" class="paper"><div class="wrap split2"><div><span class="kicker rv">Who We Are</span><h2 data-split>Operating ahead of now.</h2>
+    b += f'''<section id="who"><div class="wrap split2"><div><span class="kicker rv">Who are we</span><h2 data-split>Operating ahead of now.</h2>
 <p class="lead rv" data-delay=".2">ARRON Technologies exists to help organizations operate ahead of now. As an AI-ready technology company, we help businesses evolve into AI-native enterprises through intelligent technology, modern platforms, and human ingenuity.</p>
 <p class="rv" data-delay=".25" style="margin-top:18px">Our team of seasoned industry consultants brings proven experience designing and delivering solutions that drive operational efficiency, reduce costs, enhance customer and employee experiences, and create measurable business value.</p>
+{emph("AI-Native by design", "Built for what comes next.")}
 <a class="more rv" style="margin-top:34px" href="about.html">More about ARRON {ARROW}</a></div>
 <div class="collage rv rv-r"><div class="c1">{photo("team-room", "Consultants working with a client team")}</div><div class="c2">{photo("dashboard", "Analytics dashboard")}</div>
 <div class="badge"><b>25+ years</b><span>of combined experience in technology leadership and transformation</span></div></div></div></section>'''
-    b += f'<section id="offer"><div class="wrap">{sh("What we offer", "Five practices. One connected enterprise.", "Each practice stands on its own. Together they close the gaps between your systems, your people and your customers.")}{tiles_for(OFFER_KEYS)}</div></section>'
+    b += f'''<section id="intro" class="paper"><div class="wrap"><div class="center-head"><span class="kicker rv">What we believe</span><h2 data-split>What leads tomorrow must be built differently today.</h2></div>
+<div class="split2" style="align-items:start;margin-top:48px"><p class="lead rv" style="margin-top:0">We believe enterprises must move beyond traditional transformation to become AI-native, adaptive and continuously evolving. That means reimagining intelligence through AI, modernizing the operational core through ERP, transforming how services run through ITSM, elevating Customer Experience, and creating a Digital Workplace built around people.</p>
+<p class="rv" data-delay=".15" style="margin-top:0">By bringing these together with human ingenuity, intelligent automation and data-driven decision-making, enterprises can respond faster, decide better and continuously create new value.</p></div>
+<div style="margin-top:44px">{emph("Operate Smarter", "Evolve Faster", "Lead What's Next")}</div></div></section>'''
+    b += f'<section id="offer"><div class="wrap">{sh("What we offer", "Five practices. One intelligent enterprise experience.", "Each practice stands on its own. Together they close the gaps between your systems, your people and your customers.")}{tiles_for(OFFER_KEYS)}</div></section>'
+    b += f'<section class="paper" id="products"><div class="wrap">{sh("Products", "Product as a Service.", "AI-native products from ARRON, delivered as a service and improved continuously.")}<div class="tiles" data-stagger>' + ''.join(product_tile(p) for p in PRODUCTS) + '</div></div></section>'
     why = [("100+", "Projects delivered", "100+ transformation and technology projects delivered across enterprise platforms, service management, workplace transformation, customer experience, and automation initiatives."),
            ("5", "AI-native applications", "5 AI-native applications successfully designed and delivered, helping organizations accelerate innovation and unlock new business capabilities."),
            ("30%", "Operational cost savings", "Up to 30% operational cost savings achieved through process optimization, automation, AI adoption, and service modernization."),
@@ -603,12 +693,12 @@ def build_home():
         else:
             head = f'<span class="n">{m}</span>'
         cells += f'<div>{head}<h3>{ti}</h3><p>{tx}</p></div>'
-    b += '<section class="navy" id="why"><div class="wrap">' + sh("Why ARRON", "Experience you can measure.", "What clients get when seasoned consultants and AI-native foundations come together.") + \
-         f'<div class="why6" data-stagger>{cells}</div><div class="closing rv"><b>ARRON. Ahead of Now. Building AI-Native Enterprises.</b><div style="margin-top:26px;display:flex;gap:26px;justify-content:center;flex-wrap:wrap"><a class="more" href="case-studies.html">Read our case studies {ARROW}</a><a class="more" href="industry.html">Industries we serve {ARROW}</a></div></div></div></section>'
+    b += '<section class="navy" id="why"><div class="wrap">' + sh("Why ARRON", "Enterprise experience. AI-native thinking. Value from day one.", "ARRON combines deep enterprise expertise with a future-ready technology mindset to solve the right problems, move faster from idea to impact, and build solutions designed to evolve.") + \
+         f'<div class="why6" data-stagger>{cells}</div><div style="margin:48px 0 0" class="emph-dark">{emph("Practical expertise", "Measurable outcomes", "Built for what's next.")}</div><div class="closing rv"><b>ARRON. Ahead of Now. Building AI-Native Enterprises.</b><div style="margin-top:26px;display:flex;gap:26px;justify-content:center;flex-wrap:wrap"><a class="more" href="proven-experience.html">Proven experience {ARROW}</a><a class="more" href="industry.html">Industries we serve {ARROW}</a></div></div></div></section>'
     nxt = [("STEP 01", "Talk to us", "Reach the team directly by email. A senior consultant will reply within one business day.", "about.html#contact", "Contact us"),
            ("STEP 02", "See how we work", "Understand our consulting, services and partnership models and which fits you.", "capabilities.html", "Capabilities"),
            ("STEP 03", "Explore ARRON AURA", "See how our AI-native architecture connects agents, data and enterprise systems.", "ai.html#aura", "ARRON AURA")]
-    b += '<section class="paper"><div class="wrap">' + sh("What should you do next", "Pick the starting point that fits you.", "No forms to fill and no sales script. Just a useful conversation.") + \
+    b += '<section><div class="wrap">' + sh("What should you do next", "Pick the starting point that fits you.", "No forms to fill and no sales script. Just a useful conversation.") + \
          '<div class="nexts" data-stagger>' + ''.join(f'<a class="nx" href="{h}"><span class="n">{n}</span><b>{t}</b><p>{p}</p><span class="more">{l} {ARROW}</span></a>' for n, t, p, h, l in nxt) + '</div></div></section>'
     b += cta_band("ARRON. Ahead of Now.", "Building AI-Native Enterprises. Tell us where you are headed and we will tell you honestly how to get there.", "Talk to us")
     page("index.html", "ARRON Technologies — Ahead of Now | AI-Native Enterprise Technology", "ARRON Technologies is an AI-ready technology company building AI-native enterprises through AI, ERP, ITSM, Customer Experience and Digital Workplace.", b)
@@ -619,270 +709,224 @@ def build_offerings():
     b = hero('<a href="index.html">Home</a> / Offerings', 'Five practices that power <span class="r">the AI-native enterprise.</span>',
              "Intelligence, operations, service and experience. Start with one, or run them as a single connected program.", V.v_stack())
     b += marquee()
-    b += f'<section id="more"><div class="wrap">{sh("Our practices", "Choose your starting point.", "Each practice has its own team, playbook and platform expertise.")}{tiles_for(OFFER_KEYS)}</div></section>'
-    qs = [("ai.html", "Not sure where AI will pay off?", "Artificial & Super Intelligence", "01"), ("erp.html", "Outgrown your ERP, or choosing a new one?", "Enterprise Resource Planning", "02"),
-          ("itsm.html", "Drowning in tickets and missed SLAs?", "IT Service Management", "03"), ("cx.html", "Customers leaving between touchpoints?", "Customer Experience", "04"), ("digital-workplace.html", "Employees losing time to clunky tools?", "Digital Workplace", "05")]
-    b += '<section class="navy"><div class="wrap">' + sh("Start where it hurts", "Tell us the problem. We will point to the practice.", "A shortcut if you know the pain but not the label.") + \
+    b += f'<section id="more"><div class="wrap">{sh("What we offer", "Five practices. One intelligent enterprise experience.", "Each practice has its own team, playbook and platform expertise.")}{tiles_for(OFFER_KEYS)}</div></section>'
+    qs = [("ai.html", "We're investing in AI, but the business impact isn't clear", "Turn fragmented AI initiatives into scalable, governed business outcomes.", "AI / SI: AI built for impact, architected for autonomy.", "01"),
+          ("erp.html", "Outgrown your ERP, or choosing a new one?", "", "ERP: The right ERP, chosen and delivered right.", "02"),
+          ("itsm.html", "Drowning in tickets and missed SLAs?", "", "ITSM: Service built for efficiency, engineered for resilience.", "03"),
+          ("cx.html", "Customers leaving between touchpoints?", "", "CX: Turn every interaction into loyalty, advocacy and growth.", "04"),
+          ("digital-workplace.html", "Employees losing time to clunky tools?", "", "Digital Workplace: Work designed around people, built for productivity.", "05")]
+    b += '<section class="navy"><div class="wrap">' + sh("Start where it hurts", "Bring us the challenge. We'll map the way ahead.", "A shortcut if you know the pain but not the label.") + \
          '<div style="border-top:1px solid rgba(255,255,255,.14)" data-stagger>' + ''.join(
-             f'<a href="{h}" class="qrow"><span class="n">{n}</span><b>{q}</b><span class="a">{a}</span><span class="go">{ARROW}</span></a>' for h, q, a, n in qs) + '</div></div></section>'
-    b += cta_band("Not sure where to start?", "Tell us the outcome you want and we will recommend the lightest path to it.")
-    page("offerings.html", "Offerings — ARRON | AI, ERP, ITSM, CX & Digital Workplace", "ARRON offerings: Artificial & Super Intelligence, ERP, IT Service Management and Customer Experience.", b)
+             f'<a href="{h}" class="qrow"><span class="n">{n}</span><b>{q}{f"<small>{s}</small>" if s else ""}</b><span class="a">{a}</span><span class="go">{ARROW}</span></a>' for h, q, s, a, n in qs) + '</div></div></section>'
+    b += cta_band("Not sure where to start?", "Bring us the challenge and we will recommend the lightest path to it.")
+    page("offerings.html", "Offerings — ARRON | AI, ERP, ITSM, CX & Digital Workplace", "ARRON offerings: Artificial & Super Intelligence, ERP, IT Service Management, Customer Experience and Digital Workplace.", b)
 
 
 def build_cap():
     b = hero('<a href="index.html">Home</a> / Capabilities', 'However you need us, <span class="r">we plug in.</span>',
-             "Advise, deliver, partner or build. Four ways to work with ARRON, designed around how much of the journey you want us to own.", V.v_ladder())
+             "Advise, deliver or partner. Three ways to work with ARRON, designed around how much of the journey you want us to own.", V.v_ladder())
     b += marquee()
     b += '<section id="more"><div class="wrap">' + sh("Engagement spectrum", "From advice to full ownership.", "Pick the lightest model that gets the job done. You can move along the spectrum as needs change.") + \
-         '''<div class="spec rv"><div><span class="lv">You lead</span><h3>Advise</h3><p>Independent guidance and expert oversight while your team drives delivery.</p></div><div><span class="lv">We co-deliver</span><h3>Deliver together</h3><p>Blended teams run programs end to end, with knowledge transfer built in.</p></div><div><span class="lv">We own it</span><h3>Operate & build</h3><p>Managed services and AI-native products delivered against agreed outcomes.</p></div></div></div></section>'''
-    b += f'<section class="paper"><div class="wrap">{sh("Our capabilities", "Four ways to work with us.", "Each capability has its own page with the detail.")}{tiles_for(CAP_KEYS)}</div></section>'
+         '''<div class="spec rv"><div><span class="lv">You lead</span><h3>Advise</h3><p>Independent guidance and expert oversight while your team drives delivery.</p></div><div><span class="lv">We co-deliver</span><h3>Deliver together</h3><p>Blended teams run programs end to end, with knowledge transfer built in.</p></div><div><span class="lv">We own it</span><h3>Operate</h3><p>Managed services delivered against agreed outcomes, with your platforms kept stable and improving.</p></div></div></div></section>'''
+    b += f'<section class="paper"><div class="wrap">{sh("Our capabilities", "Three ways to work with us.", "Each capability has its own page with the detail.")}{tiles_for(CAP_KEYS)}</div></section>'
     b += '<section class="navy"><div class="wrap">' + sh("How an engagement runs", "Clear stages. No surprises.", "Whatever the model, the rhythm is the same.") + \
          proc([("Discover", "Listen, assess and define the outcome and success measures."), ("Design", "Agree architecture, plan and business case."), ("Deliver", "Build in short cycles with visible progress every sprint."), ("Sustain", "Hand over, train and keep improving.")]) + '</div></section>'
     b += cta_band("Find the model that fits.", "We will recommend the lightest engagement that gets the job done.")
-    page("capabilities.html", "Capabilities — ARRON | Consulting, Services, Partnerships, Product as a Service", "How ARRON works with you: consulting, managed services, technology partnerships and AI-native product development.", b)
+    page("capabilities.html", "Capabilities — ARRON | Consulting, Services, Partnerships", "How ARRON works with you: consulting, managed services and technology partnerships.", b)
 
 
-# ---------- industry data
-INDS = [("bank", "Banking & Financial", "Audit-ready change trails and compliance monitoring."), ("factory", "Manufacturing", "ERP, supply chain and shop-floor integration."),
-        ("heart", "Healthcare & Pharma", "SLA-driven support for critical systems."), ("cart", "Retail & Consumer", "Surge detection and omnichannel experience."),
-        ("signal", "Telecom & Media", "Network incident prediction and smart routing."), ("code", "Technology & SaaS", "Incident correlation across DevOps pipelines."),
-        ("bolt", "Energy & Utilities", "Asset-heavy operations and field service."), ("gov", "Public Sector", "Modernization for state, local and nonprofit.")]
+# =========================================================== INDUSTRY EXPERTISE
+INDUSTRIES = {
+    "banking": dict(file="banking.html", name="Banking & Financial Services", short="Banking", photo="skyline", icon="bank",
+        card="Compliance, resilience and customer trust, with governed AI.",
+        h1='Trusted finance, <span class="r">built for what comes next.</span>',
+        lead="Banks and financial institutions must modernize while staying compliant and resilient. We help them modernize core and finance platforms, strengthen service operations and bring governed AI into the work, without giving up control.",
+        focus=[("Core & finance modernization", "Modern ERP and finance platforms that shorten close cycles and improve reporting and control."),
+               ("Compliance & audit readiness", "Auditable change, access and service processes, with evidence captured as the work happens."),
+               ("Resilient service operations", "ITSM and automation that keep critical systems available and resolve issues before customers notice."),
+               ("Responsible AI", "Governed AI for monitoring, documentation and decision support, with human oversight designed in.")],
+        offers=[("ai", "Governed AI for risk signals, monitoring and decision support."), ("itsm", "Audit-ready change and incident management for critical systems."), ("cx", "Simpler onboarding and servicing across every channel.")],
+        platforms=["SAP", "Oracle", "ServiceNow", "Microsoft", "Salesforce", "Workday", "AWS", "Google Cloud"]),
+    "manufacturing": dict(file="manufacturing.html", name="Manufacturing", short="Manufacturing", photo="dashboard", icon="factory",
+        card="Connected plants, planning and supply chains.",
+        h1='Connected operations, <span class="r">from plant to planner.</span>',
+        lead="Plants, planners and suppliers all depend on the same data. We connect ERP, supply chain and shop-floor systems so manufacturers can plan with confidence, respond to disruption and keep production moving.",
+        focus=[("Connected planning & ERP", "One system of record across finance, planning, inventory and production."),
+               ("Supply chain visibility", "Inventory, logistics and demand signals brought together for earlier, better decisions."),
+               ("Predictive operations", "Forecasting and early-warning signals for demand, maintenance and supply risk."),
+               ("Quality & compliance", "Consistent processes and traceable records across plants and suppliers.")],
+        offers=[("erp", "A clean-core ERP that connects planning, shop floor and finance."), ("ai", "Predictive and agentic AI for demand, supply and maintenance."), ("itsm", "Reliable service operations for plant and enterprise systems.")],
+        platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "Infor", "Epicor", "IFS", "ServiceNow"]),
+    "retail": dict(file="retail.html", name="Retail & Consumer", short="Retail & Consumer", photo="highfive", icon="cart",
+        card="Omnichannel experience, personalization and demand sensing.",
+        h1='One customer, <span class="r">every channel.</span>',
+        lead="Customers move between stores, apps, websites and contact centers without thinking about it. We help retail and consumer brands join up data, journeys and operations so every interaction feels consistent and every sale is supported.",
+        focus=[("Omnichannel experience", "Consistent service and journeys across stores, digital and contact center."),
+               ("Personalization", "Unified customer data that drives the next best action."),
+               ("Demand sensing & inventory", "Connected ERP and supply data that keep the right products in the right place."),
+               ("Peak-season resilience", "Service and platform operations that hold up when volumes surge.")],
+        offers=[("cx", "Connected journeys, CRM and service that customers feel."), ("erp", "Inventory, finance and supply chain on one connected core."), ("ai", "AI for personalization, service and demand sensing.")],
+        platforms=["Salesforce", "SAP", "Oracle", "Microsoft", "NetSuite", "Zoho", "Twilio", "Adobe Experience Cloud"]),
+    "telecom": dict(file="telecom.html", name="Telecom", short="Telecom", photo="servers", icon="signal",
+        card="Proactive service on always-on networks.",
+        h1='Service that keeps up with <span class="r">always-on networks.</span>',
+        lead="Telecom operators run on scale and uptime. We help them move from reactive to proactive: predicting incidents, routing work intelligently and giving customers a simpler, more connected experience.",
+        focus=[("Proactive service assurance", "Event correlation and prediction that find issues before customers do."),
+               ("Intelligent incident routing", "AI-assisted triage that gets each issue to the right team faster."),
+               ("Customer lifecycle & churn", "Connected data and journeys that improve retention."),
+               ("Digital operations", "Modern ERP and service platforms behind billing, field and back-office work.")],
+        offers=[("itsm", "AI-assisted service management for network and enterprise operations."), ("cx", "Proactive customer service and retention journeys."), ("ai", "Predictive and agentic AI for network and service operations.")],
+        platforms=["ServiceNow", "Salesforce", "Microsoft", "Oracle", "SAP", "AWS", "Google Cloud", "Genesys"]),
+    "healthcare": dict(file="healthcare.html", name="Healthcare", short="Healthcare", photo="office", icon="heart",
+        card="Access, operations and secure data for care organizations.",
+        h1='Care that runs on <span class="r">connected, secure systems.</span>',
+        lead="Healthcare organizations need time back for patients and staff, and trust in how data is handled. We help them simplify operations, improve access and apply AI carefully, with privacy and human review built in.",
+        focus=[("Patient access & engagement", "Connected journeys and service that make care easier to reach."),
+               ("Documentation & operational support", "Governed AI assistants embedded in existing workflows, with human review."),
+               ("Secure data & compliance", "Data, access and audit controls designed around privacy and regulatory needs."),
+               ("Resilient support for critical systems", "Service management that keeps clinical and operational systems available.")],
+        offers=[("ai", "Governed AI for documentation and operational support."), ("dw", "A secure, simple workplace for clinical and administrative staff."), ("itsm", "SLA-driven support for systems that cannot go down.")],
+        platforms=["ServiceNow", "Microsoft", "SAP", "Oracle", "Workday", "Salesforce", "AWS", "Google Cloud"]),
+}
 
-CASES = [
-    dict(cat="erp", photo="meeting-table", tag="ERP · Manufacturing", title="One ERP across four plants", ind="Manufacturing", svc="ERP",
-         ch="Four plants ran separate legacy systems, so month-end close took weeks and inventory was invisible.", sol="Vendor-neutral selection, then a phased cloud ERP rollout with unified reporting.", r=(("-32%", "Close cycle time"), ("4 → 1", "Systems consolidated"))),
-    dict(cat="itsm", photo="dashboard", tag="ITSM · Financial services", title="An AI-assisted service desk", ind="Financial services", svc="ITSM",
-         ch="Ticket volumes and manual routing were driving missed SLAs and audit findings.", sol="Migrated to a modern ITSM platform with auto-triage, a self-service portal and audit-ready change flows.", r=(("-40%", "Ticket handling time"), ("+25%", "Self-service rate"))),
-    dict(cat="cx", photo="sticky-notes", tag="CX · Retail", title="A unified customer view", ind="Retail", svc="CX",
-         ch="Customer data sat in four tools, so service teams could not see the full history.", sol="Connected CRM, contact center and data to personalize every touchpoint.", r=(("+18 pt", "NPS improvement"), ("-22%", "Repeat contacts"))),
-    dict(cat="ai", photo="laptop-dark", tag="AI · Healthcare", title="Intelligent documentation support", ind="Healthcare", svc="AI",
-         ch="Clinical teams spent hours on documentation that slowed patient throughput.", sol="Governed AI assistant embedded in existing workflows, with human review built in.", r=(("-30%", "Documentation time"), ("100%", "Human-reviewed output"))),
-    dict(cat="erp", photo="office", tag="ERP · Public sector", title="Modernizing a county back office", ind="Public sector", svc="ERP",
-         ch="Aging finance and HR systems were costly to maintain and hard to audit.", sol="Requirements-led selection and implementation with strong change management.", r=(("-28%", "Run cost"), ("1", "Platform for finance and HR"))),
-    dict(cat="itsm", photo="servers", tag="ITSM · Telecom", title="Predicting incidents before they land", ind="Telecom", svc="ITSM",
-         ch="Network incidents surfaced only after customers called in.", sol="Event correlation and AI-driven routing feeding a single service platform.", r=(("-35%", "Major incidents"), ("+20%", "First-time resolution"))),
-    dict(cat="cx", photo="highfive", tag="CX · Banking", title="Faster, simpler customer onboarding", ind="Banking", svc="CX",
-         ch="New customers abandoned onboarding because it spanned too many steps and systems.", sol="Redesigned the journey and connected CRM, identity and servicing into one flow.", r=(("-45%", "Onboarding time"), ("+15%", "Completion rate"))),
-]
-QUOTES = [
-    ("They narrowed a crowded vendor field to the one that actually fit us, and the project landed on time. It felt like having an owner on our side of the table.", "VP of Information Technology", "Manufacturing client", "VP"),
-    ("The team brought real depth in service management and genuinely trained our people. We run the platform ourselves now, with confidence.", "Director of IT Operations", "Financial services client", "DO"),
-    ("They told us where AI would not pay off, which is exactly why we trusted them on where it would.", "Chief Digital Officer", "Healthcare client", "CD"),
-    ("Clear plan, honest estimates and senior people who stayed involved the whole way. That is rare.", "Program Director", "Public sector client", "PD"),
-    ("Our customer teams finally see one view of the customer. The difference in service quality was visible within a quarter.", "Head of Customer Operations", "Retail client", "HC"),
-    ("They negotiated terms we would not have achieved alone and then helped us deliver on the contract.", "CFO", "Distribution client", "CF"),
-]
+
+def ind_tile(i):
+    return f'<a class="tile" href="{i["file"]}"><div class="art ph">{photo(i["photo"])}</div><div class="tb"><span class="k">Industry</span><h3>{i["name"]}</h3><p>{i["card"]}</p><span class="more">Explore {ARROW}</span></div></a>'
+
+
+def build_industry():
+    b = hero('<a href="index.html">Home</a> / Industry Expertise', 'Sector knowledge that <span class="r">shortens the learning curve.</span>',
+             "Five industries where our consultants have deep, hands-on experience, and the practices we bring to each.", V.v_industries())
+    b += marquee("Technology partners across our client work")
+    b += '<section id="more"><div class="wrap">' + sh("Industries", "Where we work.", "Choose your sector to see where we help and which practices apply.") + \
+         '<div class="tiles five" data-stagger>' + ''.join(ind_tile(i) for i in INDUSTRIES.values()) + '</div></div></section>'
+    b += '<section class="paper"><div class="wrap">' + sh("Our approach", "What we bring to every sector.", "The same discipline, applied to the realities of your industry.") + rows([
+        ("Sector knowledge", "Consultants who know the regulations, processes and vocabulary of your industry."),
+        ("Platform depth", "Certified expertise across the ERP, service and customer platforms the sector runs on."),
+        ("AI with governance", "Practical AI use cases with the controls your regulators and customers expect."),
+        ("Outcome focus", "Success measures agreed up front and tracked through delivery.")], "c4w") + '</div></section>'
+    b += cta_band("Working in one of these sectors?", "We will bring people who have done it before.")
+    page("industry.html", "Industry Expertise — ARRON | Banking, Manufacturing, Retail, Telecom, Healthcare", "ARRON's industry expertise across banking and financial services, manufacturing, retail and consumer, telecom and healthcare.", b)
+
+
+def build_industry_page(key):
+    i = INDUSTRIES[key]
+    b = hero(f'<a href="index.html">Home</a> / <a href="industry.html">Industry Expertise</a> / {i["short"]}', i["h1"], i["lead"],
+             photo_stage(i["photo"], i["name"], "Industry expertise"), "photo")
+    b += marquee("Platforms we work with in this sector", i["platforms"] * 2)
+    b += f'<section id="more"><div class="wrap">{sh("Where we help", "What we do for " + i["name"] + ".", "Four areas where our teams bring the most value.")}{rows(i["focus"], "c4w")}</div></section>'
+    b += '<section class="paper"><div class="wrap">' + sh("Our practices", "How our offerings apply.", "Each practice adapted to the realities of the sector.") + '<div class="inds c3" data-stagger>' + ''.join(
+        f'<a class="ind" href="{D[k]["file"]}">{icon({"ai":"brain","erp":"cog","itsm":"server","cx":"users","dw":"laptop"}[k])}<h3>{D[k]["name"]}</h3><p>{t}</p></a>' for k, t in i["offers"]) + '</div></div></section>'
+    others = [v for k, v in INDUSTRIES.items() if k != key][:3]
+    b += '<section><div class="wrap">' + sh("Explore further", "Other industries we serve.", "Experience from one sector often improves the work in another.") + '<div class="tiles" data-stagger>' + ''.join(ind_tile(o) for o in others) + '</div></div></section>'
+    b += cta_band(f"Working in {i['short'].lower()}?", "Tell us what you are trying to achieve and we will bring the right people.")
+    page(i["file"], f'{i["name"]} — ARRON', i["lead"][:150], b)
+
+
+# =========================================================== EMPTY-STATE SECTIONS (insights, proven experience, careers)
+def build_soon(file, parent, name, h1, lead, ph, blurb, subject):
+    crumb = f'<a href="index.html">Home</a> / <a href="{parent[0]}">{parent[1]}</a> / {name}'
+    b = hero(crumb, h1, lead, photo_stage(ph, name, "Coming soon"), "photo")
+    mail = MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + subject.replace(" ", "%20"))
+    b += f'''<section id="more"><div class="wrap"><div class="soon rv"><span class="soon-ic">{icon("doc")}</span><span class="kicker">Coming soon</span><h2>Nothing published here yet.</h2>
+<p>{blurb}</p><div class="soon-cta"><a class="btn btn-red" href="{mail}">Notify me when it is live {ARROW}</a><a class="btn btn-ghost" href="{parent[0]}">Back to {parent[1]}</a></div></div></div></section>'''
+    b += '<section class="paper"><div class="wrap">' + sh("In the meantime", "Explore what is live.", "Start with our practices, or meet the team.") + '<div class="tiles" data-stagger>' + \
+         tile_for(D["ai"]) + tile_for(D["erp"]) + f'<a class="tile" href="about.html"><div class="art ph">{photo("team-room")}</div><div class="tb"><span class="k">About ARRON</span><h3>Our Purpose</h3><p>Why ARRON exists and how we work.</p><span class="more">Explore {ARROW}</span></div></a>' + '</div></div></section>'
+    page(file, f'{name} — ARRON', lead[:150], b)
+
+
+def build_soon_hub(file, name, h1, lead, ph, sh_t, items, sub):
+    b = hero(f'<a href="index.html">Home</a> / {name}', h1, lead, photo_stage(ph, name, "Being prepared"), "photo")
+    b += f'<section id="more"><div class="wrap">{sh(name, sh_t, sub)}<div class="tiles" style="grid-template-columns:repeat({len(items)},1fr)" data-stagger>' + ''.join(
+        f'<a class="tile" href="{h}"><div class="art ph">{photo(p)}</div><div class="tb"><span class="k">Coming soon</span><h3>{t}</h3><p>{d}</p><span class="more">Open {ARROW}</span></div></a>' for h, t, d, p in items) + '</div></div></section>'
+    b += cta_band("Want to hear when we publish?", "Tell us what you would like to read first and we will let you know.", "Notify me", MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Notify%20me%3A%20" + name.replace(" ", "%20")))
+    page(file, f'{name} — ARRON', lead[:150], b)
+
+
+def build_insights():
+    build_soon_hub("insights.html", "Insights", 'Thinking worth <span class="r">acting on.</span>', "Technology insights, perspectives, playbooks and articles from the ARRON team. This section is being prepared.", "laptop-dark",
+                   "Four ways to read us.", [("technology-insights.html", "Technology Insights", "What is changing in enterprise technology, and what to do about it.", "dashboard"),
+                                             ("perspectives.html", "Perspectives", "Points of view from our leaders on the AI-native enterprise.", "boardroom"),
+                                             ("playbooks.html", "Playbooks", "Practical, step-by-step guides you can put to work.", "sticky-notes"),
+                                             ("blog.html", "Blogs", "Articles and updates from the ARRON team.", "meeting-table")], "We are preparing our first publications.")
+    s = [("technology-insights.html", "Technology Insights", ("Technology Insights", 'Enterprise technology, <span class="r">explained.</span>', "Clear, practical analysis of the technology shifts that matter to enterprise leaders.", "dashboard", "We are preparing our first technology insights on AI, ERP, ITSM, customer experience and the digital workplace.")),
+         ("perspectives.html", "Perspectives", ("Perspectives", 'Points of view <span class="r">from our leaders.</span>', "How ARRON's leaders see the road from digital transformation to the AI-native enterprise.", "boardroom", "Our leaders' first perspectives are being prepared.")),
+         ("playbooks.html", "Playbooks", ("Playbooks", 'Guides you can <span class="r">put to work.</span>', "Practical playbooks for adopting AI, modernizing the core and improving service and experience.", "sticky-notes", "Our first playbooks are being prepared.")),
+         ("blog.html", "Blogs", ("Blogs", 'Notes from <span class="r">the field.</span>', "Articles and updates from the people doing the work at ARRON.", "meeting-table", "Our first articles are being prepared."))]
+    for f, n, (nm, h1, lead, ph, blurb) in s:
+        build_soon(f, ("insights.html", "Insights"), nm, h1, lead, ph, blurb, n)
+
+
+def build_proven():
+    build_soon_hub("proven-experience.html", "Proven Experience", 'Results you can <span class="r">point to.</span>', "Client stories, case studies and testimonials. This section is being prepared as we receive client approvals.", "highfive",
+                   "Evidence of the work.", [("client-stories.html", "Client Stories", "How clients describe the journey, in their own words.", "team-room"),
+                                            ("case-studies.html", "Case Studies", "The challenge, the approach and the outcome.", "boardroom"),
+                                            ("testimonials.html", "Testimonials", "What clients say about working with ARRON.", "meeting-table")], "We will publish these once clients have approved them.")
+    s = [("client-stories.html", "Client Stories", 'Our clients, <span class="r">in their words.</span>', "Stories of the journeys we have shared with clients.", "team-room", "Client stories will appear here once clients have approved them."),
+         ("case-studies.html", "Case Studies", 'The challenge, the approach, <span class="r">the outcome.</span>', "Detailed engagements across AI, ERP, ITSM, customer experience and the digital workplace.", "boardroom", "Case studies will appear here once clients have approved them."),
+         ("testimonials.html", "Testimonials", 'What clients <span class="r">say about us.</span>', "Straight feedback from the leaders we have worked alongside.", "meeting-table", "Testimonials will appear here once clients have approved them.")]
+    for f, n, h1, lead, ph, blurb in s:
+        build_soon(f, ("proven-experience.html", "Proven Experience"), n, h1, lead, ph, blurb, n)
+
+
 PEOPLE = [("Daniel Reyes", "Principal Architect, SAP & Cloud", "18+ years", "Certified SAP Enterprise and BTP architect bridging business strategy and enterprise platforms, from S/4HANA to AI-enabled solutions.", ["SAP BTP", "S/4HANA", "Business AI"], "Kentucky, USA"),
           ("Priya Nair", "Director, ERP & Enterprise Applications", "15+ years", "Leads ERP selection and implementation across finance and supply chain, focused on adoption and measurable business results.", ["ERP", "Program delivery", "Change"], "Texas, USA"),
           ("Marcus Hale", "Director, Digital & Customer Experience", "12+ years", "Designs customer journeys and the platforms behind them, connecting data, CRM and service channels into one experience.", ["CX", "CRM", "Analytics"], "Texas, USA"),
           ("Elena Brooks", "Managing Partner, ITSM & AI Transformation", "20+ years", "Entrepreneurial executive in IT service management and cloud transformation. ITIL Expert and Azure certified.", ["ServiceNow", "Azure", "ITIL"], "Dallas–Fort Worth, TX")]
 
 
-def case_card(c):
-    return f'''<div class="case" data-cat="{c["cat"]}"><div class="art ph">{photo(c["photo"], c["title"])}<em>{c["tag"]}</em></div><div class="cb"><h3>{c["title"]}</h3>
-<div class="cs-sec"><b>Challenge</b><p>{c["ch"]}</p></div><div class="cs-sec"><b>Approach</b><p>{c["sol"]}</p></div>
-<div class="res"><div><b>{c["r"][0][0]}</b><span>{c["r"][0][1]}</span></div><div><b>{c["r"][1][0]}</b><span>{c["r"][1][1]}</span></div></div></div></div>'''
-
-
-def build_industry():
-    b = hero('<a href="index.html">Home</a> / Industry Expertise', 'Deep experience. <span class="r">Real people.</span>',
-             "The industries we serve, the work we have delivered and the consultants behind it.", V.v_industries())
-    b += marquee("Technology partners across our client work")
-    b += '<section id="more"><div class="wrap">' + sh("Industries", "Sector knowledge that shortens the learning curve.", "These are the environments our team knows well.") + \
-         '<div class="inds" data-stagger>' + ''.join(f'<div class="ind">{icon(i)}<h3>{t}</h3><p>{p}</p></div>' for i, t, p in INDS) + '</div></div></section>'
-    tl = [("case-studies.html", "Clients", "Case Studies", "Representative engagements, with the challenge, approach and results.", "boardroom"),
-          ("testimonials.html", "Clients", "Testimonials", "What clients say about working with ARRON.", "highfive"),
-          ("consultants.html", "Consultants", "Consultants & Partners", "Profiles of our team and the partner network we bring in.", "team-room")]
-    b += '<section class="paper"><div class="wrap">' + sh("Explore", "See the work and the people.", "Everything you need to judge whether we are the right fit.") + \
-         '<div class="tiles" style="grid-template-columns:repeat(3,1fr)" data-stagger>' + ''.join(
-             f'<a class="tile" href="{h}"><div class="art ph">{photo(ph)}</div><div class="tb"><span class="k">{k}</span><h3>{t}</h3><p>{d}</p><span class="more">Explore {ARROW}</span></div></a>' for h, k, t, d, ph in tl) + '</div></div></section>'
-    b += cta_band("Working in one of these sectors?", "We will bring people who have done it before.")
-    page("industry.html", "Industry Expertise — ARRON | Clients, Case Studies & Consultants", "ARRON's client work, industry experience and the consultants who deliver it.", b)
-
-
-def build_cases():
-    b = hero('<a href="index.html">Home</a> / <a href="industry.html">Industry Expertise</a> / Case Studies', 'Results you can <span class="r">point to.</span>',
-             "Representative engagements across ERP, ITSM, AI and customer experience, with the challenge, the approach and the outcome.", V.v_impact())
-    b += marquee("Technology partners across our client work")
-    f = CASES[0]
-    feat = f'''<div class="feature rv"><div class="art ph">{photo("boardroom", f["title"])}</div><div class="fb2"><span class="kicker">Featured · {f["tag"]}</span><h3>{f["title"]}</h3><p>{f["ch"]} {f["sol"]}</p>
-<div class="res"><div><b>{f["r"][0][0]}</b><span>{f["r"][0][1]}</span></div><div><b>{f["r"][1][0]}</b><span>{f["r"][1][1]}</span></div></div></div></div>'''
-    b += f'''<section id="more"><div class="wrap">{sh("Case studies", "Representative engagements.", "Examples of the outcomes we design for. Client names withheld.")}{feat}
-<div id="caselist"><div class="chipbar" data-filter="#caselist"><button class="fbtn on" data-f="all">All</button><button class="fbtn" data-f="erp">ERP</button><button class="fbtn" data-f="itsm">ITSM</button><button class="fbtn" data-f="ai">AI</button><button class="fbtn" data-f="cx">CX</button></div>
-<div class="cases" data-stagger>{''.join(case_card(c) for c in CASES[1:])}</div></div></div></section>'''
-    b += cta_band("Want results like these?", "Tell us your goal and we will share the most relevant experience.")
-    page("case-studies.html", "Case Studies — ARRON", "Representative ARRON engagements across ERP, ITSM, AI and CX.", b)
-
-
-def build_testimonials():
-    stage = photo_stage("highfive", "“A partner, not a vendor.”", "Feedback from the clients we have worked with")
-    b = hero('<a href="index.html">Home</a> / <a href="industry.html">Industry Expertise</a> / Testimonials', 'What clients <span class="r">say about us.</span>',
-             "Straight feedback from the leaders we have worked alongside, in their own words.", stage, "photo")
-    q = QUOTES[0]
-    b += f'''<section id="more"><div class="wrap">{sh("Testimonials", "Trust is earned on delivery.", "Names are withheld at clients' request; roles and sectors are as given.")}
-<div class="bigq rv"><div class="art ph">{photo("meeting-table", "Client workshop")}</div><div class="qb"><div class="mark">“</div><p>{q[0]}</p><b>{q[1]}</b><span>{q[2]}</span></div></div>
-<div class="qgrid" data-stagger>{''.join(f'<div class="qcard"><div class="mark">“</div><p>{t}</p><div class="who"><div class="av">{i}</div><div><b>{r}</b><span>{s}</span></div></div></div>' for t, r, s, i in QUOTES[1:])}</div></div></section>'''
-    b += cta_band("Be our next success story.", "Start with a conversation about what you want to achieve.")
-    page("testimonials.html", "Testimonials — ARRON", "What ARRON clients say about working with us.", b)
-
-
 def build_consultants():
-    stage = photo_stage("team-room", "Senior practitioners on every engagement", "Our consultants and partner network")
-    b = hero('<a href="index.html">Home</a> / <a href="industry.html">Industry Expertise</a> / Consultants', 'The people you <span class="r">will work with.</span>',
-             "Practitioners with decades of enterprise delivery behind them, supported by a network of specialist partners.", stage, "photo")
-    b += '<section id="more" class="paper"><div class="wrap">' + sh("Our consultants", "Meet the team.", "Profiles of the practitioners who lead our engagements.") + \
+    stage = photo_stage("team-room", "Senior practitioners on every engagement", "Leadership and consultants")
+    b = hero('<a href="index.html">Home</a> / <a href="about.html">About ARRON</a> / Leadership & Consultants', 'The people you <span class="r">will work with.</span>',
+             "Practitioners with decades of enterprise delivery behind them, who stay close to clients and to the work.", stage, "photo")
+    b += '<section id="more" class="paper"><div class="wrap">' + sh("Leadership & consultants", "Meet the team.", "Profiles of the practitioners who lead our engagements.") + \
          '<div class="people" data-stagger>' + ''.join(f'<article class="person"><div class="ph"><span class="yrs">{y}</span>{V.AVATAR}</div><div class="pi"><h3>{n}</h3><div class="role">{r}</div><p>{bio}</p><div class="chips">{"".join(f"<span>{c}</span>" for c in ch)}</div><div class="loc">{loc}</div></div></article>' for n, r, y, bio, ch, loc in PEOPLE) + '</div></div></section>'
+    b += f'''<section class="band">{photo("team-laptop", "Team collaborating")}<div class="wrap"><span class="kicker">Join ARRON</span><h2>Do the best work of your career.</h2><p style="margin:20px 0 32px;max-width:48ch;font-size:1.1rem;color:#cfdcff">We hire experienced consultants and architects who want to stay close to clients and to the work.</p><a class="btn btn-red" href="careers.html">Careers at ARRON {ARROW}</a></div></section>'''
+    page("consultants.html", "Leadership & Consultants — ARRON", "Meet the ARRON leadership and consultants.", b)
+
+
+def build_partners():
+    b = hero('<a href="index.html">Home</a> / <a href="about.html">About ARRON</a> / Our Partners', 'Strong platforms. <span class="r">Stronger together.</span>',
+             "Certified expertise across the enterprise ecosystems our clients already run on, from ERP and service management to cloud and AI.", V.v_partners())
     pl = [("ServiceNow", "IT Service Management"), ("SAP", "Enterprise Resource Planning"), ("Microsoft", "Azure · Dynamics · 365"), ("Oracle", "ERP · Cloud"),
           ("Salesforce", "Customer Relationship Management"), ("Workday", "Human Capital · Finance"), ("NetSuite", "ERP · Cloud"), ("Zoho", "Business applications"),
           ("AWS", "Cloud · Artificial Intelligence"), ("Google Cloud", "Data · Artificial Intelligence"), ("OpenAI", "Generative AI"), ("Anthropic", "Generative AI")]
-    b += '<section><div class="wrap">' + sh("Our partners", "Strong platforms. Stronger together.", "Certified expertise across the ecosystems our clients already run on.") + \
-         '<div class="plogos" data-stagger>' + ''.join(f'<div class="plogo">{plogo(n)}<small>{s}</small></div>' for n, s in pl) + '</div></div></section>'
-    b += f'''<section class="band">{photo("team-laptop", "Team collaborating")}<div class="wrap"><span class="kicker">Join us</span><h2>Do the best work of your career.</h2><p style="margin:20px 0 32px;max-width:48ch;font-size:1.1rem;color:#cfdcff">We hire experienced consultants and architects who want to stay close to clients and to the work.</p><a class="btn btn-red" href="careers.html">See open roles {ARROW}</a></div></section>'''
-    page("consultants.html", "Consultants & Partners — ARRON", "Meet the ARRON consultants and our partner network.", b)
+    b += '<section id="more"><div class="wrap">' + sh("Our partners", "The ecosystem we work across.", "We recommend what fits your needs and bring the right partners into each engagement.") + \
+         '<div class="plogos" data-stagger>' + ''.join(f'<div class="plogo">{plogo(n)}<small>{s}</small></div>' for n, s in pl) + '</div>' \
+         f'<p style="margin-top:44px"><a class="more" href="partnerships.html">How our partnerships work {ARROW}</a></p></div></section>'
+    b += cta_band("Working on one of these platforms?", "Tell us what you run today and where you want to take it.")
+    page("partners.html", "Our Partners — ARRON", "The enterprise platform ecosystem ARRON works across.", b)
 
 
-POSTS = [
-    ("ai", "AI", "Is your enterprise actually ready for AI?", "A practical checklist covering data, governance, skills and use-case selection.", "laptop-dark", "8 min read"),
-    ("erp", "ERP", "Five reasons ERP projects go over budget", "And the early warning signs most steering committees miss.", "meeting-table", "6 min read"),
-    ("itsm", "ITSM", "AI triage without losing the human touch", "Where automation helps your service desk and where it should step aside.", "dashboard", "5 min read"),
-    ("cx", "CX", "Connecting customer data across channels", "A simple model for one customer view without a rip-and-replace.", "sticky-notes", "7 min read"),
-    ("erp", "ERP", "How to run an ERP demo that tells you the truth", "Scripts, scoring and the questions vendors hope you will not ask.", "boardroom", "6 min read"),
-    ("itsm", "ITSM", "Migrating off a legacy ITSM tool", "A step-by-step approach that protects data, SLAs and morale.", "servers", "9 min read"),
-    ("ai", "AI", "From pilot to production: where AI projects stall", "The four gaps between a good demo and a dependable system.", "dev-team", "7 min read"),
-    ("cx", "CX", "Measuring experience beyond NPS", "Signals that actually predict loyalty and what to do with them.", "highfive", "5 min read"),
-]
-
-ARTICLES = [
-    ("ai-readiness", "Most AI programs stall not on the model but on everything around it. Before you fund a pilot, test your readiness across four areas.",
-     [("Data access", "Can the right people reach clean, governed data for your top use cases? If not, fix that first."),
-      ("Use-case selection", "Rank ideas by value and feasibility, and start with one whose outcome you can measure within a quarter."),
-      ("Skills and ownership", "Name a business owner for every use case, not just a technical lead."),
-      ("Governance", "Decide up front how you will handle security, privacy, bias and human review.")]),
-    ("erp-over-budget", "ERP overruns are rarely a surprise in hindsight. These five causes show up again and again, usually early enough to act on.",
-     [("Unclear requirements", "Teams discover what they need halfway through configuration, when change is most expensive."),
-      ("Underestimated data migration", "Cleaning and mapping legacy data takes longer than any plan assumes."),
-      ("Customization creep", "Every bespoke change adds cost now and upgrade pain later."),
-      ("Weak change management", "A system nobody adopts delivers none of the promised value."),
-      ("No independent oversight", "Vendor timelines tend to be optimistic. Someone on your side needs to challenge them.")]),
-    ("ai-triage-human-touch", "AI can route and categorize tickets faster than any team. The question is where it should stop and a person should start.",
-     [("Start with categorization and routing", "These are low-risk, high-volume tasks where AI helps most."),
-      ("Keep people on high-impact incidents", "Major outages and sensitive requests deserve human judgment."),
-      ("Measure resolution quality", "Speed alone can hide wrong answers. Track reopen rates and satisfaction too."),
-      ("Let agents correct the model", "Make feedback easy so the system improves from real corrections.")]),
-    ("connecting-customer-data", "One customer view does not require replacing every system. It requires a clear plan for identity, integration and use.",
-     [("Start from the questions", "Pick the three things your teams most need to know about a customer."),
-      ("Unify identity first", "Match records reliably before you try to analyze anything."),
-      ("Integrate in layers", "Connect systems gradually instead of attempting a big-bang rebuild."),
-      ("Put insight where people work", "A dashboard nobody opens helps no one. Surface it inside the agent's screen."),
-      ("Govern consent", "Respect preferences and regulations from the start.")]),
-    ("erp-demo-truth", "A polished vendor demo shows what the product does best. A scripted demo shows whether it fits you.",
-     [("Script from your real processes", "Give every vendor the same scenarios drawn from your daily work."),
-      ("Score on one sheet", "Use identical criteria so comparisons are fair and defensible."),
-      ("Involve end users", "The people who will use the system spot gaps that executives miss."),
-      ("Ask to see the edge cases", "Exceptions and failures reveal more than the happy path."),
-      ("Insist on hands-on time", "A sandbox session beats any slide.")]),
-    ("itsm-migration", "Moving off a legacy service management tool is a chance to simplify. It is also easy to disrupt service if you rush.",
-     [("Inventory what you really use", "Retire unused workflows rather than copying them across."),
-      ("Clean data before moving it", "Migrating bad records only moves the problem."),
-      ("Migrate in waves", "Start with low-risk queues and learn before the critical ones."),
-      ("Run in parallel where it matters", "Keep a safety net for urgent services during cutover."),
-      ("Retrain with real tickets", "People learn fastest on the work they actually do.")]),
-    ("pilot-to-production", "Plenty of AI demos work. Far fewer become dependable systems. The gap usually comes down to four things.",
-     [("Data access", "Production needs reliable, permissioned data, not a one-off extract."),
-      ("Integration", "Value appears only when AI is wired into the workflow people use."),
-      ("Ownership", "Someone must be accountable for the outcome after launch."),
-      ("Monitoring", "Models drift. You need to watch quality and cost continuously.")]),
-    ("cx-beyond-nps", "Net Promoter Score is useful but incomplete. Better signals show where loyalty is won or lost.",
-     [("Customer effort", "How hard was it to get help? Effort predicts loyalty well."),
-      ("Resolution and repeat contact", "Did the issue stay fixed, or did the customer have to come back?"),
-      ("Behavioral signals", "Usage patterns and drop-offs often speak louder than surveys."),
-      ("Closing the loop", "Follow up on feedback so customers see that it matters."),
-      ("Link to revenue", "Tie experience measures to retention and growth so they get funded.")]),
-]
-
-
-def build_blog():
-    stage = photo_stage("meeting-table", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX")
-    signup = f'''<div class="hero-signup rv" data-delay=".5"><span class="hs-label">Get the monthly newsletter</span>
-<form data-demo onsubmit="return false"><div class="news"><input type="email" required placeholder="you@company.com" aria-label="Email address"><button class="btn btn-red" type="submit">Subscribe {ARROW}</button></div></form>
-<div class="ok">Thanks, you are on the list.</div><p class="hs-note">One useful email a month. Free, and you can unsubscribe any time. <a href="#more">Or browse the articles below ↓</a></p></div>'''
-    b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Blogs & Newsletter', 'Latest <span class="r">thinking.</span>',
-             "Practical writing on AI, ERP, ITSM and customer experience from the people doing the work.", stage, "photo", cta_html=signup)
-    f = POSTS[0]
-    feat = f'<a class="feature rv" href="{ARTICLES[0][0]}.html"><div class="art ph">{photo(f[4])}</div><div class="fb2"><span class="kicker">{f[1]} · Featured</span><h3>{f[2]}</h3><p>{f[3]} Read it before you invest in a single model.</p><span class="more" style="margin-top:24px">Read article {ARROW}</span></div></a>'
-    cards = ''.join(f'<a class="post" href="{ARTICLES[i+1][0]}.html" data-cat="{c}"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for i, (c, t, ti, de, ph, rt) in enumerate(POSTS[1:]))
-    b += f'''<section id="more"><div class="wrap">{sh("Blogs", "Insights from the field.", "Filter by topic to find what is useful to you.")}{feat}
-<div id="postlist"><div class="chipbar" data-filter="#postlist"><button class="fbtn on" data-f="all">All</button><button class="fbtn" data-f="ai">AI</button><button class="fbtn" data-f="erp">ERP</button><button class="fbtn" data-f="itsm">ITSM</button><button class="fbtn" data-f="cx">CX</button></div>
-<div class="posts" data-stagger>{cards}</div></div></div></section>'''
-    b += f'''<section class="navy" style="padding:90px 0" id="newsletter"><div class="wrap split2"><div><span class="kicker rv">Newsletter</span><h2 data-split>One useful email, once a month.</h2></div>
-<div class="rv" data-delay=".2"><p style="font-size:1.1rem;margin-bottom:26px;max-width:44ch">Short briefings on what is changing in enterprise technology, and what to do about it.</p><form data-demo onsubmit="return false"><div class="news"><input type="email" required placeholder="you@company.com" aria-label="Email"><button class="btn btn-red" type="submit">Subscribe</button></div></form><div class="ok" style="margin-top:16px">Thanks, you are on the list.</div></div></div></section>'''
-    page("blog.html", "Blogs & Newsletter — ARRON", "ARRON insights on AI, ERP, ITSM and customer experience, plus our monthly newsletter.", b)
-
-
-def build_articles():
-    for i, (slug, intro, pts) in enumerate(ARTICLES):
-        c, tag, title, desc, ph, rt = POSTS[i]
-        stage = photo_stage(ph, title, f"{tag} · {rt}")
-        b = hero(f'<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / <a href="blog.html">Blogs</a> / {tag}', title, desc, stage, "photo", cta=False)
-        b += f'''<section id="more"><div class="wrap" style="max-width:920px"><span class="kicker">{tag} · {rt}</span><p class="lead" style="font-size:1.3rem;color:var(--ink);font-weight:500;margin-bottom:46px">{intro}</p>
-<h2 style="font-size:1.8rem;margin-bottom:8px">Key takeaways</h2>{rows([(a, b2) for a, b2 in pts], "c2")}
-<div style="margin-top:56px;padding:34px 38px;border-radius:20px;background:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap"><div><b style="font:800 1.2rem var(--fd);color:var(--ink);display:block">Want to talk this through?</b><span style="color:var(--muted)">A senior consultant can help you apply this to your situation.</span></div><a class="btn btn-red" href="about.html#contact">Talk to an expert {ARROW}</a></div></div></section>'''
-        others = [j for j in range(len(POSTS)) if j != i][:3]
-        b += '<section class="paper"><div class="wrap">' + sh("Keep reading", "More from the blog.", "Related articles on AI, ERP, ITSM and CX.") + '<div class="posts" data-stagger>' + ''.join(
-            f'<a class="post" href="{ARTICLES[j][0]}.html"><div class="art ph">{photo(POSTS[j][4])}</div><div class="pb"><span class="m">{POSTS[j][1]} · {POSTS[j][5]}</span><h3>{POSTS[j][2]}</h3><p>{POSTS[j][3]}</p><span class="more">Read article {ARROW}</span></div></a>' for j in others) + '</div></div></section>'
-        page(f"{slug}.html", f"{title} — ARRON", desc, b)
-
-
-def build_events():
-    stage = photo_stage("workshop", "Learn with us, live", "Webinars, roundtables and workshops")
-    b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Events & Webinars', 'Learn with us, <span class="r">live.</span>',
-             "Webinars, roundtables and workshops on the topics our clients ask about most.", stage, "photo")
-    up = [("12", "Feb", "AI readiness for the enterprise", "Live webinar · 45 minutes with Q&A", "Webinar", "laptop-dark"), ("05", "Mar", "ERP selection roundtable", "Dallas, TX · In person, invite only", "Event", "workshop"), ("20", "Mar", "ITSM in the age of AI agents", "Live webinar · Hands-on demo", "Webinar", "dashboard")]
-    b += '<section id="more"><div class="wrap">' + sh("Upcoming", "On the calendar.", "Register to join live, or to receive the recording if you cannot attend.") + \
-         '<div class="evcards" data-stagger>' + ''.join(f'<div class="evc"><div class="art ph">{photo(ph)}<div class="pill-d"><b>{d}</b><span>{m}</span></div></div><div class="eb"><span class="k">{k}</span><h3>{t}</h3><p>{p}</p><a class="more" href="about.html#contact">Register {ARROW}</a></div></div>' for d, m, t, p, k, ph in up) + '</div></div></section>'
-    od = [("Choosing an ERP without regret", "On demand · 38 min", "meeting-table"), ("Building a business case for ITSM", "On demand · 42 min", "boardroom"), ("Customer journeys that convert", "On demand · 35 min", "sticky-notes")]
-    b += '<section class="paper"><div class="wrap">' + sh("On demand", "Watch when it suits you.", "Recordings of past webinars, free to watch.") + \
-         '<div class="evcards" data-stagger>' + ''.join(f'<div class="evc"><div class="art ph">{photo(ph)}</div><div class="eb"><span class="k">Webinar recording</span><h3>{t}</h3><p>{d}</p><a class="more" href="about.html#contact">Request recording {ARROW}</a></div></div>' for t, d, ph in od) + '</div></div></section>'
-    b += cta_band("Want us at your event?", "Our consultants speak on AI, ERP, ITSM and customer experience.", "Invite a speaker")
-    page("events.html", "Events & Webinars — ARRON", "Upcoming and on-demand ARRON webinars and events.", b)
+def build_delivery():
+    b = hero('<a href="index.html">Home</a> / <a href="about.html">About ARRON</a> / Delivery Landscape', 'U.S. leadership. <span class="r">Global delivery.</span>',
+             "ARRON combines U.S. leadership with global delivery capabilities, giving clients access to experienced consultants, architects, engineers, and transformation specialists.", V.v_offices())
+    b += '<section id="more"><div class="wrap">' + sh("Global Delivery, Local Partnership", "Six offices across two countries.", "Headquartered in Dallas, Texas, with delivery teams across the U.S. and India.")
+    b += '<div class="offices" data-stagger><div class="ofc"><h3>United States</h3><ul><li class="hq"><i></i>Dallas, Texas <small>Headquarters</small></li><li><i></i>Louisville, Kentucky</li><li><i></i>Houston, Texas</li></ul></div><div class="ofc"><h3>India</h3><ul><li><i></i>National Capital Region (Delhi NCR)</li><li><i></i>Pune</li><li><i></i>Bangalore</li></ul></div></div>'
+    b += '<p class="rv" style="margin-top:34px;max-width:80ch;font-size:1.05rem">This distributed presence enables us to deliver the responsiveness of a local partner with the scale, expertise, and innovation capabilities of a global technology organization.</p></div></section>'
+    b += cta_band("Need a team close to you?", "Tell us where you operate and we will tell you how we would deliver.")
+    page("delivery-landscape.html", "Delivery Landscape — ARRON", "ARRON offices in Dallas, Louisville, Houston, Delhi NCR, Pune and Bangalore.", b)
 
 
 def build_careers():
-    stage = photo_stage("team-laptop", "Build your career with ARRON", "Senior practitioners, real clients, room to grow")
-    b = hero('<a href="index.html">Home</a> / <a href="resources.html">Resources</a> / Careers', 'Do the best work <span class="r">of your career.</span>',
+    stage = photo_stage("team-laptop", "Join ARRON", "Senior practitioners, real clients, room to grow")
+    b = hero('<a href="index.html">Home</a> / Careers', 'Join ARRON. Do the best work <span class="r">of your career.</span>',
              "Join a team where senior practitioners shape the work, learn from each other and stay close to clients.", stage, "photo")
-    b += f'<section id="more"><div class="wrap">{sh("Why ARRON", "What it is like to work here.", "A small, senior team with the ambition of a much larger firm.")}' + rows([
-        ("Meaningful work", "Modern ERP, service and AI programs for organizations that depend on them."),
+    b += f'<section id="more"><div class="wrap">{sh("Why ARRON", "What it is like to work here.", "A senior team with the ambition of a much larger firm.")}' + rows([
+        ("Meaningful work", "AI, ERP, service and experience programs for organizations that depend on them."),
         ("Senior colleagues", "Learn directly from people with decades of delivery experience."),
-        ("Funded learning", "Certification budgets and protected time to build new skills."),
-        ("Flexibility", "Dallas-anchored and remote-friendly, with clear expectations.")], "c4w") + '</div></section>'
-    jobs = [("Senior ERP Consultant", "ERP", "Dallas, TX", "Hybrid"), ("ServiceNow Architect", "ITSM", "Remote · USA", "Full-time"), ("AI Solutions Engineer", "AI", "Dallas, TX", "Hybrid"),
-            ("CX Strategy Consultant", "CX", "Dallas, TX", "Hybrid"), ("SAP BTP Developer", "ERP", "Remote · USA", "Full-time"), ("Delivery Manager", "ITSM", "Dallas, TX", "Hybrid")]
-    b += f'''<section class="paper"><div class="wrap">{sh("Open roles", "Find your role.", "Do not see a fit? Send us a note anyway.")}
-<div id="joblist"><div class="chipbar" data-filter="#joblist"><button class="fbtn on" data-f="all">All</button><button class="fbtn" data-f="erp">ERP</button><button class="fbtn" data-f="itsm">ITSM</button><button class="fbtn" data-f="ai">AI</button><button class="fbtn" data-f="cx">CX</button></div>
-<div class="roles">{''.join(f'<a class="rolerow" href="about.html#contact" data-cat="{c.lower()}"><b>{t}</b><span class="d tagd">{c}</span><span class="l">{l}</span><span class="more">{k} {ARROW}</span></a>' for t, c, l, k in jobs)}</div></div></div></section>'''
+        ("Funded learning", "Certification support and protected time to build new skills."),
+        ("Global team", "Work with colleagues across the U.S. and India.")], "c4w") + '</div></section>'
+    mail = MAILTO.replace("Enquiry%20from%20the%20ARRON%20website", "Careers%20at%20ARRON")
+    b += f'''<section class="paper"><div class="wrap"><div class="soon rv"><span class="soon-ic">{icon("users")}</span><span class="kicker">Open roles</span><h2>No roles listed right now.</h2><p>We are always glad to hear from experienced consultants, architects and engineers. Send us your profile and tell us what you want to work on, and we will be in touch when a role fits.</p><div class="soon-cta"><a class="btn btn-red" href="{mail}">Send your profile {ARROW}</a></div></div></div></section>'''
     b += '<section class="navy"><div class="wrap">' + sh("How we hire", "A process that respects your time.", "Four steps, usually completed within three weeks.") + \
          proc([("Apply", "Send your profile or a short note."), ("Conversation", "Meet a senior consultant to discuss your experience."), ("Case discussion", "Talk through a real engagement scenario."), ("Offer", "Meet the leadership team and receive your offer.")]) + '</div></section>'
-    b += cta_band("Ready to join us?", "Send us your profile and tell us what you want to work on.", "Get in touch")
-    page("careers.html", "Careers — ARRON", "Careers at ARRON: open roles and how we hire.", b)
+    page("careers.html", "Careers — Join ARRON", "Careers at ARRON: join a team building AI-native enterprises.", b)
 
-
-def build_resources():
-    b = hero('<a href="index.html">Home</a> / Resources', 'Ideas worth <span class="r">acting on.</span>',
-             "Practical thinking on AI, ERP, ITSM and customer experience, plus the events and roles that keep our community growing.", resources_stage())
-    tl = [("blog.html", "Blogs & Newsletter", "Insights from the field", "Practical writing on AI, ERP, ITSM and CX, plus a monthly newsletter.", "laptop-dark"),
-          ("events.html", "Events & Webinars", "Learn with us, live", "Upcoming sessions and on-demand recordings.", "workshop"),
-          ("careers.html", "Careers", "Build your career with ARRON", "Open roles and how we hire.", "team-laptop")]
-    b += '<section id="more"><div class="wrap">' + sh("Explore", "Three ways to engage.", "Read, learn or join us.") + '<div class="tiles" style="grid-template-columns:repeat(3,1fr)" data-stagger>' + ''.join(
-        f'<a class="tile" href="{h}"><div class="art ph">{photo(ph)}</div><div class="tb"><span class="k">{k}</span><h3>{t}</h3><p>{d}</p><span class="more">Explore {ARROW}</span></div></a>' for h, k, t, d, ph in tl) + '</div></div></section>'
-    b += '<section class="paper"><div class="wrap">' + sh("Latest", "Fresh from the blog.", "Three recent reads.") + '<div class="posts" data-stagger>' + ''.join(
-        f'<a class="post" href="{ARTICLES[i+1][0]}.html"><div class="art ph">{photo(ph)}</div><div class="pb"><span class="m">{t} · {rt}</span><h3>{ti}</h3><p>{de}</p><span class="more">Read article {ARROW}</span></div></a>' for i, (c, t, ti, de, ph, rt) in enumerate(POSTS[1:4])) + '</div></div></section>'
-    b += cta_band("Get the monthly briefing.", "One useful email, once a month.", "Subscribe", "blog.html#newsletter")
-    page("resources.html", "Resources — ARRON | Insights, Events & Careers", "ARRON insights, newsletter, webinars and career opportunities.", b)
 
 
 def build_about():
-    b = hero('<a href="index.html">Home</a> / About Us', 'Building the Future Enterprise. <span class="r">Today.</span>',
+    b = hero('<a href="index.html">Home</a> / About ARRON / Our Purpose', 'Building the Future Enterprise. <span class="r">Today.</span>',
              "Headquartered in Dallas, Texas, ARRON Technologies is an AI-ready technology consulting and services company dedicated to helping organizations operate ahead of now.", V.v_offices())
     b += '''<section id="more" class="navy"><div class="wrap split2" style="align-items:start"><div><span class="kicker rv">Our Purpose</span><h2 class="pull" data-split>We believe the next generation of successful enterprises will not simply use AI. They will be built around it.</h2></div>
 <div><p class="lead rv" style="margin-top:0;color:#c3cee6">ARRON exists to help organizations create that future by building AI-native foundations that empower people, accelerate innovation, and create sustainable competitive advantage.</p>
@@ -893,9 +937,6 @@ def build_about():
 <p class="rv" data-delay=".25" style="margin-top:18px">With more than 25 years of combined experience in technology leadership, digital transformation, enterprise architecture, customer experience, service management, and business operations, our team has helped organizations reimagine how they work, serve customers, and create value in an increasingly AI-driven world.</p>
 <p class="rv" data-delay=".3" style="margin-top:18px">Our consultants have designed and delivered transformational solutions across industries, helping organizations modernize operations, improve service experiences, accelerate innovation, and realize significant business value through technology. From AI and automation to ERP, ITSM, Digital Workplace, and Customer Experience (CX), we focus on solutions that drive measurable outcomes and sustainable growth.</p></div></div></section>'''
     b += '<section class="paper"><div class="wrap"><div class="stats rv" style="grid-template-columns:repeat(4,1fr)"><div class="stat"><b data-count="25" data-suffix="+">0</b><span>Years of combined experience</span></div><div class="stat"><b data-count="100" data-suffix="+">0</b><span>Projects delivered</span></div><div class="stat"><b data-count="5">0</b><span>AI-native applications</span></div><div class="stat"><b data-count="6">0</b><span>Offices across two countries</span></div></div></div></section>'
-    b += '<section id="offices"><div class="wrap">' + sh("Global Delivery, Local Partnership", "U.S. leadership. Global delivery.", "ARRON combines U.S. leadership with global delivery capabilities to provide clients with access to experienced consultants, architects, engineers, and transformation specialists.")
-    b += '<div class="offices" data-stagger><div class="ofc"><h3>United States</h3><ul><li class="hq"><i></i>Dallas, Texas <small>Headquarters</small></li><li><i></i>Louisville, Kentucky</li><li><i></i>Houston, Texas</li></ul></div><div class="ofc"><h3>India</h3><ul><li><i></i>National Capital Region (Delhi NCR)</li><li><i></i>Pune</li><li><i></i>Bangalore</li></ul></div></div>'
-    b += '<p class="rv" style="margin-top:34px;max-width:80ch;font-size:1.05rem">This distributed presence enables us to deliver the responsiveness of a local partner with the scale, expertise, and innovation capabilities of a global technology organization.</p></div></section>'
     b += f'''<section class="paper" id="contact"><div class="wrap cgrid"><div><span class="kicker rv">Contact us</span><h2 data-split>Let's talk about what is next.</h2>
 <p class="rv" data-delay=".2" style="margin-top:22px;font-size:1.1rem">Tell us a little about your challenge. A senior member of the team will reply within one business day.</p>
 <div class="cinfo rv" data-delay=".3"><div><b>Email</b><span><a href="mailto:{EMAIL_1}">{EMAIL_1}</a></span></div><div><b>Email</b><span><a href="mailto:{EMAIL_2}">{EMAIL_2}</a></span></div><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div></div></div>
@@ -903,12 +944,17 @@ def build_about():
 <div class="two"><label>Company<input name="company" placeholder="Company name"></label><label>Interested in<select name="topic"><option>Artificial Intelligence / ARRON AURA</option><option>ERP</option><option>ITSM</option><option>Customer Experience</option><option>Digital Workplace</option><option>Products</option><option>Careers</option><option>Something else</option></select></label></div>
 <label>How can we help?<textarea name="msg" placeholder="A few lines about your goals or challenge"></textarea></label>
 <button class="btn btn-red" type="submit" style="justify-content:center">Send message {ARROW}</button><div class="ok">Your email app should open with the message ready to send. If it does not, write to us directly at the addresses shown.</div></form></div></div></section>'''
-    page("about.html", "About Us — ARRON Technologies | Dallas, Texas", "ARRON Technologies is an AI-ready technology consulting and services company headquartered in Dallas, Texas, with delivery teams in the U.S. and India.", b)
+    page("about.html", "About ARRON — Our Purpose | ARRON Technologies, Dallas, Texas", "ARRON Technologies is an AI-ready technology consulting and services company headquartered in Dallas, Texas, with delivery teams in the U.S. and India.", b)
+
 
 
 if __name__ == "__main__":
-    build_home(); build_offerings(); build_cap(); build_industry(); build_cases(); build_testimonials(); build_consultants()
-    build_resources(); build_blog(); build_articles(); build_events(); build_careers(); build_about()
+    build_home(); build_offerings(); build_cap(); build_industry(); build_insights(); build_proven(); build_consultants(); build_partners(); build_delivery()
+    build_products(); build_careers(); build_about()
+    for p in PRODUCTS:
+        build_product(p)
+    for k in INDUSTRIES:
+        build_industry_page(k)
     for k in OFFER_KEYS + CAP_KEYS:
         build_detail(k)
     print("built", len([f for f in os.listdir(ROOT) if f.endswith('.html')]), "pages")
