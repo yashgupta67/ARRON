@@ -225,7 +225,7 @@ section{padding:110px 0;position:relative}
 .person p{font-size:.9rem;color:var(--muted);line-height:1.55}
 .person .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:18px}
 .person .chips span{font:600 .72rem var(--fd);padding:5px 10px;border-radius:999px;background:var(--paper);color:var(--navy-800)}
-.person .loc{font-size:.8rem;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.person .loc{margin-top:auto!important;font-size:.8rem;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
 
 /* ---------- partners ---------- */
 .plogos{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
