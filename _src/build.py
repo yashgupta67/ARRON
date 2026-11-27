@@ -874,10 +874,14 @@ def build_proven():
         build_soon(f, ("proven-experience.html", "Proven Experience"), n, h1, lead, ph, blurb, n)
 
 
-PEOPLE = [("Daniel Reyes", "Principal Architect, SAP & Cloud", "18+ years", "Certified SAP Enterprise and BTP architect bridging business strategy and enterprise platforms, from S/4HANA to AI-enabled solutions.", ["SAP BTP", "S/4HANA", "Business AI"], "Kentucky, USA"),
-          ("Priya Nair", "Director, ERP & Enterprise Applications", "15+ years", "Leads ERP selection and implementation across finance and supply chain, focused on adoption and measurable business results.", ["ERP", "Program delivery", "Change"], "Texas, USA"),
-          ("Marcus Hale", "Director, Digital & Customer Experience", "12+ years", "Designs customer journeys and the platforms behind them, connecting data, CRM and service channels into one experience.", ["CX", "CRM", "Analytics"], "Texas, USA"),
-          ("Elena Brooks", "Managing Partner, ITSM & AI Transformation", "20+ years", "Entrepreneurial executive in IT service management and cloud transformation. ITIL Expert and Azure certified.", ["ServiceNow", "Azure", "ITIL"], "Dallas–Fort Worth, TX")]
+PEOPLE = [
+    ("Gourav Gupta", "SAP Enterprise Architect", "", "Designs how manufacturing and distribution companies run on SAP, from greenfield S/4HANA implementations to ECC conversions. Sets clean-core direction on SAP BTP and leads SAP Business AI. Certified SAP Enterprise Architect.", ["S/4HANA", "SAP BTP", "Business AI"], "Louisville, Kentucky", "gourav.jpg", "https://www.linkedin.com/in/sap-gourav-gupta/"),
+    ("Manjot Sohal", "Oracle HCM Architect", "", "Oracle Human Capital Management architect based in the Dallas-Fort Worth area, helping organizations design and deliver HCM solutions that support their people and processes.", ["Oracle HCM", "Architecture", "HR transformation"], "Dallas-Fort Worth, Texas", "manjot.jpg", "https://www.linkedin.com/in/manjot-sohal-107a22187/"),
+    ("Yash Gupta", "AI & Data Science", "", "AI and data science graduate focused on generative AI, analytics and business intelligence, with a foundation in machine learning, Python and web development.", ["GenAI", "Analytics", "Business Intelligence"], "Delhi, India", "yash.jpg", "https://www.linkedin.com/in/yash-gupta-73b9281b1/"),
+    ("Rajit Mohan", "Growth Accelerator | Digital Solutions & Modern Workplaces", "", "Entrepreneurial executive who advises clients in healthcare, retail, manufacturing, banking and technology on large-scale modernization, digital strategy, automation and AI, and has led large multi-year global deals.", ["Digital workplace", "Cloud", "AIOps"], "Dallas-Fort Worth, Texas", "rajit.jpg", "https://www.linkedin.com/in/rajit-mohan-22197732/"),
+]
+LI_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>'
+
 
 
 def build_consultants():
@@ -885,7 +889,7 @@ def build_consultants():
     b = hero('<a href="index.html">Home</a> / <a href="about.html">About ARRON</a> / Leadership & Consultants', 'The people you <span class="r">will work with.</span>',
              "Practitioners with decades of enterprise delivery behind them, who stay close to clients and to the work.", stage, "photo")
     b += '<section id="more" class="paper"><div class="wrap">' + sh("Leadership & consultants", "Meet the team.", "Profiles of the practitioners who lead our engagements.") + \
-         '<div class="people" data-stagger>' + ''.join(f'<article class="person"><div class="ph"><span class="yrs">{y}</span>{V.AVATAR}</div><div class="pi"><h3>{n}</h3><div class="role">{r}</div><p>{bio}</p><div class="chips">{"".join(f"<span>{c}</span>" for c in ch)}</div><div class="loc">{loc}</div></div></article>' for n, r, y, bio, ch, loc in PEOPLE) + '</div></div></section>'
+         '<div class="people" data-stagger>' + ''.join(f'<article class="person"><div class="ph real">{f'<span class="yrs">{y}</span>' if y else ''}<img src="assets/img/team/{img}" alt="{n}" loading="lazy" width="480" height="480"></div><div class="pi"><h3>{n}</h3><div class="role">{r}</div><p>{bio}</p><div class="chips">{"".join(f"<span>{c}</span>" for c in ch)}</div><div class="loc">{loc}</div><a class="li" href="{url}" target="_blank" rel="noopener noreferrer" aria-label="{n} on LinkedIn">{LI_SVG} LinkedIn profile</a></div></article>' for n, r, y, bio, ch, loc, img, url in PEOPLE) + '</div></div></section>'
     b += f'''<section class="band">{photo("team-laptop", "Team collaborating")}<div class="wrap"><span class="kicker">Join ARRON</span><h2>Do the best work of your career.</h2><p style="margin:20px 0 32px;max-width:48ch;font-size:1.1rem;color:#cfdcff">We hire experienced consultants and architects who want to stay close to clients and to the work.</p><a class="btn btn-red" href="careers.html">Careers at ARRON {ARROW}</a></div></section>'''
     page("consultants.html", "Leadership & Consultants — ARRON", "Meet the ARRON leadership and consultants.", b)
 
