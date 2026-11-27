@@ -158,7 +158,7 @@ def header(fname):
             on = ' class="active"' if href == active else ''
             items += f'<a href="{href}"{on}>{label}</a>'
     return f'''<header class="site-header"><div class="wrap bar">
-<a class="logo" href="index.html" aria-label="ARRON home"><img src="assets/img/logo.png" alt="ARRON — Ahead of now"></a>
+<a class="logo" href="index.html" aria-label="ARRON home"><img src="assets/img/logo.png" alt="ARRON — Ahead of now" width="693" height="210" style="height:58px;width:auto;max-width:none;flex:none;aspect-ratio:693/210"></a>
 <button class="burger" aria-label="Menu"><span></span><span></span></button>
 <nav class="nav">{items}<a class="btn btn-red" href="about.html#contact">Talk to us {ARROW}</a></nav></div></header>'''
 

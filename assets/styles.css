@@ -710,3 +710,8 @@ a.ind:hover h3{color:var(--red)}
 .logo img{max-width:none;width:auto;object-fit:contain}
 .nav{min-width:0}
 @media(min-width:1361px) and (max-width:1480px){.logo img{height:50px}.nav>a,.nav .dd>a{padding:10px 8px;font-size:.85rem}.nav>a::after,.nav .dd>a::after{left:8px;right:8px}.nav .btn{margin-left:6px;padding:10px 16px}}
+.site-header .wrap.bar{max-width:1640px;padding-left:28px;padding-right:28px;gap:40px}
+.logo{margin-right:12px}
+@media(max-width:1360px){.logo img{height:50px!important}}
+@media(max-width:640px){.logo img{height:44px!important}.site-header .wrap.bar{padding-left:18px;padding-right:18px}}
+@media(min-width:1361px) and (max-width:1480px){.logo img{height:48px!important}.site-header .wrap.bar{gap:20px;padding-left:20px;padding-right:20px}}
