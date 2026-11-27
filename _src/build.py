@@ -243,7 +243,7 @@ D["erp"] = dict(
     tile_tag="A smarter core",
     tile_desc="Modernized enterprise core and processes, on a platform that simplifies operations, accelerates decisions and enables continuous change.",
     plat_label="ERP platforms we work with",
-    platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "Workday", "Zoho", "Infor", "Epicor", "IFS"])
+    platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "Workday", "Zoho"])
 D["itsm"] = dict(
     file="itsm.html", parent=("offerings.html", "Offerings"), name="IT Service Management", short="ITSM", visual=V.v_itsm, mini="itsm",
     tile_tag="Service, before it's needed",
@@ -753,7 +753,7 @@ INDUSTRIES = {
                ("Predictive operations", "Forecasting and early-warning signals for demand, maintenance and supply risk."),
                ("Quality & compliance", "Consistent processes and traceable records across plants and suppliers.")],
         offers=[("erp", "A clean-core ERP that connects planning, shop floor and finance."), ("ai", "Predictive and agentic AI for demand, supply and maintenance."), ("itsm", "Reliable service operations for plant and enterprise systems.")],
-        platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "Infor", "Epicor", "IFS", "ServiceNow"]),
+        platforms=["SAP", "Oracle", "Microsoft", "NetSuite", "ServiceNow"]),
     "retail": dict(file="retail.html", name="Retail & Consumer", short="Retail & Consumer", photo="highfive", icon="cart",
         card="Omnichannel experience, personalization and demand sensing.",
         h1='One customer, <span class="r">every channel.</span>',
