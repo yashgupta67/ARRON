@@ -350,7 +350,7 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
   .cta{padding:56px 40px}.quotes{grid-template-columns:1fr}
   .spec>div:nth-child(3){grid-column:span 2;border-left:0;border-top:1px solid var(--line)}
 }
-@media(max-width:1240px){
+@media(max-width:1100px){
   .site-header{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}
   .burger{display:block}
   .nav{position:fixed;inset:84px 0 0 0;background:#fff;flex-direction:column;align-items:stretch;padding:20px 24px 40px;gap:0;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);overflow:auto}
@@ -484,7 +484,7 @@ form.f input:focus,form.f select:focus,form.f textarea:focus{border-color:var(--
   .qgrid,.evcards{grid-template-columns:1fr 1fr}
   .collage{min-height:460px}
 }
-@media(max-width:1240px){
+@media(max-width:1100px){
   .menu.wide{width:auto;display:block}.menu h5{padding:14px 4px 4px}.menu .foot{display:none}
   .nav .dd:nth-last-child(-n+3) .menu,.nav .dd:nth-last-child(-n+3) .menu.wide{right:auto}
 }
@@ -730,13 +730,13 @@ a.ind:hover h3{color:var(--red)}
 @media(max-width:640px){.logo img{height:38px!important}}
 .ft img{height:auto;width:min(100%,260px)}
 /* compact nav so laptops (1241px+) still see the full menu */
-@media(min-width:1241px) and (max-width:1480px){
+@media(min-width:1101px) and (max-width:1480px){
   .nav>a,.nav .dd>a{padding:9px 7px;font-size:.82rem}
   .nav>a::after,.nav .dd>a::after{left:7px;right:7px}
   .nav .btn{margin-left:6px;padding:9px 15px;font-size:.82rem}
   .site-header .wrap.bar{gap:10px;padding-left:18px;padding-right:18px}
 }
-@media(min-width:1241px) and (max-width:1360px){.logo img{height:40px!important}}
+@media(min-width:1101px) and (max-width:1360px){.logo img{height:40px!important}}
 /* clearer hamburger */
 .burger{border:1px solid var(--line);border-radius:10px;background:#fff}
 .burger span{height:3px;border-radius:2px;background:var(--navy-800)}
@@ -744,7 +744,7 @@ a.ind:hover h3{color:var(--red)}
 .menu-open .burger span:nth-child(1){top:20px}.menu-open .burger span:nth-child(2){top:20px}
 /* tablet / phone menu: collapsible groups */
 .dd-t{display:none}
-@media(max-width:1240px){
+@media(max-width:1100px){
   .nav .dd{display:flex;flex-wrap:wrap;align-items:stretch}
   .nav .dd>a{flex:1 1 0;min-width:0}
   .dd-t{display:grid;place-items:center;width:56px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--navy-800);cursor:pointer}
@@ -756,7 +756,17 @@ a.ind:hover h3{color:var(--red)}
 }
 /* never allow sideways scroll (off-canvas menu on tablets/phones) */
 html,body{overflow-x:clip}
-@media(max-width:1240px){
+@media(max-width:1100px){
   .nav{visibility:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s linear .4s}
   .menu-open .nav{visibility:visible;transition-delay:0s}
 }
+/* fluid desktop nav: scales with the screen so any laptop (HP, Dell, scaled Windows displays) shows the full menu from 1101px */
+@media(min-width:1101px) and (max-width:1600px){
+  .site-header .wrap.bar{gap:clamp(8px,1.2vw,24px);padding-left:clamp(14px,1.6vw,28px);padding-right:clamp(14px,1.6vw,28px)}
+  .nav>a,.nav .dd>a{font-size:clamp(.71rem,.62vw + .28rem,.93rem);padding:9px clamp(3px,.65vw,13px)}
+  .nav>a::after,.nav .dd>a::after{left:clamp(4px,.7vw,13px);right:clamp(4px,.7vw,13px)}
+  .nav .dd>a{gap:3px}.nav .dd>a svg{width:8px}
+  .nav .btn{margin-left:clamp(4px,.6vw,12px);padding:clamp(8px,.8vw,12px) clamp(12px,1.2vw,22px);font-size:clamp(.74rem,.5vw + .3rem,.88rem)}
+  .logo img{height:clamp(34px,3.5vw,54px)!important}
+}
+.site-header .wrap.bar{width:min(1440px,100% - 48px);max-width:none;padding-left:0;padding-right:0}
