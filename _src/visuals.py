@@ -374,15 +374,29 @@ def v_prod_connect():
 
 # ------------------------------------------------------------------ Offices (About)
 def v_offices():
-    us = [("Dallas, TX", 150, 190, True), ("Louisville, KY", 235, 105, False), ("Houston, TX", 170, 265, False)]
-    ind = [("Delhi NCR", 430, 85), ("Pune", 405, 195), ("Bangalore", 440, 270)]
+    hub = (280, 168)
+    offices = [("Dallas, TX", 88, 150, True, "Headquarters"), ("Louisville, KY", 112, 70, False, ""), ("Houston, TX", 112, 238, False, ""),
+               ("Delhi NCR", 472, 70, False, ""), ("Pune", 492, 150, False, ""), ("Bangalore", 468, 238, False, "")]
+    dots = ''.join(f'<circle cx="{x}" cy="{y}" r="1.5" fill="rgba(255,255,255,.12)"/>' for x in range(24, 546, 20) for y in range(36, 306, 20))
     out = ''
-    for i, (n, x, y) in enumerate(ind):
-        out += f'<path d="M150,190 Q{(150+x)/2},{min(190,y)-110} {x},{y}" fill="none" stroke="url(#go2)" stroke-width="1.8" class="sv-flow" style="animation-delay:{i*.3}s"/>'
-    for n, x, y, hq in us:
-        out += f'<circle cx="{x}" cy="{y}" r="{9 if hq else 6}" fill="{"#ff6b78" if hq else "#6aa3ff"}"/><text x="{x}" y="{y+24}" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="800">{n}</text>' + (f'<circle cx="{x}" cy="{y}" r="14" fill="none" stroke="#ff6b78" stroke-width="2"><animate attributeName="r" values="9;30;9" dur="2.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2.8s" repeatCount="indefinite"/></circle><text x="{x}" y="{y+40}" text-anchor="middle" fill="#9fb3e0" font-size="10.5">Headquarters</text>' if hq else '')
-    for n, x, y in ind:
-        out += f'<circle cx="{x}" cy="{y}" r="6" fill="#6aa3ff"/><text x="{x}" y="{y+24}" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="800">{n}</text>'
-    dots = ''.join(f'<circle cx="{x}" cy="{y}" r="1.6" fill="rgba(255,255,255,.16)"/>' for x in range(30, 540, 20) for y in range(30, 320, 20))
-    return f'''<svg viewBox="0 0 560 330" {FONT}><defs><linearGradient id="go2" x1="0" x2="1"><stop offset="0" stop-color="#ff6b78"/><stop offset="1" stop-color="#6aa3ff"/></linearGradient></defs>{dots}
-<text x="170" y="40" text-anchor="middle" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="3">UNITED STATES</text><text x="430" y="40" text-anchor="middle" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="3">INDIA</text>{out}</svg>'''
+    for i, (n, x, y, hq, sub) in enumerate(offices):
+        cx = (x + hub[0]) / 2
+        cy = (y + hub[1]) / 2 + (-26 if y < hub[1] else 26 if y > hub[1] else -18)
+        d = f"M{x},{y} Q{cx},{cy} {hub[0]},{hub[1]}"
+        out += f'<path d="{d}" fill="none" stroke="rgba(120,160,255,.28)" stroke-width="1.3"/>'
+        for k in range(2):
+            out += f'<circle r="2.6" fill="{"#ff8a95" if hq else "#9cc0ff"}"><animateMotion dur="4.2s" begin="{i*.55 + k*2.1:.2f}s" repeatCount="indefinite" path="{d}"/><animate attributeName="opacity" values="0;1;1;0" dur="4.2s" begin="{i*.55 + k*2.1:.2f}s" repeatCount="indefinite"/></circle>'
+    for i, (n, x, y, hq, sub) in enumerate(offices):
+        col = "#ff6b78" if hq else "#6aa3ff"
+        out += f'<circle cx="{x}" cy="{y}" r="8" fill="none" stroke="{col}" stroke-width="1.6"><animate attributeName="r" values="8;26;8" dur="3.6s" begin="{i*.4:.1f}s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0;.9" dur="3.6s" begin="{i*.4:.1f}s" repeatCount="indefinite"/></circle>'
+        out += f'<circle cx="{x}" cy="{y}" r="{8 if hq else 6}" fill="{col}"/><text x="{x}" y="{y+(26 if y>=hub[1]-30 else -16)}" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="800">{n}</text>'
+        if sub:
+            out += f'<text x="{x}" y="{y+40}" text-anchor="middle" fill="#9fb3e0" font-size="10.5">{sub}</text>'
+    hubsvg = f'''<circle cx="{hub[0]}" cy="{hub[1]}" r="34" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.4"><animate attributeName="r" values="34;50;34" dur="3.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;.7" dur="3.4s" repeatCount="indefinite"/></circle>
+<circle cx="{hub[0]}" cy="{hub[1]}" r="34" fill="#12306b" stroke="#8fb4ff" stroke-width="1.6"/>
+<text x="{hub[0]}" y="{hub[1]-2}" text-anchor="middle" fill="#fff" font-size="12" font-weight="800" letter-spacing="1.5">OUR</text>
+<text x="{hub[0]}" y="{hub[1]+14}" text-anchor="middle" fill="#fff" font-size="12" font-weight="800" letter-spacing="1.5">CLIENTS</text>'''
+    return f'''<svg viewBox="0 0 560 330" {FONT}>{dots}
+<text x="100" y="32" text-anchor="middle" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="3">UNITED STATES</text><text x="480" y="32" text-anchor="middle" fill="#9fb3e0" font-size="11" font-weight="800" letter-spacing="3">INDIA</text>
+{out}{hubsvg}
+<text x="280" y="312" text-anchor="middle" fill="#bcd0f7" font-size="11.5" font-weight="600">Consultants in six offices, working for our clients</text></svg>'''
