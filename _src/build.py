@@ -519,7 +519,7 @@ def aura_diagram():
         '<div class="at more">+ Other Enterprise Systems</div>'], "", 6)
     caps = [("brain", "Reasoning<br>Engine"), ("network", "Agent<br>Orchestration"), ("cog", "Workflow<br>Automation"), ("chart", "Real-time<br>Insights"), ("target", "Decision<br>Intelligence"), ("loop", "Continuous<br>Learning")]
     core = f'''<div class="ar"><div class="ar-l"><h4>ARRON AURA Intelligence Layer</h4><p>Reasoning, orchestration and intelligence at the core</p></div>
-<div class="core"><div class="core-top"><img src="assets/img/mark.png" alt=""><div><h4>ARRON <em>AURA</em><sup>™</sup></h4><span>ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span></div></div>
+<div class="core"><div class="core-top"><img src="assets/img/mark.png" alt=""><div><h4>ARRON <em>AURA</em></h4><span>ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span></div></div>
 <div class="core-caps">{''.join(f'<div>{icon(i)}<span>{l}</span></div>' for i, l in caps)}<div class="out">From Data<br>to Decisions<br>to Impact</div></div></div></div>'''
     data = _row("Data & Knowledge Foundation", "Unified, real-time access to all enterprise knowledge", [
         _at("db", "Structured Data", "Enterprise Resource Planning, Customer Relationship Management, Human Resources, IT Service Management"), _at("doc", "Unstructured Data", "Documents, Email, Content"),
@@ -530,7 +530,7 @@ def aura_diagram():
     infra = _row("Infrastructure & Cloud", "Scalable, secure and resilient by design", [
         _at("cloud", "Multi-Cloud", "Azure | AWS | Google Cloud"), _at("cloud", "Hybrid & On-Premises", "Flexible Deployment"), _at("server", "Scalable Architecture", "High Performance"),
         _at("shield", "Resilient & Secure", "Business Continuity"), _at("leaf", "Sustainable", "A Greener Tomorrow")], "gov")
-    return f'''<div class="aura rv" id="aura"><div class="aura-head"><h3>ARRON <em>AURA</em><sup>™</sup></h3><span class="sub">ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span><p>A unified intelligence layer for the Autonomous Enterprise</p></div>
+    return f'''<div class="aura rv" id="aura"><div class="aura-head"><h3>ARRON <em>AURA</em></h3><span class="sub">ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span><p>A unified intelligence layer for the Autonomous Enterprise</p></div>
 {people}{_flow()}{agents}{_flow(["Execute", "Collaborate", "Learn", "Adapt", "Deliver Outcomes"])}{apps}{_flow(n=6)}{core}{_flow(n=5)}{data}{gov}{infra}
 <div class="aura-foot"><b>INTELLIGENCE EVERYWHERE. IMPACT FASTER.</b><span>People + Artificial Intelligence Agents + Data + Applications = A More Human, Autonomous Enterprise</span></div></div>'''
 
@@ -538,7 +538,7 @@ def aura_diagram():
 def aura_mini():
     def row(title, chips):
         return f'<div class="am"><div class="t">{title}</div><div class="c">{"".join(f"<span>{c}</span>" for c in chips)}</div></div>'
-    return f'''<a class="amini rv" href="ai.html#aura" data-delay=".5" style="display:block"><div class="am-h"><b>ARRON <em>AURA</em>™</b><span>ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span></div>
+    return f'''<a class="amini rv" href="ai.html#aura" data-delay=".5" style="display:block"><div class="am-h"><b>ARRON <em>AURA</em></b><span>ARTIFICIAL INTELLIGENCE UNIFIED REASONING ARCHITECTURE</span></div>
 {row("People & Experiences", ["Employees", "Customers", "Leaders", "Partners", "Communities"])}
 {row("Artificial Intelligence Agents", ["Service", "Finance", "Human Resources", "Customer Experience", "Operations", "Industry"])}
 {row("Enterprise Applications", ["ServiceNow", "Workday", "Microsoft", "Salesforce", "SAP"])}
@@ -561,7 +561,7 @@ def build_ai():
         ("Decision Intelligence", "Combine data, context and AI to surface insights, guide decisions and trigger timely action.")], "c4w") + '</div></section>'
     b += f'''<section class="paper"><div class="wrap">{sh("AI-Native by design", "Traditional enterprises bolt AI onto existing systems. ARRON takes a fundamentally different approach.", "We design AI-native architectures that embed intelligence into the core of business operations, enabling autonomous decision-making, continuous learning, and seamless collaboration between people, processes, and AI from day one.")}
 <div class="rv" style="padding:34px 40px;border-radius:24px;background:#fff;border-left:4px solid var(--red);max-width:900px"><span class="kicker" style="margin-bottom:12px">Definition</span><h3 style="font-size:1.35rem;margin-bottom:12px">What is AI-Native Architecture?</h3><p style="color:var(--text)">AI-native architecture is an enterprise framework where AI agents, business applications, automation, and data operate as a unified intelligence ecosystem. Every layer is designed to enable intelligent orchestration, predictive insights, adaptive workflows, and autonomous execution at scale.</p></div></div></section>'''
-    b += f'''<section id="aura-sec"><div class="wrap">{sh("Introducing ARRON AURA™", "Artificial Intelligence Unified Reasoning Architecture", "ARRON AURA is our AI-native enterprise platform that connects intelligent agents, enterprise systems, data, and human expertise to create a unified operational intelligence layer across the organization.")}{aura_diagram()}</div></section>'''
+    b += f'''<section id="aura-sec"><div class="wrap">{sh("Introducing ARRON AURA", "Artificial Intelligence Unified Reasoning Architecture", "ARRON AURA is our AI-native enterprise platform that connects intelligent agents, enterprise systems, data, and human expertise to create a unified operational intelligence layer across the organization.")}{aura_diagram()}</div></section>'''
     caps = [("brain", "Adaptive AI & Agent Ecosystem", "AI agents and emerging autonomous systems that reason, coordinate and act across enterprise tasks and functions."),
             ("network", "Intelligent Enterprise Workflows", "Orchestration and automation that connect AI, people, applications and processes around end-to-end outcomes."),
             ("db", "Data & Decision Intelligence", "A connected data and knowledge foundation that turns enterprise context into real-time insight and better-informed action."),
@@ -656,7 +656,7 @@ def build_home():
     b = f'''<section class="hero home-hero"><div class="wrap">
 <h1 data-split>Building AI-native enterprises, <span class="r">ahead of now.</span></h1>
 <p class="lead rv" data-delay=".4">ARRON Technologies is an AI-ready technology company building the future enterprise on AI-native foundations. We help organizations transform operations, elevate customer and employee experiences, and accelerate growth through AI, automation, enterprise platforms, and intelligent services designed for what's ahead of now.</p>
-<div class="hero-cta rv" data-delay=".55"><a class="btn btn-red" href="about.html#contact">Talk to us {ARROW}</a><a class="btn btn-ghost" href="ai.html#aura">Explore ARRON AURA™</a></div>
+<div class="hero-cta rv" data-delay=".55"><a class="btn btn-red" href="about.html#contact">Talk to us {ARROW}</a><a class="btn btn-ghost" href="ai.html#aura">Explore ARRON AURA</a></div>
 <div class="hero-stats rv" data-delay=".7"><div><b>100+</b><span>Projects delivered</span></div><div><b>5</b><span>AI-native applications</span></div><div><b>Up to 30%</b><span>Operational cost savings</span></div><div><b>25+ yrs</b><span>Combined experience</span></div></div>
 {aura_mini()}</div></section>'''
     b += marquee()
