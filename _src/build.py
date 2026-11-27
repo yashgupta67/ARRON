@@ -654,7 +654,6 @@ def build_product(p):
 # =========================================================== HOME
 def build_home():
     b = f'''<section class="hero home-hero"><div class="wrap">
-<div class="tagpill rv"><i></i>ARRON Technologies · Ahead of Now</div>
 <h1 data-split>Building AI-native enterprises, <span class="r">ahead of now.</span></h1>
 <p class="lead rv" data-delay=".4">ARRON Technologies is an AI-ready technology company building the future enterprise on AI-native foundations. We help organizations transform operations, elevate customer and employee experiences, and accelerate growth through AI, automation, enterprise platforms, and intelligent services designed for what's ahead of now.</p>
 <div class="hero-cta rv" data-delay=".55"><a class="btn btn-red" href="about.html#contact">Talk to us {ARROW}</a><a class="btn btn-ghost" href="ai.html#aura">Explore ARRON AURA™</a></div>
