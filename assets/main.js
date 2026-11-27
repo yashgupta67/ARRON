@@ -11,6 +11,12 @@ function onScroll(){
 addEventListener('scroll',onScroll,{passive:true});onScroll();
 var bg=document.querySelector('.burger');
 if(bg)bg.onclick=function(){document.body.classList.toggle('menu-open')};
+document.querySelectorAll('.nav .dd').forEach(function(d){
+  var b=document.createElement('button');b.type='button';b.className='dd-t';b.setAttribute('aria-label','Show submenu');b.setAttribute('aria-expanded','false');
+  b.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  b.onclick=function(e){e.preventDefault();var o=d.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false')};
+  d.insertBefore(b,d.children[1]);
+});
 document.querySelectorAll('.nav a').forEach(function(a){a.addEventListener('click',function(){document.body.classList.remove('menu-open')})});
 
 // split headings into words
