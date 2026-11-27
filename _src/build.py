@@ -574,7 +574,7 @@ def build_ai():
            ("Data & Knowledge Fabric", "Unified access to structured data, unstructured content, enterprise knowledge, and real-time insights."),
            ("Governance & Security", "Responsible AI frameworks delivering transparency, compliance, privacy, security, and trust."),
            ("Continuous Intelligence", "Adaptive systems that learn, evolve, and improve through every interaction and outcome.")]
-    b += '<section class="navy"><div class="wrap">' + sh("The ARRON Architecture Pillars", "Built on foundations that scale with what's next.", "Five foundations designed to keep enterprise AI connected, governed and ready to evolve.") + \
+    b += '<section class="navy"><div class="wrap">' + sh("The ARRON Architecture Pillars", "Built on foundations that scale ahead of now.", "Five foundations designed to keep enterprise AI connected, governed and ready to evolve.") + \
          '<div class="pillars" data-stagger>' + ''.join(f'<div class="pillar"><span class="n">{i+1:02d}</span><h3>{ti}</h3><p>{tx}</p></div>' for i, (ti, tx) in enumerate(pil)) + '</div></div></section>'
     b += steps_block("How we deliver", "From ambition to AI that works.", "A structured path to take AI from opportunity to enterprise adoption, with scalability, trust and measurable value built in.",
                      [("Assess", "Identify high-value opportunities and understand data, technology, governance and organizational readiness."),
@@ -663,14 +663,14 @@ def build_home():
     b += f'''<section id="who"><div class="wrap split2"><div><span class="kicker rv">Who are we</span><h2 data-split>Operating ahead of now.</h2>
 <p class="lead rv" data-delay=".2">ARRON Technologies exists to help organizations operate ahead of now. As an AI-ready technology company, we help businesses evolve into AI-native enterprises through intelligent technology, modern platforms, and human ingenuity.</p>
 <p class="rv" data-delay=".25" style="margin-top:18px">Our team of seasoned industry consultants brings proven experience designing and delivering solutions that drive operational efficiency, reduce costs, enhance customer and employee experiences, and create measurable business value.</p>
-{emph("AI-Native by design", "Built for what comes next.")}
+{emph("AI-Native by design", "Built ahead of now.")}
 <a class="more rv" style="margin-top:34px" href="about.html">More about ARRON {ARROW}</a></div>
 <div class="collage rv rv-r"><div class="c1">{photo("team-room", "Consultants working with a client team")}</div><div class="c2">{photo("dashboard", "Analytics dashboard")}</div>
 <div class="badge"><b>25+ years</b><span>of combined experience in technology leadership and transformation</span></div></div></div></section>'''
     b += f'''<section id="intro" class="paper"><div class="wrap"><div class="center-head"><span class="kicker rv">What we believe</span><h2 data-split>What leads tomorrow must be built differently today.</h2></div>
 <div class="split2" style="align-items:start;margin-top:48px"><p class="lead rv" style="margin-top:0">We believe enterprises must move beyond traditional transformation to become AI-native, adaptive and continuously evolving. That means reimagining intelligence through AI, modernizing the operational core through ERP, transforming how services run through ITSM, elevating Customer Experience, and creating a Digital Workplace built around people.</p>
 <p class="rv" data-delay=".15" style="margin-top:0">By bringing these together with human ingenuity, intelligent automation and data-driven decision-making, enterprises can respond faster, decide better and continuously create new value.</p></div>
-<div style="margin-top:44px">{emph("Operate Smarter", "Evolve Faster", "Lead What's Next")}</div></div></section>'''
+<div style="margin-top:44px">{emph("Operate Smarter", "Evolve Faster", "Lead Ahead of Now")}</div></div></section>'''
     b += f'<section id="offer"><div class="wrap">{sh("What we offer", "Five practices. One intelligent enterprise experience.", "Each practice stands on its own. Together they close the gaps between your systems, your people and your customers.")}{tiles_for(OFFER_KEYS)}</div></section>'
     b += f'<section class="paper" id="products"><div class="wrap">{sh("Products", "Product as a Service.", "AI-native products from ARRON, delivered as a service and improved continuously.")}<div class="tiles" data-stagger>' + ''.join(product_tile(p) for p in PRODUCTS) + '</div></div></section>'
     why = [("100+", "Projects delivered", "100+ transformation and technology projects delivered across enterprise platforms, service management, workplace transformation, customer experience, and automation initiatives."),
@@ -691,7 +691,7 @@ def build_home():
             head = f'<span class="n">{m}</span>'
         cells += f'<div>{head}<h3>{ti}</h3><p>{tx}</p></div>'
     b += '<section class="navy" id="why"><div class="wrap">' + sh("Why ARRON", "Enterprise experience. AI-native thinking. Value from day one.", "ARRON combines deep enterprise expertise with a future-ready technology mindset to solve the right problems, move faster from idea to impact, and build solutions designed to evolve.") + \
-         f'<div class="why6" data-stagger>{cells}</div><div style="margin:48px 0 0" class="emph-dark">{emph("Practical expertise", "Measurable outcomes", "Built for what's next.")}</div><div class="closing rv"><b>ARRON. Ahead of Now. Building AI-Native Enterprises.</b><div style="margin-top:26px;display:flex;gap:26px;justify-content:center;flex-wrap:wrap"><a class="more" href="proven-experience.html">Proven experience {ARROW}</a><a class="more" href="industry.html">Industries we serve {ARROW}</a></div></div></div></section>'
+         f'<div class="why6" data-stagger>{cells}</div><div style="margin:48px 0 0" class="emph-dark">{emph("Practical expertise", "Measurable outcomes", "Built ahead of now.")}</div><div class="closing rv"><b>ARRON. Ahead of Now. Building AI-Native Enterprises.</b><div style="margin-top:26px;display:flex;gap:26px;justify-content:center;flex-wrap:wrap"><a class="more" href="proven-experience.html">Proven experience {ARROW}</a><a class="more" href="industry.html">Industries we serve {ARROW}</a></div></div></div></section>'
     nxt = [("STEP 01", "Talk to us", "Reach the team directly by email. A senior consultant will reply within one business day.", "about.html#contact", "Contact us"),
            ("STEP 02", "See how we work", "Understand our consulting, services and partnership models and which fits you.", "capabilities.html", "Capabilities"),
            ("STEP 03", "Explore ARRON AURA", "See how our AI-native architecture connects agents, data and enterprise systems.", "ai.html#aura", "ARRON AURA")]
@@ -736,7 +736,7 @@ def build_cap():
 INDUSTRIES = {
     "banking": dict(file="banking.html", name="Banking & Financial Services", short="Banking", photo="skyline", icon="bank",
         card="Compliance, resilience and customer trust, with governed AI.",
-        h1='Trusted finance, <span class="r">built for what comes next.</span>',
+        h1='Trusted finance, <span class="r">built ahead of now.</span>',
         lead="Banks and financial institutions must modernize while staying compliant and resilient. We help them modernize core and finance platforms, strengthen service operations and bring governed AI into the work, without giving up control.",
         focus=[("Core & finance modernization", "Modern ERP and finance platforms that shorten close cycles and improve reporting and control."),
                ("Compliance & audit readiness", "Auditable change, access and service processes, with evidence captured as the work happens."),
@@ -943,7 +943,7 @@ def build_about():
 <p class="rv" data-delay=".25" style="margin-top:18px">With more than 25 years of combined experience in technology leadership, digital transformation, enterprise architecture, customer experience, service management, and business operations, our team has helped organizations reimagine how they work, serve customers, and create value in an increasingly AI-driven world.</p>
 <p class="rv" data-delay=".3" style="margin-top:18px">Our consultants have designed and delivered transformational solutions across industries, helping organizations modernize operations, improve service experiences, accelerate innovation, and realize significant business value through technology. From AI and automation to ERP, ITSM, Digital Workplace, and Customer Experience (CX), we focus on solutions that drive measurable outcomes and sustainable growth.</p></div></div></section>'''
     b += '<section class="paper"><div class="wrap"><div class="stats rv" style="grid-template-columns:repeat(4,1fr)"><div class="stat"><b data-count="25" data-suffix="+">0</b><span>Years of combined experience</span></div><div class="stat"><b data-count="100" data-suffix="+">0</b><span>Projects delivered</span></div><div class="stat"><b data-count="5">0</b><span>AI-native applications</span></div><div class="stat"><b data-count="6">0</b><span>Offices across two countries</span></div></div></div></section>'
-    b += f'''<section class="paper" id="contact"><div class="wrap cgrid"><div><span class="kicker rv">Contact us</span><h2 data-split>Let's talk about what is next.</h2>
+    b += f'''<section class="paper" id="contact"><div class="wrap cgrid"><div><span class="kicker rv">Contact us</span><h2 data-split>Let's talk about getting ahead of now.</h2>
 <p class="rv" data-delay=".2" style="margin-top:22px;font-size:1.1rem">Tell us a little about your challenge. A senior member of the team will reply within one business day.</p>
 <div class="cinfo rv" data-delay=".3"><div><b>Email</b><span><a href="mailto:{EMAIL_1}">{EMAIL_1}</a></span></div><div><b>Email</b><span><a href="mailto:{EMAIL_2}">{EMAIL_2}</a></span></div><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div></div></div>
 <div class="rv rv-r"><form class="f" data-demo data-mailto="{EMAIL_1},{EMAIL_2}" onsubmit="return false"><div class="two"><label>Name<input name="name" required placeholder="Jane Smith"></label><label>Work email<input name="email" type="email" required placeholder="jane@company.com"></label></div>
