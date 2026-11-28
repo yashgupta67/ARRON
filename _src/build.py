@@ -9,6 +9,7 @@ VER = str(int(__import__('time').time()))
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EMAIL_1 = "RajitM@arrontechnologies.com"
 EMAIL_2 = "Annad@arrontechnologies.com"
+LINKEDIN = "https://www.linkedin.com/company/arron-technologies/"
 MAILTO = f"mailto:{EMAIL_1},{EMAIL_2}?subject=Enquiry%20from%20the%20ARRON%20website"
 import re as _re
 
@@ -165,13 +166,13 @@ def header(fname):
 
 def footer():
     def col(title, links):
-        return f'<div><h4>{title}</h4><ul>' + ''.join(f'<li><a href="{h}">{t}</a></li>' for h, t in links) + '</ul></div>'
+        return f'<div><h4>{title}</h4><ul>' + ''.join(f'<li><a href="{h}"' + (' target="_blank" rel="noopener noreferrer"' if h.startswith("https://") else '') + f'>{t}</a></li>' for h, t in links) + '</ul></div>'
     return f'''<footer class="site-footer"><div class="wrap"><div class="ft" style="grid-template-columns:1.5fr repeat(4,1fr)">
 <div><img src="assets/img/logo-stacked-light.png" alt="ARRON — ahead of now"><p style="max-width:34ch">An AI-ready technology company building AI-native enterprises. Headquartered in Dallas, Texas.</p></div>
 {col("Offerings", [("ai.html", "AI / Super Intelligence"), ("erp.html", "ERP"), ("itsm.html", "ITSM"), ("cx.html", "Customer Experience"), ("digital-workplace.html", "Digital Workplace")])}
 {col("Capabilities & Products", [("consulting.html", "Consulting"), ("services.html", "Services"), ("partnerships.html", "Partnerships"), ("arron-ai.html", "ARRON AI"), ("record-vault-ai.html", "Record Vault AI"), ("connect-ai.html", "Connect AI")])}
 {col("Industries", [(h, t) for h, t, d in INDUSTRY_PAGES])}
-{col("Company", [("about.html", "About ARRON"), ("proven-experience.html", "Proven Experience"), ("insights.html", "Our Insights"), ("careers.html", "Careers"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
+{col("Company", [("about.html", "About ARRON"), ("proven-experience.html", "Proven Experience"), ("insights.html", "Our Insights"), ("careers.html", "Careers"), (LINKEDIN, "LinkedIn"), (f"mailto:{EMAIL_1}", EMAIL_1), (f"mailto:{EMAIL_2}", EMAIL_2)])}</div>
 <div class="fb"><span>© 2026 ARRON Technologies. All rights reserved.</span><span>Dallas, Texas · Louisville · Houston · Delhi NCR · Pune · Bangalore</span></div></div></footer>'''
 
 
@@ -947,7 +948,7 @@ def build_about():
     b += '<section class="paper"><div class="wrap"><div class="stats rv" style="grid-template-columns:repeat(4,1fr)"><div class="stat"><b data-count="25" data-suffix="+">0</b><span>Years of combined experience</span></div><div class="stat"><b data-count="100" data-suffix="+">0</b><span>Projects delivered</span></div><div class="stat"><b data-count="5">0</b><span>AI-native applications</span></div><div class="stat"><b data-count="6">0</b><span>Offices across two countries</span></div></div></div></section>'
     b += f'''<section class="paper" id="contact"><div class="wrap cgrid"><div><span class="kicker rv">Contact us</span><h2 data-split>Let's talk about getting ahead of now.</h2>
 <p class="rv" data-delay=".2" style="margin-top:22px;font-size:1.1rem">Tell us a little about your challenge. A senior member of the team will reply within one business day.</p>
-<div class="cinfo rv" data-delay=".3"><div><b>Email</b><span><a href="mailto:{EMAIL_1}">{EMAIL_1}</a></span></div><div><b>Email</b><span><a href="mailto:{EMAIL_2}">{EMAIL_2}</a></span></div><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div></div></div>
+<div class="cinfo rv" data-delay=".3"><div><b>Email</b><span><a href="mailto:{EMAIL_1}">{EMAIL_1}</a></span></div><div><b>Email</b><span><a href="mailto:{EMAIL_2}">{EMAIL_2}</a></span></div><div><b>LinkedIn</b><span><a href="{LINKEDIN}" target="_blank" rel="noopener noreferrer">linkedin.com/company/arron-technologies</a></span></div><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div></div></div>
 <div class="rv rv-r"><form class="f" data-demo data-mailto="{EMAIL_1},{EMAIL_2}" onsubmit="return false"><div class="two"><label>Name<input name="name" required placeholder="Jane Smith"></label><label>Work email<input name="email" type="email" required placeholder="jane@company.com"></label></div>
 <div class="two"><label>Company<input name="company" placeholder="Company name"></label><label>Interested in<select name="topic"><option>Artificial Intelligence / ARRON AURA</option><option>ERP</option><option>ITSM</option><option>Customer Experience</option><option>Digital Workplace</option><option>Products</option><option>Careers</option><option>Something else</option></select></label></div>
 <label>How can we help?<textarea name="msg" placeholder="A few lines about your goals or challenge"></textarea></label>
