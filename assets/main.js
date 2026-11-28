@@ -1,5 +1,6 @@
 (function(){
 'use strict';
+try{if(window.top!==window.self){window.top.location=window.self.location}}catch(e){}
 var hdr=document.querySelector('.site-header');
 var bar=document.createElement('div');bar.className='progress';document.body.appendChild(bar);
 function onScroll(){

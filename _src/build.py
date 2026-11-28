@@ -10,6 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EMAIL_1 = "RajitM@arrontechnologies.com"
 EMAIL_2 = "Annad@arrontechnologies.com"
 LINKEDIN = "https://www.linkedin.com/company/arron-technologies/"
+SITE = "https://arrontechnologies.com"
 MAILTO = f"mailto:{EMAIL_1},{EMAIL_2}?subject=Enquiry%20from%20the%20ARRON%20website"
 import re as _re
 
@@ -182,10 +183,28 @@ def marquee(label="The platforms and ecosystems we work across", names=PLATFORMS
 
 
 def page(fname, title, desc, body):
+    canon = SITE + "/" + ("" if fname == "index.html" else fname)
+    desc = desc.replace('"', "&quot;")
+    jsonld = ""
+    if fname == "index.html":
+        import json
+        org = {"@context": "https://schema.org", "@graph": [
+            {"@type": "Organization", "@id": SITE + "/#org", "name": "ARRON Technologies", "url": SITE + "/", "logo": SITE + "/assets/img/logo.png",
+             "slogan": "Ahead of Now", "foundingDate": "2026", "description": "ARRON Technologies is an AI-ready technology consulting and services company helping organizations become AI-native enterprises.",
+             "address": {"@type": "PostalAddress", "addressLocality": "Dallas", "addressRegion": "TX", "addressCountry": "US"},
+             "sameAs": [LINKEDIN], "email": EMAIL_1,
+             "contactPoint": [{"@type": "ContactPoint", "contactType": "sales", "email": EMAIL_1}, {"@type": "ContactPoint", "contactType": "customer support", "email": EMAIL_2}]},
+            {"@type": "WebSite", "@id": SITE + "/#site", "url": SITE + "/", "name": "ARRON Technologies", "publisher": {"@id": SITE + "/#org"}}]}
+        jsonld = '<script type="application/ld+json">' + json.dumps(org) + '</script>'
     html = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
-<link rel="icon" href="assets/img/mark.png">
+<link rel="canonical" href="{canon}"><meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0f2a5f"><meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'">
+<meta property="og:type" content="website"><meta property="og:site_name" content="ARRON Technologies"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{canon}"><meta property="og:image" content="{SITE}/assets/img/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{SITE}/assets/img/og-image.png">
+<link rel="icon" href="assets/img/mark.png"><link rel="apple-touch-icon" href="assets/img/og-image.png">{jsonld}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css?v={VER}"></head>
@@ -857,7 +876,7 @@ def build_insights():
         sig = None
         if f == "blog.html":
             sig = f'''<div class="hero-signup rv" data-delay=".5"><span class="hs-label">Get the blog and newsletter by email</span>
-<form data-demo data-mailto="{EMAIL_1},{EMAIL_2}" data-subject="Subscribe me to the ARRON blog and newsletter" onsubmit="return false"><div class="news"><input type="email" name="email" required placeholder="you@company.com" aria-label="Email address"><button class="btn btn-red" type="submit">Subscribe {ARROW}</button></div></form>
+<form data-demo data-mailto="{EMAIL_1},{EMAIL_2}" data-subject="Subscribe me to the ARRON blog and newsletter"><div class="news"><input type="email" name="email" required placeholder="you@company.com" aria-label="Email address"><button class="btn btn-red" type="submit">Subscribe {ARROW}</button></div></form>
 <div class="ok">Your email app should open with the request ready to send. Just press send and we will add you.</div><p class="hs-note">Be first to read our articles when they are published. Free, and you can unsubscribe any time.</p></div>'''
         build_soon(f, ("insights.html", "Our Insights"), nm, h1, lead, ph, blurb, n, sig)
 
@@ -949,12 +968,39 @@ def build_about():
     b += f'''<section class="paper" id="contact"><div class="wrap cgrid"><div><span class="kicker rv">Contact us</span><h2 data-split>Let's talk about getting ahead of now.</h2>
 <p class="rv" data-delay=".2" style="margin-top:22px;font-size:1.1rem">Tell us a little about your challenge. A senior member of the team will reply within one business day.</p>
 <div class="cinfo rv" data-delay=".3"><div><b>Email</b><span><a href="mailto:{EMAIL_1}">{EMAIL_1}</a></span></div><div><b>Email</b><span><a href="mailto:{EMAIL_2}">{EMAIL_2}</a></span></div><div><b>LinkedIn</b><span><a href="{LINKEDIN}" target="_blank" rel="noopener noreferrer">linkedin.com/company/arron-technologies</a></span></div><div><b>Headquarters</b><span>Dallas, Texas, USA</span></div></div></div>
-<div class="rv rv-r"><form class="f" data-demo data-mailto="{EMAIL_1},{EMAIL_2}" onsubmit="return false"><div class="two"><label>Name<input name="name" required placeholder="Jane Smith"></label><label>Work email<input name="email" type="email" required placeholder="jane@company.com"></label></div>
+<div class="rv rv-r"><form class="f" data-demo data-mailto="{EMAIL_1},{EMAIL_2}"><div class="two"><label>Name<input name="name" required placeholder="Jane Smith"></label><label>Work email<input name="email" type="email" required placeholder="jane@company.com"></label></div>
 <div class="two"><label>Company<input name="company" placeholder="Company name"></label><label>Interested in<select name="topic"><option>Artificial Intelligence / ARRON AURA</option><option>ERP</option><option>ITSM</option><option>Customer Experience</option><option>Digital Workplace</option><option>Products</option><option>Careers</option><option>Something else</option></select></label></div>
 <label>How can we help?<textarea name="msg" placeholder="A few lines about your goals or challenge"></textarea></label>
 <button class="btn btn-red" type="submit" style="justify-content:center">Send message {ARROW}</button><div class="ok">Your email app should open with the message ready to send. If it does not, write to us directly at the addresses shown.</div></form></div></div></section>'''
     page("about.html", "About ARRON — Our Purpose | ARRON Technologies, Dallas, Texas", "ARRON Technologies is an AI-ready technology consulting and services company headquartered in Dallas, Texas, with delivery teams in the U.S. and India.", b)
 
+
+
+def build_404():
+    b = f'''<section class="hero"><div class="wrap" style="padding:60px 0 40px"><div class="crumbs">Page not found</div><h1 data-split>That page <span class="r">does not exist.</span></h1>
+<p class="lead rv" data-delay=".3">The link may be old or mistyped. Start from the home page, or tell us what you were looking for.</p>
+<div class="hero-cta rv" data-delay=".5"><a class="btn btn-red" href="/index.html">Go to the home page {ARROW}</a><a class="btn btn-ghost" href="/offerings.html">See our offerings</a></div></div></section>'''
+    page("404.html", "Page not found — ARRON Technologies", "This page does not exist. Return to the ARRON Technologies home page.", b)
+    fp = os.path.join(ROOT, "404.html")
+    h = open(fp).read().replace("<head>", '<head><base href="/">', 1).replace('<meta name="robots" content="index,follow,max-image-preview:large">', '<meta name="robots" content="noindex">')
+    open(fp, "w").write(h)
+
+
+def build_seo_files():
+    import datetime
+    today = datetime.date.today().isoformat()
+    pages = sorted(f for f in os.listdir(ROOT) if f.endswith(".html") and f != "404.html")
+    prio = {"index.html": "1.0", "offerings.html": "0.9", "ai.html": "0.9", "erp.html": "0.8", "itsm.html": "0.8", "cx.html": "0.8", "digital-workplace.html": "0.8", "products.html": "0.8", "about.html": "0.7"}
+    urls = ""
+    for f in pages:
+        loc = SITE + "/" + ("" if f == "index.html" else f)
+        urls += f"<url><loc>{loc}</loc><lastmod>{today}</lastmod><priority>{prio.get(f, '0.6')}</priority></url>\n"
+    open(os.path.join(ROOT, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "</urlset>\n")
+    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /documentation/\n\nSitemap: {SITE}/sitemap.xml\n")
+    open(os.path.join(ROOT, "security.txt"), "w").write("")  # placeholder removed below
+    os.remove(os.path.join(ROOT, "security.txt"))
+    os.makedirs(os.path.join(ROOT, ".well-known"), exist_ok=True)
+    open(os.path.join(ROOT, ".well-known", "security.txt"), "w").write(f"Contact: mailto:{EMAIL_1}\nExpires: 2027-11-28T00:00:00.000Z\nPreferred-Languages: en\nCanonical: {SITE}/.well-known/security.txt\n")
 
 
 if __name__ == "__main__":
@@ -966,4 +1012,5 @@ if __name__ == "__main__":
         build_industry_page(k)
     for k in OFFER_KEYS + CAP_KEYS:
         build_detail(k)
+    build_404(); build_seo_files()
     print("built", len([f for f in os.listdir(ROOT) if f.endswith('.html')]), "pages")
