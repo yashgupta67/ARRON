@@ -192,7 +192,7 @@ def page(fname, title, desc, body):
             {"@type": "Organization", "@id": SITE + "/#org", "name": "ARRON Technologies", "url": SITE + "/", "logo": SITE + "/assets/img/logo.png",
              "slogan": "Ahead of Now", "foundingDate": "2026", "description": "ARRON Technologies is an AI-ready technology consulting and services company helping organizations become AI-native enterprises.",
              "address": {"@type": "PostalAddress", "addressLocality": "Dallas", "addressRegion": "TX", "addressCountry": "US"},
-             "sameAs": [LINKEDIN], "email": EMAIL_1,
+             "alternateName": ["ARRON", "Arron Technology", "Arron Tech"], "sameAs": [LINKEDIN], "email": EMAIL_1,
              "contactPoint": [{"@type": "ContactPoint", "contactType": "sales", "email": EMAIL_1}, {"@type": "ContactPoint", "contactType": "customer support", "email": EMAIL_2}]},
             {"@type": "WebSite", "@id": SITE + "/#site", "url": SITE + "/", "name": "ARRON Technologies", "publisher": {"@id": SITE + "/#org"}}]}
         jsonld = '<script type="application/ld+json">' + json.dumps(org) + '</script>'
@@ -610,7 +610,7 @@ def build_ai():
         ("shield", "Autonomy with control", "Progress toward greater enterprise autonomy while retaining governance, security and human oversight.")])
     b += explore_block(d, OFFER_KEYS)
     b += cta_band("Ready to move beyond AI experimentation?", "Tell us where you want AI to create impact. We'll help shape the path forward.", "Start a conversation")
-    page(d["file"], "AI / Super Intelligence — ARRON AURA | ARRON Technologies", "AI built for impact, architected for autonomy. Meet ARRON AURA, our AI-native enterprise platform.", b)
+    page(d["file"], "AI Services & Super Intelligence — ARRON AURA | ARRON Technologies", "ARRON Technologies AI services: generative AI, agentic AI, AI engineering and decision intelligence. Meet ARRON AURA, our AI-native enterprise architecture.", b)
 
 
 # =========================================================== Products (Product as a Service)
@@ -718,7 +718,7 @@ def build_home():
     b += '<section><div class="wrap">' + sh("What should you do next", "Pick the starting point that fits you.", "No forms to fill and no sales script. Just a useful conversation.") + \
          '<div class="nexts" data-stagger>' + ''.join(f'<a class="nx" href="{h}"><span class="n">{n}</span><b>{t}</b><p>{p}</p><span class="more">{l} {ARROW}</span></a>' for n, t, p, h, l in nxt) + '</div></div></section>'
     b += cta_band("ARRON. Ahead of Now.", "Building AI-Native Enterprises. Tell us where you are headed and we will tell you honestly how to get there.", "Talk to us")
-    page("index.html", "ARRON Technologies — Ahead of Now | AI-Native Enterprise Technology", "ARRON Technologies is an AI-ready technology company building AI-native enterprises through AI, ERP, ITSM, Customer Experience and Digital Workplace.", b)
+    page("index.html", "ARRON Technologies | AI Services, ERP, ITSM & Digital Workplace — Dallas, TX", "ARRON Technologies (Arron) is an AI services and technology consulting company in Dallas, Texas. We build AI-native enterprises with AI, ERP, ITSM, Customer Experience and Digital Workplace.", b)
 
 
 # =========================================================== HUBS
@@ -736,7 +736,7 @@ def build_offerings():
          '<div style="border-top:1px solid rgba(255,255,255,.14)" data-stagger>' + ''.join(
              f'<a href="{h}" class="qrow"><span class="n">{n}</span><b>{q}{f"<small>{s}</small>" if s else ""}</b><span class="a">{a}</span><span class="go">{ARROW}</span></a>' for h, q, s, a, n in qs) + '</div></div></section>'
     b += cta_band("Not sure where to start?", "Bring us the challenge and we will recommend the lightest path to it.")
-    page("offerings.html", "Offerings — ARRON | AI, ERP, ITSM, CX & Digital Workplace", "ARRON offerings: Artificial & Super Intelligence, ERP, IT Service Management, Customer Experience and Digital Workplace.", b)
+    page("offerings.html", "AI Services & Offerings — ARRON Technologies | ERP, ITSM, CX, Digital Workplace", "ARRON Technologies AI services and offerings: Artificial & Super Intelligence, ERP, IT Service Management, Customer Experience and Digital Workplace consulting.", b)
 
 
 def build_cap():
