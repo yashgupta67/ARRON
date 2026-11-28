@@ -1,3 +1,7 @@
 .claude/
 __pycache__/
 .DS_Store
+
+# private working files, kept locally only
+documentation/
+linkedin/
